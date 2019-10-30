@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalTemplateMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.AppraisalTemplateOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="OBJECT_TYPE" jdbcType="DECIMAL" property="objectType" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="TYPE" jdbcType="DECIMAL" property="type" />
+    <result column="organizationName" jdbcType="VARCHAR" property="organizationName" />
+    <result column="employeeName" jdbcType="VARCHAR" property="employeeName" />
+    <result column="organizationId" jdbcType="VARCHAR" property="organizationId" />
+    <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+    <result column="roleId" jdbcType="VARCHAR" property="roleId" />
+    <result column="employeeId" jdbcType="DECIMAL" property="employeeId" />
+    <result column="DATUM_VALUE" jdbcType="DECIMAL" property="datumValue" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+    DISPLAY_ORDER, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+    NAME, OBJECT_TYPE, STATE, TYPE,DATUM_VALUE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_TEMPLATE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from APPRAISAL_TEMPLATE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AppraisalTemplate">
+    insert into APPRAISAL_TEMPLATE (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+      DISPLAY_ORDER, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, NAME, OBJECT_TYPE,
+      STATE, TYPE,DATUM_VALUE)
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{displayOrder,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{objectType,jdbcType=DECIMAL},
+      #{state,jdbcType=DECIMAL}, #{type,jdbcType=DECIMAL},  #{datumValue,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AppraisalTemplate">
+    insert into APPRAISAL_TEMPLATE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="objectType != null">
+        OBJECT_TYPE,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="datumValue != null">
+        DATUM_VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="objectType != null">
+        #{objectType,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=DECIMAL},
+      </if>
+      <if test="datumValue != null">
+        #{datumValue,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AppraisalTemplate">
+    update APPRAISAL_TEMPLATE
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="objectType != null">
+        OBJECT_TYPE = #{objectType,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=DECIMAL},
+      </if>
+      <if test="datumValue != null">
+        DATUM_VALUE = #{datumValue,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AppraisalTemplate">
+    update APPRAISAL_TEMPLATE
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      OBJECT_TYPE = #{objectType,jdbcType=DECIMAL},
+      STATE = #{state,jdbcType=DECIMAL},
+      TYPE = #{type,jdbcType=DECIMAL},
+      DATUM_VALUE = #{datumValue,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="findByNameNotId" parameterType="com.assessment.model.AppraisalTemplate" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_TEMPLATE
+    where ID != #{id,jdbcType=DECIMAL} and  NAME = #{name,jdbcType=VARCHAR} and AMPUTATED=0
+  </select>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM APPRAISAL_TEMPLATE
+    WHERE  APPRAISAL_TEMPLATE.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">APPRAISAL_TEMPLATE.NAME like '%'||#{name}||'%'and </if>
+      <if test="type!=null and type !=''">APPRAISAL_TEMPLATE.TYPE = #{type} and </if>
+      <if test="objectType!=null and objectType !=''">APPRAISAL_TEMPLATE.OBJECT_TYPE = #{objectType} and </if>
+    </trim>
+    ORDER BY APPRAISAL_TEMPLATE.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectByTemplateIdAndWindowType" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    ORGANIZATION."NAME" organizationName ,ORGANIZATION."ID" organizationId
+    FROM APPRAISAL_TEMPLATE_TARGET
+    INNER JOIN "ORGANIZATION" ON "ORGANIZATION".ID = APPRAISAL_TEMPLATE_TARGET.ORGANIZATION_ID
+    where  APPRAISAL_TEMPLATE_TARGET.TEMPLATE_ID = #{templateId} and APPRAISAL_TEMPLATE_TARGET.OBJECT_TYPE = #{objectType}
+  </select>
+
+  <select id="selectByTemplateIdAndRoleType" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    "ROLE"."NAME" roleName,ROLE."ID" roleId
+    FROM APPRAISAL_TEMPLATE_TARGET
+    INNER JOIN "ROLE" ON "ROLE".ID = APPRAISAL_TEMPLATE_TARGET.ROLE_ID
+    where  APPRAISAL_TEMPLATE_TARGET.TEMPLATE_ID = #{templateId} and APPRAISAL_TEMPLATE_TARGET.OBJECT_TYPE = #{objectType}
+  </select>
+
+  <select id="selectAppraisalEmployees" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+      SELECT
+      EMPLOYEES."ID" employeeId,EMPLOYEES.NAME employeeName
+      FROM
+          APPRAISAL_TEMPLATE
+      LEFT JOIN APPRAISAL_TEMPLATE_TARGET ON APPRAISAL_TEMPLATE."ID" = APPRAISAL_TEMPLATE_TARGET.TEMPLATE_ID
+      LEFT JOIN USER_ROLE ON USER_ROLE.ROLE_ID = APPRAISAL_TEMPLATE_TARGET.ROLE_ID
+      LEFT JOIN "USERS" ON "USERS". ID = USER_ROLE.USER_ID
+      RIGHT JOIN EMPLOYEES ON EMPLOYEES."ID" = USERS .EMPLOYEE_ID
+      WHERE
+          USERS .EMPLOYEE_ID IS NOT NULL AND APPRAISAL_TEMPLATE."ID" =#{templateId}
+  </select>
+
+
+  <select id="selectAllAppraisalEmployees" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+      SELECT EMPLOYEES."ID" employeeId,EMPLOYEES.NAME employeeName FROM EMPLOYEES left join ORGANIZATION on EMPLOYEES.ORGANIZATION_ID = ORGANIZATION.id
+       where (WINDOW_STATE  = 0  or WINDOW_STATE  = 1 ) and ASSESSMENT_STATE = 0
+  </select>
+
+  <select id="selectAppraisalOrganization" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+     SELECT
+	APPRAISAL_TEMPLATE_TARGET.ORGANIZATION_ID organizationId,"ORGANIZATION"."NAME" organizationName
+    FROM
+    APPRAISAL_TEMPLATE
+    LEFT JOIN APPRAISAL_TEMPLATE_TARGET ON APPRAISAL_TEMPLATE."ID" = APPRAISAL_TEMPLATE_TARGET.TEMPLATE_ID
+		LEFT JOIN ORGANIZATION ON APPRAISAL_TEMPLATE_TARGET.ORGANIZATION_ID = "ORGANIZATION"."ID"
+    WHERE APPRAISAL_TEMPLATE."ID" =#{templateId}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    APPRAISAL_TEMPLATE
+    WHERE  AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">NAME like '%'||#{name}||'%'and </if>
+      <if test="type!=null and type !=''">APPRAISAL_TEMPLATE.TYPE = #{type} and </if>
+      <if test="objectType!=null and objectType !=''">APPRAISAL_TEMPLATE.OBJECT_TYPE = #{objectType} and </if>
+    </trim>
+    ORDER BY LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+  <select id="selectByObjectTypeAndState" parameterType="com.assessment.model.AppraisalTemplate" resultMap="BaseResultMap">
+    select
+    ID
+    from APPRAISAL_TEMPLATE
+    where APPRAISAL_TEMPLATE.OBJECT_TYPE = #{objectType} and APPRAISAL_TEMPLATE.STATE = #{state} and AMPUTATED=0
+  </select>
+
+</mapper>

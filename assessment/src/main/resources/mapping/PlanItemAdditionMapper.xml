@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.PlanItemAdditionMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.model.PlanItemAddition">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="PLAN_ITEM_ID" jdbcType="DECIMAL" property="planItemId" />
+    <result column="total" jdbcType="DECIMAL" property="total" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, FILE_NAME,
+    PLAN_ITEM_ID, URL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from PLAN_ITEM_ADDITION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from PLAN_ITEM_ADDITION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.PlanItemAddition">
+    insert into PLAN_ITEM_ADDITION (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, FILE_NAME,
+      PLAN_ITEM_ID, URL)
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},
+      #{planItemId,jdbcType=DECIMAL}, #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.PlanItemAddition">
+    insert into PLAN_ITEM_ADDITION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="planItemId != null">
+        PLAN_ITEM_ID,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="planItemId != null">
+        #{planItemId,jdbcType=DECIMAL},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.PlanItemAddition">
+    update PLAN_ITEM_ADDITION
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="planItemId != null">
+        PLAN_ITEM_ID = #{planItemId,jdbcType=DECIMAL},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.PlanItemAddition">
+    update PLAN_ITEM_ADDITION
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      PLAN_ITEM_ID = #{planItemId,jdbcType=DECIMAL},
+      URL = #{url,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <update id="deleteByItemId">
+    update PLAN_ITEM_ADDITION
+    set AMPUTATED = 1
+    where PLAN_ITEM_ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="findByPlanItemId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    FILE_NAME,URL
+    from PLAN_ITEM_ADDITION
+    where PLAN_ITEM_ID = #{id,jdbcType=DECIMAL} and AMPUTATED = 0
+  </select>
+
+  <select id="findSumByPlanId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+	PLAN_ITEM_ADDITION.PLAN_ITEM_ID,
+	count( PLAN_ITEM_ADDITION.PLAN_ITEM_ID ) total
+    FROM
+        PLAN_ITEM_ADDITION
+        LEFT JOIN APPRAISAL_PLAN_ITEM ON PLAN_ITEM_ADDITION.PLAN_ITEM_ID = APPRAISAL_PLAN_ITEM.id
+    WHERE
+        APPRAISAL_PLAN_ITEM.PLAN_ID = #{id}
+        AND PLAN_ITEM_ADDITION.AMPUTATED = 0
+    GROUP BY
+        PLAN_ITEM_ADDITION.PLAN_ITEM_ID
+  </select>
+</mapper>

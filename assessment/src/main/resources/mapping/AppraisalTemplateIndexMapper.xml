@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalTemplateIndexMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.model.AppraisalTemplateIndex">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="RULE_ID" jdbcType="DECIMAL" property="ruleId" />
+    <result column="TEMPLATE_ID" jdbcType="DECIMAL" property="templateId" />
+    <result column="TEMPLATE_INDEX_ID" jdbcType="DECIMAL" property="templateIndexId" />
+    <result column="INDEX_ID" jdbcType="DECIMAL" property="indexId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RULE_ID, TEMPLATE_ID, TEMPLATE_INDEX_ID, INDEX_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from APPRAISAL_TEMPLATE_INDEX
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from APPRAISAL_TEMPLATE_INDEX
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AppraisalTemplateIndex">
+    insert into APPRAISAL_TEMPLATE_INDEX (ID, RULE_ID, TEMPLATE_ID, 
+      TEMPLATE_INDEX_ID, INDEX_ID)
+    values (#{id,jdbcType=DECIMAL}, #{ruleId,jdbcType=DECIMAL}, #{templateId,jdbcType=DECIMAL}, 
+      #{templateIndexId,jdbcType=DECIMAL}, #{indexId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AppraisalTemplateIndex">
+    insert into APPRAISAL_TEMPLATE_INDEX
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="ruleId != null">
+        RULE_ID,
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID,
+      </if>
+      <if test="templateIndexId != null">
+        TEMPLATE_INDEX_ID,
+      </if>
+      <if test="indexId != null">
+        INDEX_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleId != null">
+        #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateIndexId != null">
+        #{templateIndexId,jdbcType=DECIMAL},
+      </if>
+      <if test="indexId != null">
+        #{indexId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AppraisalTemplateIndex">
+    update APPRAISAL_TEMPLATE_INDEX
+    <set>
+      <if test="ruleId != null">
+        RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateIndexId != null">
+        TEMPLATE_INDEX_ID = #{templateIndexId,jdbcType=DECIMAL},
+      </if>
+      <if test="indexId != null">
+        INDEX_ID = #{indexId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AppraisalTemplateIndex">
+    update APPRAISAL_TEMPLATE_INDEX
+    set RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      TEMPLATE_INDEX_ID = #{templateIndexId,jdbcType=DECIMAL},
+      INDEX_ID = #{indexId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

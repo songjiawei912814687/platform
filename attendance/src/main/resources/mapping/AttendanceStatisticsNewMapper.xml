@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.AttendanceStatisticsNewMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.model.AttendanceStatistics">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ABSENCE_HOURS" jdbcType="DECIMAL" property="absenceHours" />
+    <result column="ATTENDANCE_DATE" jdbcType="TIMESTAMP" property="attendanceDate" />
+    <result column="BE_LATE" jdbcType="VARCHAR" property="beLate" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NAME" jdbcType="VARCHAR" property="employeeName" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="IS_LEAVE" jdbcType="VARCHAR" property="isLeave" />
+    <result column="IS_OFF_TIME" jdbcType="VARCHAR" property="isOffTime" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="LEAVE_EARLY" jdbcType="VARCHAR" property="leaveEarly" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="PUNCH" jdbcType="VARCHAR" property="punch" />
+    <result column="SIGN_IN_TIME" jdbcType="TIMESTAMP" property="signInTime" />
+    <result column="SIGN_OUT_TIME" jdbcType="TIMESTAMP" property="signOutTime" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="VERIFICATION_TIME_ONE" jdbcType="TIMESTAMP" property="verificationTimeOne" />
+    <result column="VERIFICATION_TIME_TWO" jdbcType="TIMESTAMP" property="verificationTimeTwo" />
+    <result column="VERIFICATION" jdbcType="VARCHAR" property="verification"/>
+  </resultMap>
+
+  <resultMap id="AttendanceDailyDateBaseMap" type="com.attendance.domian.output.AttendanceDailyDate">
+    <result column="BE_LATE" jdbcType="VARCHAR" property="beLate" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NAME" jdbcType="VARCHAR" property="employeeName" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="LEAVE_EARLY" jdbcType="VARCHAR" property="leaveEarly" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="SIGN_IN_TIME" jdbcType="TIMESTAMP" property="signInTime" />
+    <result column="SIGN_OUT_TIME" jdbcType="TIMESTAMP" property="signOutTime" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="IS_LEAVE" jdbcType="VARCHAR" property="isLeave" />
+    <result column="ATTENDANCE_DATE" jdbcType="TIMESTAMP" property="attendanceDate" />
+    <result column="VERIFICATION" jdbcType="VARCHAR" property="verification"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, ABSENCE_HOURS, ATTENDANCE_DATE, BE_LATE, EMPLOYEE_ID, EMPLOYEE_NAME, EMPLOYEE_NO,
+    IS_LEAVE, IS_OFF_TIME, JOBS_NAME, LEAVE_EARLY, ORGANIZATION_ID, ORGANIZATION_NAME,
+    PUNCH, SIGN_IN_TIME, SIGN_OUT_TIME, STATUS_NAME, VERIFICATION_TIME_ONE, VERIFICATION_TIME_TWO,VERIFICATION
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ATTENDANCE_STATISTICS_NEW
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ATTENDANCE_STATISTICS_NEW
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.attendance.model.AttendanceStatistics">
+    insert into ATTENDANCE_STATISTICS_NEW (ID, ABSENCE_HOURS, ATTENDANCE_DATE,
+      BE_LATE, EMPLOYEE_ID, EMPLOYEE_NAME,
+      EMPLOYEE_NO, IS_LEAVE, IS_OFF_TIME,
+      JOBS_NAME, LEAVE_EARLY, ORGANIZATION_ID,
+      ORGANIZATION_NAME, PUNCH, SIGN_IN_TIME,
+      SIGN_OUT_TIME, STATUS_NAME, VERIFICATION_TIME_ONE,
+      VERIFICATION_TIME_TWO)
+    values (#{id,jdbcType=DECIMAL}, #{absenceHours,jdbcType=DECIMAL}, #{attendanceDate,jdbcType=TIMESTAMP},
+      #{beLate,jdbcType=VARCHAR}, #{employeeId,jdbcType=DECIMAL}, #{employeeName,jdbcType=VARCHAR},
+      #{employeeNo,jdbcType=VARCHAR}, #{isLeave,jdbcType=VARCHAR}, #{isOffTime,jdbcType=VARCHAR},
+      #{jobsName,jdbcType=VARCHAR}, #{leaveEarly,jdbcType=VARCHAR}, #{organizationId,jdbcType=DECIMAL},
+      #{organizationName,jdbcType=VARCHAR}, #{punch,jdbcType=VARCHAR}, #{signInTime,jdbcType=TIMESTAMP},
+      #{signOutTime,jdbcType=TIMESTAMP}, #{statusName,jdbcType=VARCHAR}, #{verificationTimeOne,jdbcType=TIMESTAMP},
+      #{verificationTimeTwo,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.AttendanceStatistics">
+    insert into ATTENDANCE_STATISTICS_NEW
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="absenceHours != null">
+        ABSENCE_HOURS,
+      </if>
+      <if test="attendanceDate != null">
+        ATTENDANCE_DATE,
+      </if>
+      <if test="beLate != null">
+        BE_LATE,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="employeeName != null">
+        EMPLOYEE_NAME,
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO,
+      </if>
+      <if test="isLeave != null">
+        IS_LEAVE,
+      </if>
+      <if test="isOffTime != null">
+        IS_OFF_TIME,
+      </if>
+      <if test="jobsName != null">
+        JOBS_NAME,
+      </if>
+      <if test="leaveEarly != null">
+        LEAVE_EARLY,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME,
+      </if>
+      <if test="punch != null">
+        PUNCH,
+      </if>
+      <if test="signInTime != null">
+        SIGN_IN_TIME,
+      </if>
+      <if test="signOutTime != null">
+        SIGN_OUT_TIME,
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME,
+      </if>
+      <if test="verificationTimeOne != null">
+        VERIFICATION_TIME_ONE,
+      </if>
+      <if test="verificationTimeTwo != null">
+        VERIFICATION_TIME_TWO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="absenceHours != null">
+        #{absenceHours,jdbcType=DECIMAL},
+      </if>
+      <if test="attendanceDate != null">
+        #{attendanceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beLate != null">
+        #{beLate,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isLeave != null">
+        #{isLeave,jdbcType=VARCHAR},
+      </if>
+      <if test="isOffTime != null">
+        #{isOffTime,jdbcType=VARCHAR},
+      </if>
+      <if test="jobsName != null">
+        #{jobsName,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveEarly != null">
+        #{leaveEarly,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationName != null">
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="punch != null">
+        #{punch,jdbcType=VARCHAR},
+      </if>
+      <if test="signInTime != null">
+        #{signInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signOutTime != null">
+        #{signOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusName != null">
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="verificationTimeOne != null">
+        #{verificationTimeOne,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verificationTimeTwo != null">
+        #{verificationTimeTwo,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.AttendanceStatistics">
+    update ATTENDANCE_STATISTICS_NEW
+    <set>
+      <if test="absenceHours != null">
+        ABSENCE_HOURS = #{absenceHours,jdbcType=DECIMAL},
+      </if>
+      <if test="attendanceDate != null">
+        ATTENDANCE_DATE = #{attendanceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beLate != null">
+        BE_LATE = #{beLate,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeName != null">
+        EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isLeave != null">
+        IS_LEAVE = #{isLeave,jdbcType=VARCHAR},
+      </if>
+      <if test="isOffTime != null">
+        IS_OFF_TIME = #{isOffTime,jdbcType=VARCHAR},
+      </if>
+      <if test="jobsName != null">
+        JOBS_NAME = #{jobsName,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveEarly != null">
+        LEAVE_EARLY = #{leaveEarly,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="punch != null">
+        PUNCH = #{punch,jdbcType=VARCHAR},
+      </if>
+      <if test="signInTime != null">
+        SIGN_IN_TIME = #{signInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signOutTime != null">
+        SIGN_OUT_TIME = #{signOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="verificationTimeOne != null">
+        VERIFICATION_TIME_ONE = #{verificationTimeOne,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verificationTimeTwo != null">
+        VERIFICATION_TIME_TWO = #{verificationTimeTwo,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.AttendanceStatistics">
+    update ATTENDANCE_STATISTICS
+    set ABSENCE_HOURS = #{absenceHours,jdbcType=DECIMAL},
+      ATTENDANCE_DATE = #{attendanceDate,jdbcType=TIMESTAMP},
+      BE_LATE = #{beLate,jdbcType=VARCHAR},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      IS_LEAVE = #{isLeave,jdbcType=VARCHAR},
+      IS_OFF_TIME = #{isOffTime,jdbcType=VARCHAR},
+      JOBS_NAME = #{jobsName,jdbcType=VARCHAR},
+      LEAVE_EARLY = #{leaveEarly,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      PUNCH = #{punch,jdbcType=VARCHAR},
+      SIGN_IN_TIME = #{signInTime,jdbcType=TIMESTAMP},
+      SIGN_OUT_TIME = #{signOutTime,jdbcType=TIMESTAMP},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      VERIFICATION_TIME_ONE = #{verificationTimeOne,jdbcType=TIMESTAMP},
+      VERIFICATION_TIME_TWO = #{verificationTimeTwo,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="findAttendanceDailyDate" parameterType="com.common.model.PageData" resultMap="AttendanceDailyDateBaseMap">
+    select
+    a.EMPLOYEE_ID, a.ATTENDANCE_DATE,a.EMPLOYEE_NAME,a.EMPLOYEE_NO,a.SIGN_IN_TIME,a.SIGN_OUT_TIME,
+    a.IS_LEAVE,a.PUNCH,a.STATUS_NAME,a.BE_LATE,a.LEAVE_EARLY,a.VERIFICATION
+    from  ATTENDANCE_STATISTICS a
+    LEFT JOIN EMPLOYEES e ON e.id = a.EMPLOYEE_ID
+    where 1=1
+    <if test="orgId!=null or employeeId!=null"> AND (EXISTS (
+      SELECT
+      ROLE_ORGAN.ORGAN_ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      a.ORGANIZATION_ID = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+        UNION ALL
+        SELECT
+        organ.ID
+        FROM
+        ORGANIZATION organ
+        WHERE
+        (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+        AND a.ORGANIZATION_ID= organ.id
+        AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeId!=null">
+        or a.EMPLOYEE_ID = #{employeeId}
+      </if>
+      )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="days!=null and days !=''">
+        TO_CHAR (a.ATTENDANCE_DATE,'YYYY-MM-DD') = #{days} and
+      </if>
+      <if test="startDate!=null and startDate != '' and endDate !=null and endDate != ''">
+        TO_CHAR (a.ATTENDANCE_DATE,'YYYY-MM-DD') &lt;= #{endDate} and
+        TO_CHAR (a.ATTENDANCE_DATE,'YYYY-MM-DD') &gt;=#{startDate} and
+      </if>
+      <if test="stateName!=null and stateName !=''">
+        a.STATUS_NAME=#{stateName,jdbcType=VARCHAR} and
+      </if>
+      <if test="name!=null and name !=''">
+        a.EMPLOYEE_NAME like '%'||#{name,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="no!=null and no != ''">
+        a.EMPLOYEE_NO like '%'||#{no,jdbcType=VARCHAR}||'%'and
+      </if>
+      <if test="path!=null and path!=''">
+        a.ORGANIZATION_ID in ${path} and
+      </if>
+      <if test="isLeave!=null and isLeave!=''">
+        a.IS_LEAVE  = #{isLeave,jdbcType=VARCHAR} and
+      </if>
+      <if test="verification!=null and verification!=''">
+        a.VERIFICATION  = #{verification,jdbcType=VARCHAR} and
+      </if>
+    </trim>
+    ORDER by a.EMPLOYEE_NO,a.ATTENDANCE_DATE
+  </select>
+
+  <delete id="deleteByDate" parameterType="com.common.model.PageData">
+    delete from ATTENDANCE_STATISTICS
+    where TO_CHAR(ATTENDANCE_DATE,'YYYY-MM-DD') = #{days}
+  </delete>
+
+  <!--迟到次数-->
+  <select id="selectSumLate" parameterType="com.common.model.PageData" resultType="java.lang.Integer">
+    SELECT
+    SUM(1)
+    FROM
+    ATTENDANCE_STATISTICS
+    WHERE
+    BE_LATE = '是'
+    and TO_DATE(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &lt; ATTENDANCE_DATE
+    and TO_DATE(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &gt; ATTENDANCE_DATE
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">ATTENDANCE_STATISTICS.EMPLOYEE_NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">ATTENDANCE_STATISTICS.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+    </trim>
+  </select>
+
+  <!--早退次数-->
+  <select id="selectSumLeave" parameterType="com.common.model.PageData" resultType="java.lang.Integer">
+    SELECT
+    SUM(1)
+    FROM
+    ATTENDANCE_STATISTICS
+    WHERE
+    LEAVE_EARLY = '是'
+    and TO_DATE(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &lt; ATTENDANCE_DATE
+    and TO_DATE(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &gt; ATTENDANCE_DATE
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">ATTENDANCE_STATISTICS.EMPLOYEE_NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">ATTENDANCE_STATISTICS.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+    </trim>
+  </select>
+
+  <!--未打卡次数-->
+  <select id="selectSumNotPunch" parameterType="com.common.model.PageData" resultType="java.lang.Integer">
+    SELECT
+    SUM(1)
+    FROM
+    ATTENDANCE_STATISTICS
+    WHERE
+    PUNCH = '否'
+    and TO_DATE(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &lt; ATTENDANCE_DATE
+    and TO_DATE(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &gt; ATTENDANCE_DATE
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">ATTENDANCE_STATISTICS.EMPLOYEE_NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">ATTENDANCE_STATISTICS.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+    </trim>
+  </select>
+
+  <!--请假天数-->
+  <select id="selectSumDays" parameterType="com.common.model.PageData" resultType="java.lang.Integer">
+    SELECT
+    SUM(ABSENCE_HOURS)
+    FROM
+    ATTENDANCE_STATISTICS
+    WHERE
+    IS_LEAVE = '是'
+    and TO_DATE(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &lt; ATTENDANCE_DATE
+    and TO_DATE(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &gt; ATTENDANCE_DATE
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">ATTENDANCE_STATISTICS.EMPLOYEE_NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">ATTENDANCE_STATISTICS.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+    </trim>
+  </select>
+
+
+  <select id="findAttendanceDailyDate1" parameterType="com.common.model.PageData" resultMap="AttendanceDailyDateBaseMap">
+    select
+    a.* from  ATTENDANCE_STATISTICS a
+    LEFT JOIN EMPLOYEES e ON e."ID" = a.EMPLOYEE_ID
+    LEFT JOIN ORGANIZATION o ON e.ORGANIZATION_ID = o.ID
+    where
+    TO_DATE(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &lt; a.ATTENDANCE_DATE
+    and TO_DATE(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &gt; a.ATTENDANCE_DATE
+    <if test="orgId!=null or employeeId!=null">
+      AND (EXISTS (
+      SELECT
+      o.ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      o.id = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+        UNION ALL
+        SELECT
+        organ.ID
+        FROM
+        ORGANIZATION organ
+        WHERE
+        (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+        AND o.id = organ.id
+        AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeId!=null">
+        or a.EMPLOYEE_ID = #{employeeId}
+      </if>
+      )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">a.EMPLOYEE_NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">a.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+      <if test="organizationId!=null and organizationId!=''">CONCAT(o.PATH ,',') like '%'||#{organizationId}||',%'and</if>
+    </trim>
+  </select>
+
+  <select id="selectSum" parameterType="com.common.model.PageData" resultMap="AttendanceDailyDateBaseMap">
+    SELECT
+    s.EMPLOYEE_NO,s.ORGANIZATION_NAME,s.EMPLOYEE_NAME,
+    sum( CASE s.BE_LATE WHEN '是' THEN 1 ELSE 0 END ) beLateTimes,
+    sum( CASE s.LEAVE_EARLY WHEN '是' THEN 1 ELSE 0 END ) leaveEarlyTimes,
+    sum( CASE s.PUNCH WHEN '否' THEN 1 ELSE 0 END)	punchTimes,
+    sum( s.ABSENCE_HOURS )	hours
+    FROM
+    ATTENDANCE_STATISTICS s
+    LEFT JOIN ORGANIZATION o ON s.ORGANIZATION_ID = o.ID
+    where o.AMPUTATED = 0 and to_date(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &lt; s.ATTENDANCE_DATE
+    and   to_date(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &gt; s.ATTENDANCE_DATE
+    <if test="orgId!=null or employeeId!=null">
+      AND (EXISTS (
+      SELECT
+      o.ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      o.id = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+        UNION
+        SELECT
+        organ.ID
+        FROM
+        ORGANIZATION organ
+        WHERE
+        (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+        AND o.id = organ.id
+        AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeId!=null">
+        or s.EMPLOYEE_ID = #{employeeId}
+      </if>
+      )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">s.EMPLOYEE_NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">s.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+      <if test="organizationId!=null and organizationId!=''">CONCAT(o.PATH ,',') like '%'||#{organizationId}||',%'and</if>
+    </trim>
+    GROUP BY
+    EMPLOYEE_NO,EMPLOYEE_NAME,ORGANIZATION_NAME
+  </select>
+
+
+  <select id="selectByEmployeeId" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select ATTENDANCE_STATISTICS.* from  ATTENDANCE_STATISTICS
+    where EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL}
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="date!=null and date !=''">to_char(ATTENDANCE_DATE,'yyyy-mm-dd')=#{date} and </if>
+      <if test="startTime!=null and startTime !=''">to_char(ATTENDANCE_DATE,'yyyy-mm-dd')&gt;=#{startTime} and </if>
+      <if test="endTime!=null and endTime !=''">to_char(ATTENDANCE_DATE,'yyyy-mm-dd')&lt;=#{endTime} and </if>
+    </trim>
+  </select>
+</mapper>

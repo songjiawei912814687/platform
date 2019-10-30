@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assistdecision.mapper.mybatis.AttendanceStatisticsMapper">
+  <resultMap id="BaseResultMap" type="com.assistdecision.domain.output.AttendanceStatisticsOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="BE_LATE" jdbcType="VARCHAR" property="beLate" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NAME" jdbcType="VARCHAR" property="employeeName" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="LEAVE_EARLY" jdbcType="VARCHAR" property="leaveEarly" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="PUNCH" jdbcType="VARCHAR" property="punch" />
+    <result column="SIGN_IN_TIME" jdbcType="TIMESTAMP" property="signInTime" />
+    <result column="SIGN_OUT_TIME" jdbcType="TIMESTAMP" property="signOutTime" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ATTENDANCE_DATE" jdbcType="TIMESTAMP" property="attendanceDate" />
+    <result column="IS_LEAVE" jdbcType="VARCHAR" property="isLeave" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, BE_LATE, EMPLOYEE_ID, EMPLOYEE_NAME, EMPLOYEE_NO, JOBS_NAME, LEAVE_EARLY, ORGANIZATION_NAME,
+    PUNCH,  SIGN_IN_TIME, SIGN_OUT_TIME, STATUS_NAME, ORGANIZATION_ID, ATTENDANCE_DATE,IS_LEAVE
+  </sql>
+
+  <!--迟到次数-->
+  <select id="selectSumLate" parameterType="com.common.model.PageData" resultType="java.lang.Integer">
+    select count(1)
+    from ATTENDANCE_STATISTICS ats
+    left join ORGANIZATION O
+    on ats.ORGANIZATION_ID=O.ID and o.AMPUTATED = 0
+    where BE_LATE = '是'
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%' and
+      </if>
+      <if test="startTime!=null and startTime!=''">
+        ATTENDANCE_DATE >=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        ATTENDANCE_DATE &lt;=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+    </trim>
+  </select>
+
+  <!--早退次数-->
+  <select id="selectEarly" parameterType="com.common.model.PageData" resultType="java.lang.Integer">
+    select count(1)
+    from ATTENDANCE_STATISTICS ats
+    left join ORGANIZATION O
+    on ats.ORGANIZATION_ID=O.ID and o.AMPUTATED = 0
+    where LEAVE_EARLY = '是'
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%' and
+      </if>
+      <if test="startTime!=null and startTime!=''">
+        ATTENDANCE_DATE >=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        ATTENDANCE_DATE &lt;=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+    </trim>
+  </select>
+
+  <!--未打卡次数-->
+  <select id="selectSumNotPunch" parameterType="com.common.model.PageData" resultType="java.lang.Integer">
+    select count(1)
+    from ATTENDANCE_STATISTICS ats
+    left join ORGANIZATION O
+    on ats.ORGANIZATION_ID=O.ID and o.AMPUTATED = 0
+    where PUNCH = '是'
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%' and
+      </if>
+      <if test="startTime!=null and startTime!=''">
+        ATTENDANCE_DATE >=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        ATTENDANCE_DATE &lt;=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+    </trim>
+  </select>
+
+  <select id="selectSumLeave" parameterType="com.common.model.PageData" resultType="integer">
+   select count(1)
+    from ATTENDANCE_STATISTICS ats
+    left join ORGANIZATION O
+    on ats.ORGANIZATION_ID=O.ID and o.AMPUTATED = 0
+    where IS_LEAVE = '是'
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%' and
+      </if>
+      <if test="startTime!=null and startTime!=''">
+         ATTENDANCE_DATE >=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        ATTENDANCE_DATE &lt;=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+    </trim>
+  </select>
+
+  <select id="selectEarlyDetail" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    ast.EMPLOYEE_NO,
+    ast.EMPLOYEE_NAME,
+    ast.SIGN_IN_TIME,
+    ast.SIGN_OUT_TIME
+    from ATTENDANCE_STATISTICS ast
+    left join ORGANIZATION O
+    on ast.ORGANIZATION_ID=O.ID and o.AMPUTATED = 0
+    where ast.LEAVE_EARLY = '是'
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%' and
+      </if>
+      <if test="startTime!=null and startTime!=''">
+        ast.ATTENDANCE_DATE >=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        ast.ATTENDANCE_DATE &lt;=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+    </trim>
+  </select>
+
+  <select id="selectLeaveDetail" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    LA.EMPLOYEES_ID,
+    e.EMPLOYEE_NO AS empno,
+    la.REPORT_START_DATE as leaveDate,
+    la.APPLICATION_TYPE as leaveType
+    from LEAVE_APPLICATION la
+    left join ORGANIZATION O
+    on la.ORGANIZATION_ID=O.ID and o.AMPUTATED = 0
+    LEFT JOIN EMPLOYEES e
+    ON e.ID = la.EMPLOYEES_ID and e.AMPUTATED = 0
+    where la.AMPUTATED = 0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%' and
+      </if>
+      <if test="startTime!=null and startTime!=''">
+        LA.REPORT_START_DATE >=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        LA.REPORT_END_DATE &lt;=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+    </trim>
+  </select>
+  <select id="selectNotPunchDetail" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    ast.EMPLOYEE_NO,
+    ast.EMPLOYEE_NAME,
+    ast.SIGN_IN_TIME,
+    ast.SIGN_OUT_TIME
+    from ATTENDANCE_STATISTICS ast
+    left join ORGANIZATION O
+    on ast.ORGANIZATION_ID=O.ID and o.AMPUTATED = 0
+    where ast.PUNCH = '是'
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%' and
+      </if>
+      <if test="startTime!=null and startTime!=''">
+        ast.ATTENDANCE_DATE >=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        ast.ATTENDANCE_DATE &lt;=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+    </trim>
+  </select>
+  <select id="selectLateDetail" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    ast.EMPLOYEE_NO,
+    ast.EMPLOYEE_NAME,
+    ast.SIGN_OUT_TIME,
+    ast.SIGN_IN_TIME
+    from ATTENDANCE_STATISTICS ast
+    left join ORGANIZATION O
+    on ast.ORGANIZATION_ID=O.ID and o.AMPUTATED = 0
+    where ast.BE_LATE = '是'
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%' and
+      </if>
+      <if test="startTime!=null and startTime!=''">
+        ast.ATTENDANCE_DATE >=to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        ast.ATTENDANCE_DATE &lt;=to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+    </trim>
+  </select>
+
+  <select id="workerDetail" parameterType="com.common.model.PageData" resultMap="BaseResultMap" >
+    SELECT
+	s.EMPLOYEE_ID,
+    s.EMPLOYEE_NO,
+    s.EMPLOYEE_NAME,
+    sum( CASE s.BE_LATE WHEN '是' THEN 1 ELSE 0 END ) beLateTimes,
+	sum(case s.IS_LEAVE WHEN '是' then 1 ELSE 0 end ) isLeaveTimes,
+    sum( CASE s.LEAVE_EARLY WHEN '是' THEN 1 ELSE 0 END ) leaveEarlyTimes,
+    sum( CASE s.PUNCH WHEN '是' THEN 1 ELSE 0 END)	punchTimes
+    FROM
+    ATTENDANCE_STATISTICS s
+    where  1=1
+    <trim prefix="and" suffixOverrides="and">
+      <if test="startTime!=null and startTime!=''">
+        s.ATTENDANCE_DATE>= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        s.ATTENDANCE_DATE&lt;=to_date(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') and
+      </if>
+      <if test="orgId!=null and orgId!=''">
+        s.ORGANIZATION_ID = #{orgId,jdbcType=DECIMAL} and
+      </if>
+      <if test="empName!=null and empName!=''">
+        s.EMPLOYEE_NAME like '%'||#{empName,jdbcType=VARCHAR}||'%' and
+      </if>
+    </trim>
+    GROUP BY
+    s.EMPLOYEE_NO,s.EMPLOYEE_NAME,s.EMPLOYEE_ID
+    order by s.EMPLOYEE_ID
+  </select>
+</mapper>

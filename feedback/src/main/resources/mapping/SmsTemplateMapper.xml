@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feedback.mapper.mybatis.SmsTemplateMapper">
+  <resultMap id="BaseResultMap" type="com.feedback.domain.output.SmsTemplateOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="IS_REPLY" jdbcType="DECIMAL" property="isReply" />
+    <result column="REPLY_LIMIT" jdbcType="DECIMAL" property="replyLimit" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.feedback.domain.output.SmsTemplateOutput">
+    <result column="DESCRIPTION" jdbcType="CLOB" property="description" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DISPLAY_ORDER, 
+    LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME, STATE, TYPE,IS_REPLY,REPLY_LIMIT
+  </sql>
+  <sql id="Blob_Column_List">
+    DESCRIPTION
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    SELECT
+    s.id,
+    s.type,
+    s.name,
+    s.description,
+    s.state,
+    s.IS_REPLY,
+    s.REPLY_LIMIT
+    FROM
+    SMS_TEMPLATE s
+    where s.ID = #{id,jdbcType=DECIMAL}
+  </select>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="ResultMapWithBLOBs" parameterType="com.common.model.PageData">
+    SELECT
+    s.id,
+    s.type,
+    s.name,
+    s.state,
+    s.last_update_date_time,
+    s.last_update_user_name
+    FROM
+    SMS_TEMPLATE s
+    where s.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">s.NAME like '%'||#{name}||'%' and </if>
+      <if test="type!=null and type !='' ">s.type =#{type,jdbcType=VARCHAR} and </if>
+    </trim>
+    ORDER BY s.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+  <!--查询分页-->
+  <select id="selectAll" resultMap="ResultMapWithBLOBs" parameterType="com.common.model.PageData">
+    SELECT
+    s.id,
+    s.type,
+    s.name,
+    s.state,
+    s.last_update_date_time,
+    s.last_update_user_name
+    FROM
+    SMS_TEMPLATE s
+    where s.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">s.NAME like '%'||#{name}||'%' and </if>
+      <if test="type!=null and type !='' ">s.type =#{type,jdbcType=VARCHAR} and </if>
+    </trim>
+    ORDER BY s.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectByName" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    SELECT
+    s.id,
+    s.type,
+    s.name,
+    s.state,
+    s.description,
+    s.last_update_date_time,
+    s.last_update_user_name
+    FROM
+    SMS_TEMPLATE s
+    where s.name =#{name,jdbcType=VARCHAR} and s.AMPUTATED=0
+  </select>
+
+
+  <select id="selectByType" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    SELECT
+    s.id,
+    s.type,
+    s.name,
+    s.description,
+    s.state,
+    s.last_update_date_time,
+    s.last_update_user_name
+    FROM
+    SMS_TEMPLATE s
+    where s.type = #{type,jdbcType=VARCHAR} and s.AMPUTATED=0 and s.state=1
+  </select>
+
+
+
+</mapper>

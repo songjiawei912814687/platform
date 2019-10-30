@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feedback.mapper.mybatis.WindowMapper">
+  <resultMap id="BaseResultMap" type="com.feedback.domain.output.WindowOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <result column="WINDOW_IP" jdbcType="VARCHAR" property="windowIp" />
+    <result column="WINDOW_NO" jdbcType="VARCHAR" property="windowNo" />
+    <result column="USERS_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME, ORGANIZATION_ID, USER_ID, WINDOW_IP,
+    WINDOW_NO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    window.ID,
+    window.CREATED_DATE_TIME,
+    window.CREATED_USER_ID,
+    window.CREATED_USER_NAME,
+    window.DESCRIPTION,
+    window.LAST_UPDATE_DATE_TIME,
+    window.LAST_UPDATE_USER_ID,
+    window.LAST_UPDATE_USER_NAME,
+    window.NAME,
+    window.ORGANIZATION_ID,
+    window.USER_ID,
+    window.WINDOW_IP,
+    window.WINDOW_NO,
+    organization.NAME ORGANIZATION_NAME
+    from WINDOW window
+    left join ORGANIZATION organization on organization.ID=window.ORGANIZATION_ID
+    where window.ID = #{id,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectByWindowNo" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from WINDOW
+    where  WINDOW_NO = #{no,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByOrAndWindowNo" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from WINDOW
+    where ORGANIZATION_ID = #{orId,jdbcType=DECIMAL}
+    and WINDOW_NO = #{windowNo,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from WINDOW
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.feedback.model.Window">
+    insert into WINDOW (ID, CREATED_DATE_TIME, CREATED_USER_ID,
+      CREATED_USER_NAME, DESCRIPTION, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME,
+      ORGANIZATION_ID, USER_ID, WINDOW_IP,
+      WINDOW_NO)
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL},
+      #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{organizationId,jdbcType=DECIMAL}, #{userId,jdbcType=DECIMAL}, #{windowIp,jdbcType=VARCHAR},
+      #{windowNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.feedback.model.Window">
+    insert into WINDOW
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="windowIp != null">
+        WINDOW_IP,
+      </if>
+      <if test="windowNo != null">
+        WINDOW_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="windowIp != null">
+        #{windowIp,jdbcType=VARCHAR},
+      </if>
+      <if test="windowNo != null">
+        #{windowNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.feedback.model.Window">
+    update WINDOW
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="windowIp != null">
+        WINDOW_IP = #{windowIp,jdbcType=VARCHAR},
+      </if>
+      <if test="windowNo != null">
+        WINDOW_NO = #{windowNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.feedback.model.Window">
+    update WINDOW
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      USER_ID = #{userId,jdbcType=DECIMAL},
+      WINDOW_IP = #{windowIp,jdbcType=VARCHAR},
+      WINDOW_NO = #{windowNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <!--查询所有-->
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    window.ID,
+    window.CREATED_DATE_TIME,
+    window.CREATED_USER_ID,
+    window.CREATED_USER_NAME,
+    window.DESCRIPTION,
+    window.LAST_UPDATE_DATE_TIME,
+    window.LAST_UPDATE_USER_ID,
+    window.LAST_UPDATE_USER_NAME,
+    window.NAME,
+    window.ORGANIZATION_ID,
+    window.USER_ID,
+    window.WINDOW_IP,
+    window.WINDOW_NO,
+    users.USERNAME AS USERS_NAME,
+    organization.NAME AS ORGANIZATION_NAME
+    FROM
+    Window window
+    LEFT JOIN USERS users ON users.ID = window.USER_ID
+    LEFT JOIN ORGANIZATION organization ON organization.ID = window.ORGANIZATION_ID
+    AND organization.AMPUTATED = 0
+    <trim prefix="where" suffixOverrides="and">
+      <if test="path!=null and path !='' "> CONCAT(ORGANIZATION.PATH ,',') like '%'||#{path}||'%' and </if>
+    </trim>
+    ORDER BY window.LAST_UPDATE_DATE_TIME DESC
+  </select>
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    window.ID,
+    window.CREATED_DATE_TIME,
+    window.CREATED_USER_ID,
+    window.CREATED_USER_NAME,
+    window.DESCRIPTION,
+    window.LAST_UPDATE_DATE_TIME,
+    window.LAST_UPDATE_USER_ID,
+    window.LAST_UPDATE_USER_NAME,
+    window.NAME,
+    window.ORGANIZATION_ID,
+    window.USER_ID,
+    window.WINDOW_IP,
+    window.WINDOW_NO,
+    users.USERNAME AS USERS_NAME,
+    organization.NAME AS ORGANIZATION_NAME
+    FROM
+    Window window
+    LEFT JOIN USERS users ON users.ID = window.USER_ID
+    LEFT JOIN ORGANIZATION organization ON organization.ID = window.ORGANIZATION_ID
+    AND organization.AMPUTATED = 0
+    <trim prefix="where" suffixOverrides="and">
+      <if test="name!=null and name !='' ">window.NAME like '%'||#{name}||'%' and </if>
+      <if test="windowNo!=null and windowNo !='' ">window.WINDOW_NO like '%'||#{windowNo}||'%' </if>
+    </trim>
+    ORDER BY window.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+</mapper>

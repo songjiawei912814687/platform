@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalTemplateRuleMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.model.AppraisalTemplateRule">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="RULE_ID" jdbcType="DECIMAL" property="ruleId" />
+    <result column="TEMPLATE_ID" jdbcType="DECIMAL" property="templateId" />
+    <result column="TEMPLATE_INDEX_ID" jdbcType="DECIMAL" property="templateIndexId" />
+  </resultMap>
+
+
+  <resultMap id="PlanBaseResultMap" type="com.assessment.model.AppraisalPlanItem">
+    <result column="CUMULATIVE_LIMIT" jdbcType="DECIMAL" property="cumulativeLimit" />
+    <result column="DATUM_VALUE" jdbcType="DECIMAL" property="datumValue" />
+    <result column="DEFAULT_SCORE" jdbcType="DECIMAL" property="defaultScore" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="INDEX_ID" jdbcType="DECIMAL" property="indexId" />
+    <result column="INDEX_NAME" jdbcType="VARCHAR" property="indexName" />
+    <result column="INDEX_SCORE" jdbcType="DECIMAL" property="indexScore" />
+    <result column="MAX_BONUS" jdbcType="DECIMAL" property="maxBonus" />
+    <result column="OBJECT_TYPE" jdbcType="DECIMAL" property="objectType" />
+    <result column="PLAN_ID" jdbcType="DECIMAL" property="planId" />
+    <result column="QUANTITY" jdbcType="DECIMAL" property="quantity" />
+    <result column="RATING_DESCRIPTION" jdbcType="VARCHAR" property="ratingDescription" />
+    <result column="RULE_ID" jdbcType="DECIMAL" property="ruleId" />
+    <result column="RULE_NAME" jdbcType="VARCHAR" property="ruleName" />
+    <result column="RULE_SCORE" jdbcType="DECIMAL" property="ruleScore" />
+    <result column="SCORE" jdbcType="DECIMAL" property="score" />
+    <result column="SCORE_SOURCE" jdbcType="DECIMAL" property="scoreSource" />
+    <result column="SCORE_TYPE" jdbcType="DECIMAL" property="scoreType" />
+    <result column="DATA_TYPE" jdbcType="DECIMAL" property="dataType" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, RULE_ID, TEMPLATE_ID, TEMPLATE_INDEX_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_TEMPLATE_RULE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from APPRAISAL_TEMPLATE_RULE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AppraisalTemplateRule">
+    insert into APPRAISAL_TEMPLATE_RULE (ID, RULE_ID, TEMPLATE_ID,
+      TEMPLATE_INDEX_ID)
+    values (#{id,jdbcType=DECIMAL}, #{ruleId,jdbcType=DECIMAL}, #{templateId,jdbcType=DECIMAL},
+      #{templateIndexId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AppraisalTemplateRule">
+    insert into APPRAISAL_TEMPLATE_RULE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="ruleId != null">
+        RULE_ID,
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID,
+      </if>
+      <if test="templateIndexId != null">
+        TEMPLATE_INDEX_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleId != null">
+        #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateIndexId != null">
+        #{templateIndexId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AppraisalTemplateRule">
+    update APPRAISAL_TEMPLATE_RULE
+    <set>
+      <if test="ruleId != null">
+        RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateIndexId != null">
+        TEMPLATE_INDEX_ID = #{templateIndexId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AppraisalTemplateRule">
+    update APPRAISAL_TEMPLATE_RULE
+    set RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      TEMPLATE_INDEX_ID = #{templateIndexId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByTemplateId" parameterType="com.common.model.PageData" resultMap="PlanBaseResultMap">
+    SELECT
+    APPRAISAL_INDEX."ID" INDEX_ID,
+    APPRAISAL_INDEX."NAME" INDEX_NAME,
+    APPRAISAL_INDEX.DATUM_VALUE DATUM_VALUE,
+    APPRAISAL_INDEX.MAX_BONUS MAX_BONUS,
+    APPRAISAL_INDEX.OBJECT_TYPE OBJECT_TYPE,
+    APPRAISAL_RULE."ID" RULE_ID,
+    APPRAISAL_RULE."NAME" RULE_NAME,
+    APPRAISAL_RULE.DESCRIPTION DESCRIPTION,
+    APPRAISAL_RULE.SCORE_TYPE SCORE_TYPE,
+    APPRAISAL_RULE.SCORE_SOURCE SCORE_SOURCE,
+    APPRAISAL_RULE.CUMULATIVE_LIMIT CUMULATIVE_LIMIT,
+    APPRAISAL_RULE.SCORE SCORE,
+    APPRAISAL_RULE.DATA_TYPE DATA_TYPE,
+    APPRAISAL_RULE.DEFAULT_SCORE DEFAULT_SCORE
+    FROM APPRAISAL_TEMPLATE_RULE
+    LEFT JOIN APPRAISAL_INDEX ON APPRAISAL_INDEX."ID" = APPRAISAL_TEMPLATE_RULE.TEMPLATE_INDEX_ID
+    LEFT JOIN APPRAISAL_RULE ON APPRAISAL_RULE.ID = APPRAISAL_TEMPLATE_RULE.RULE_ID
+    WHERE
+    APPRAISAL_TEMPLATE_RULE.TEMPLATE_ID = #{templateId}
+    order by  APPRAISAL_TEMPLATE_RULE.ID
+  </select>
+</mapper>

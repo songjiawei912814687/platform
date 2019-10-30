@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assistdecision.mapper.mybatis.StationPeopleMapper">
+  <resultMap id="BaseResultMap" type="com.assistdecision.domain.output.StationPeopleOutput">
+    <id column="RESOURCE_ID" jdbcType="DECIMAL" property="resourceId" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CREATION_TIME" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="FULL_SEQUENCE" jdbcType="VARCHAR" property="fullSequence" />
+    <result column="GROUP_CODE" jdbcType="VARCHAR" property="groupCode" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PRIORITY_CODE" jdbcType="VARCHAR" property="priorityCode" />
+    <result column="SCHEDULE_CODE" jdbcType="VARCHAR" property="scheduleCode" />
+    <result column="SEQUENCE_NUMBER" jdbcType="DECIMAL" property="sequenceNumber" />
+    <result column="SORT_INDEX" jdbcType="DECIMAL" property="sortIndex" />
+    <result column="SOURCE" jdbcType="VARCHAR" property="source" />
+    <result column="STATUS_CODE" jdbcType="VARCHAR" property="statusCode" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+    <result column="TAKE_NUMBER_TIME" jdbcType="TIMESTAMP" property="takeNumberTime"/>
+    <result column="CANCEL_TIME" jdbcType="TIMESTAMP" property="cancelTime"/>
+    <result column="COMPLETE_TIME" jdbcType="TIMESTAMP" property="completeTime"/>
+    <result column="START_WORK_TIME" jdbcType="TIMESTAMP" property="startWorkTime"/>
+    <result column="PASS_TIME" jdbcType="TIMESTAMP" property="passTime"/>
+    <result column="MATTERS" jdbcType="VARCHAR" property="matters"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, CREATION_TIME, DEPT_CODE, DEPT_NAME, FULL_SEQUENCE, GROUP_CODE, GROUP_NAME,
+    MOBILE, NAME, PRIORITY_CODE, RESOURCE_ID, SCHEDULE_CODE, SEQUENCE_NUMBER, SORT_INDEX,
+    SOURCE, STATUS_CODE,STATUS,TAKE_NUMBER_TIME,CANCEL_TIME,COMPLETE_TIME,START_WORK_TIME,PASS_TIME,MATTERS
+  </sql>
+
+  <select id="selectAverageService" resultMap="BaseResultMap">
+      SELECT
+      t.*
+      FROM
+      (
+      SELECT
+      TRUNC (
+      SUM( ceil((To_date(TO_CHAR ( SP.COMPLETE_TIME, 'yyyy-mm-dd hh24-mi-ss' ) , 'yyyy-mm-dd hh24-mi-ss') - To_date(TO_CHAR ( SP.START_WORK_TIME, 'yyyy-mm-dd hh24-mi-ss' ) , 'yyyy-mm-dd hh24-mi-ss')) * 24 * 60 ) ) / COUNT( 1 ),
+      0) AS averageMinute,
+      SP.DEPT_CODE AS DEPT_CODE,
+      o.NAME AS DEPT_NAME
+      FROM
+      STATION_PEOPLE sp
+      LEFT JOIN "ORGANIZATION" o ON o.ORGANIZATION_NO = SP.DEPT_CODE
+      AND o.AMPUTATED = 0
+      WHERE
+      SP.COMPLETE_TIME IS NOT NULL
+      AND SP.START_WORK_TIME IS NOT NULL
+      AND o.NAME IS NOT NULL  and o.LINKED_ID IS NULL
+      GROUP BY
+      SP.DEPT_CODE,
+      o."NAME"
+      ORDER BY
+      averageMinute
+      ) t
+      WHERE
+      ROWNUM &lt; 11
+  </select>
+
+
+    <select id="selectAllDeptTake"  parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+        select
+        DISTINCT
+        s.DEPT_CODE as organizationNo,
+        s.DEPT_NAME as organizationName,
+        count (s.TAKE_NUMBER_TIME) as takeNumber
+        from STATION_PEOPLE s
+        where 1=1
+        <trim prefix="AND" suffixOverrides="and">
+            <if test="startTime!=null and startTime!=''">
+                s.CREATION_TIME &gt;= TO_DATE (#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss') and
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                s.CREATION_TIME &lt;= TO_DATE (#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss') and
+            </if>
+        </trim>
+        GROUP BY s.DEPT_NAME,s.DEPT_CODE
+        order by  s.DEPT_CODE
+    </select>
+
+    <select id="selectAllDeptComp" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+        select
+        DISTINCT
+        s.DEPT_CODE as organizationNo,
+        s.DEPT_NAME as organizationName,
+        count (s.COMPLETE_TIME) as compNumber
+        from STATION_PEOPLE s
+        where 1=1
+        <trim prefix="AND" suffixOverrides="and">
+            <if test="startTime!=null and startTime!=''">
+                s.CREATION_TIME &gt;= TO_DATE (#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss') and
+            </if>
+            <if test="endTime!=null and endTime!=''">
+                s.CREATION_TIME &lt;= TO_DATE (#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss') and
+            </if>
+        </trim>
+        GROUP BY s.DEPT_NAME,s.DEPT_CODE
+        order by  s.DEPT_CODE
+    </select>
+
+    <select id="mattersAverageMinutes" resultMap="BaseResultMap">
+      SELECT
+      t.*
+      FROM
+      (
+      SELECT
+      TRUNC (
+      SUM( ceil((To_date(TO_CHAR ( SP.COMPLETE_TIME, 'yyyy-mm-dd hh24-mi-ss' ) , 'yyyy-mm-dd hh24-mi-ss') - To_date(TO_CHAR ( SP.START_WORK_TIME, 'yyyy-mm-dd hh24-mi-ss' ) , 'yyyy-mm-dd hh24-mi-ss')) * 24 * 60 ) ) / COUNT( 1 ),
+      0) AS averageMinute,
+
+			SP.MATTERS as matters
+      FROM
+      STATION_PEOPLE sp
+
+      WHERE
+      SP.COMPLETE_TIME IS NOT NULL
+      AND SP.START_WORK_TIME IS NOT NULL
+
+      GROUP BY
+
+		SP.MATTERS
+      ORDER BY
+      averageMinute
+      ) t
+
+    </select>
+
+    <select id="deptAverageMinutes" resultMap="BaseResultMap">
+         SELECT
+      t.*
+      FROM
+      (
+      SELECT
+      TRUNC (
+      SUM( ceil((To_date(TO_CHAR ( SP.COMPLETE_TIME, 'yyyy-mm-dd hh24-mi-ss' ) , 'yyyy-mm-dd hh24-mi-ss') - To_date(TO_CHAR ( SP.START_WORK_TIME, 'yyyy-mm-dd hh24-mi-ss' ) , 'yyyy-mm-dd hh24-mi-ss')) * 24 * 60 ) ) / COUNT( 1 ),
+      0) AS averageMinute,
+
+			SP.DEPT_CODE as organizationNo,
+			SP.DEPT_NAME as organizationName
+      FROM
+      STATION_PEOPLE sp
+
+      WHERE
+      SP.COMPLETE_TIME IS NOT NULL
+      AND SP.START_WORK_TIME IS NOT NULL
+			and SP.DEPT_NAME is not null
+
+      GROUP BY
+
+		SP.DEPT_CODE,
+			SP.DEPT_NAME
+      ORDER BY
+      averageMinute
+      ) t
+    </select>
+
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalTemplateTargetMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.model.AppraisalTemplateTarget">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="OBJECT_TYPE" jdbcType="DECIMAL" property="objectType" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId" />
+    <result column="TEMPLATE_ID" jdbcType="DECIMAL" property="templateId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, OBJECT_TYPE, ORGANIZATION_ID, ROLE_ID, TEMPLATE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_TEMPLATE_TARGET
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from APPRAISAL_TEMPLATE_TARGET
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AppraisalTemplateTarget">
+    insert into APPRAISAL_TEMPLATE_TARGET (ID, OBJECT_TYPE, ORGANIZATION_ID,
+      ROLE_ID, TEMPLATE_ID)
+    values (#{id,jdbcType=DECIMAL}, #{objectType,jdbcType=DECIMAL}, #{organizationId,jdbcType=DECIMAL},
+      #{roleId,jdbcType=DECIMAL}, #{templateId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AppraisalTemplateTarget">
+    insert into APPRAISAL_TEMPLATE_TARGET
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="objectType != null">
+        OBJECT_TYPE,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="objectType != null">
+        #{objectType,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AppraisalTemplateTarget">
+    update APPRAISAL_TEMPLATE_TARGET
+    <set>
+      <if test="objectType != null">
+        OBJECT_TYPE = #{objectType,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AppraisalTemplateTarget">
+    update APPRAISAL_TEMPLATE_TARGET
+    set OBJECT_TYPE = #{objectType,jdbcType=DECIMAL},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      ROLE_ID = #{roleId,jdbcType=DECIMAL},
+      TEMPLATE_ID = #{templateId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <delete id="deleteByTemplate" parameterType="java.lang.Integer">
+    delete from APPRAISAL_TEMPLATE_TARGET
+    where  TEMPLATE_ID = #{templateId,jdbcType=DECIMAL}
+  </delete>
+
+  <select id="findByTemplateId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_TEMPLATE_TARGET
+    where TEMPLATE_ID = #{templateId,jdbcType=DECIMAL}
+  </select>
+</mapper>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.OrganizationMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.AppraisalOrganizationOutput">
+    <result column="organizationId" jdbcType="DECIMAL"  property="organizationId" />
+    <result column="parentId"   jdbcType="DECIMAL" property="parentId" />
+    <result column="organizationName" jdbcType="VARCHAR"  property="organizationName" />
+    <result column="parentName"  jdbcType="VARCHAR" property="parentName" />
+      <result column="orgaNo" jdbcType="VARCHAR" property="orgaNo"/>
+      <result column="copyOrganNo"  jdbcType="VARCHAR" property="copyOrganNo" />
+  </resultMap>
+
+  <select id="getAppraisalOrganization" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+	org."ID" organizationId,
+	org.PARENT_ID parentId,
+	org."NAME" organizationName,
+	o."NAME" parentName
+    FROM
+        "ORGANIZATION" org
+    LEFT JOIN "ORGANIZATION" o ON org.PARENT_ID = o."ID"
+    WHERE
+        org.AMPUTATED = 0
+    AND org.ASSESSMENT_STATE = 0
+    AND NOT EXISTS (
+        SELECT
+            APPRAISAL_TEMPLATE_TARGET.ORGANIZATION_ID
+        FROM
+            APPRAISAL_TEMPLATE_TARGET
+        INNER JOIN APPRAISAL_TEMPLATE ON APPRAISAL_TEMPLATE."ID" = APPRAISAL_TEMPLATE_TARGET.TEMPLATE_ID
+        WHERE
+        org."ID" = APPRAISAL_TEMPLATE_TARGET.ORGANIZATION_ID
+        AND APPRAISAL_TEMPLATE.AMPUTATED = 0
+        AND APPRAISAL_TEMPLATE.STATE = #{state}
+      AND APPRAISAL_TEMPLATE.type = #{type}
+      <if test="templateId!=null">AND APPRAISAL_TEMPLATE."ID" !=  #{templateId}</if>
+    )AND NOT EXISTS (SELECT ORGANIZATION.PARENT_ID  from  ORGANIZATION where  ORGANIZATION.PARENT_ID = org."ID")
+  </select>
+
+    <select id="judgeOrganizationIsInUse" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+   SELECT
+	ORGANIZATION ."NAME" organizationName
+    FROM
+        APPRAISAL_TEMPLATE_TARGET
+    INNER JOIN "ORGANIZATION" ON "ORGANIZATION"."ID" = APPRAISAL_TEMPLATE_TARGET.ORGANIZATION_ID
+    WHERE
+        APPRAISAL_TEMPLATE_TARGET.TEMPLATE_ID = #{templateId}
+    AND EXISTS (
+        SELECT
+            tar.ORGANIZATION_ID
+        FROM
+            APPRAISAL_TEMPLATE_TARGET tar
+            INNER JOIN APPRAISAL_TEMPLATE ON APPRAISAL_TEMPLATE."ID" = tar.TEMPLATE_ID
+        WHERE
+            tar.ORGANIZATION_ID = APPRAISAL_TEMPLATE_TARGET.ORGANIZATION_ID
+        AND APPRAISAL_TEMPLATE.ID != #{templateId}
+        AND APPRAISAL_TEMPLATE.AMPUTATED = 0
+        AND APPRAISAL_TEMPLATE.AMPUTATED = 0
+      AND APPRAISAL_TEMPLATE.TYPE = #{type}
+    )
+  </select>
+
+    <select id="getNameAndId" resultMap="BaseResultMap" >
+   SELECT
+	ORGANIZATION ."NAME" organizationName,ORGANIZATION.id organizationId
+    FROM
+        ORGANIZATION
+  </select>
+
+
+    <select id="getByOrgId" resultMap="BaseResultMap" >
+   SELECT
+        ID organizationId , NAME organizationName,
+        PARENT_ID parentId,PATH path
+    FROM
+        ORGANIZATION where AMPUTATED = 0
+        <if test="orgId!=null and orgId!=''">
+           and ID = #{orgId}
+        </if>
+  </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
+        SELECT
+        ID organizationId , NAME organizationName,
+        PARENT_ID parentId,PATH path
+        FROM
+        ORGANIZATION where AMPUTATED = 0 and ID = #{id}
+    </select>
+
+    <select id="selectOrganizationId" parameterType="string" resultType="int">
+        select O.ID
+        from ORGANIZATION O
+        where O.NAME=#{organizationName,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByName" parameterType="string" resultType="string">
+         select o.ORGANIZATION_NO as orgaNo
+         from ORGANIZATION O
+         where O.NAME=#{organizationName,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectByOrgaNo" parameterType="string" resultType="integer">
+    select t.ID as organizationId from
+    (select o1.ID as ID from ORGANIZATION o1
+    where o1.ORGANIZATION_NO = #{orgaNo,jdbcType=VARCHAR}
+    order by LINKED_ID) t
+    where ROWNUM = 1
+    </select>
+
+
+
+    <select id="getByOrgIdWithinAuthority" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+        SELECT
+        ID,
+        NAME organizationName,
+        PARENT_ID parentId,
+        PATH path
+        FROM
+        (
+        SELECT
+        ORGANIZATION.ID organizationId,
+        ORGANIZATION.NAME organizationName,
+        ORGANIZATION.PARENT_ID parentId,
+        ORGANIZATION.DISPLAY_ORDER,
+        ORGANIZATION.PATH path
+        FROM
+        USER_ROLE
+        INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+        LEFT JOIN ORGANIZATION ON ORGANIZATION.id = ROLE_ORGAN.ORGAN_ID
+        WHERE
+        ORGANIZATION.AMPUTATED = 0
+        AND USER_ROLE.USER_ID = #{userId}
+        <if test="path!=null">
+            UNION ALL
+            SELECT
+            ORGANIZATION.ID organizationId,
+            ORGANIZATION.NAME organizationName,
+            ORGANIZATION.PARENT_ID parentId,
+            ORGANIZATION.DISPLAY_ORDER,
+            ORGANIZATION.PATH path
+            FROM
+            ORGANIZATION
+            WHERE
+            ORGANIZATION.id in  (${path})
+            AND ORGANIZATION.AMPUTATED =0
+        </if>
+        <if test="linkedId!=null">
+            UNION ALL
+            SELECT
+            ORGANIZATION.ID organizationId,
+            ORGANIZATION.NAME organizationName,
+            ORGANIZATION.PARENT_ID parentId,
+            ORGANIZATION.DISPLAY_ORDER,
+            ORGANIZATION.PATH path
+            FROM
+            ORGANIZATION
+            WHERE
+            ORGANIZATION.LINKED_ID =#{linkedId}
+            AND ORGANIZATION.AMPUTATED =0
+        </if>
+        )
+        GROUP BY
+        organizationId,
+        organizationName,
+        parentId,
+        DISPLAY_ORDER,
+        path
+        <if test="orgId!=null and orgId!=''">  having organizationId=#{orgId}</if>
+        ORDER BY
+        DISPLAY_ORDER
+    </select>
+
+    <select id="getByPath" resultMap="BaseResultMap" >
+        select
+        ORGANIZATION.ID organizationId
+        from ORGANIZATION WHERE ID in (${path})
+    </select>
+
+    <select id="getByCopyOrganNo" resultMap="BaseResultMap">
+        select
+        ORGANIZATION.ID organizationId,COPY_ORGAN_NO copyOrganNo
+        from ORGANIZATION where COPY_ORGAN_NO=#{copyOrganNo}
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap">
+        select
+        ORGANIZATION.ID organizationId,ORGANIZATION_NO as orgaNo
+        from ORGANIZATION where id=#{id}
+    </select>
+
+</mapper>

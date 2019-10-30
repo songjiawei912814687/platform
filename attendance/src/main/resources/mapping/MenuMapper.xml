@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.MenuMapper">
+
+  <resultMap id="BaseResultMap" type="com.attendance.domian.output.MenuOutput">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="created_date_time" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="created_user_id" jdbcType="INTEGER" property="createdUserId" />
+    <result column="created_user_name" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="dis_play_order_by" jdbcType="INTEGER" property="disPlayOrderBy" />
+    <result column="has_child" jdbcType="INTEGER" property="hasChild" />
+    <result column="is_show" jdbcType="INTEGER" property="isShow" />
+    <result column="last_update_date_time" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="last_update_user_id" jdbcType="INTEGER" property="lastUpdateUserId" />
+    <result column="last_update_user_name" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, created_date_time, created_user_id, created_user_name, descrition, dis_play_order_by,
+    has_child, is_show, last_update_date_time, last_update_user_id, last_update_user_name,
+    name, parent_id,path,icon,ename
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.attendance.model.Menu">
+    insert into menu (id, code, created_date_time,
+      created_user_id, created_user_name, descrition,
+      dis_play_order_by, has_child, is_show,
+      last_update_date_time, last_update_user_id,
+      last_update_user_name, name, parent_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=INTEGER}, #{createdUserName,jdbcType=VARCHAR}, #{descrition,jdbcType=VARCHAR},
+      #{disPlayOrderBy,jdbcType=INTEGER}, #{hasChild,jdbcType=INTEGER}, #{isShow,jdbcType=INTEGER},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=INTEGER},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.Menu">
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="createdDateTime != null">
+        created_date_time,
+      </if>
+      <if test="createdUserId != null">
+        created_user_id,
+      </if>
+      <if test="createdUserName != null">
+        created_user_name,
+      </if>
+      <if test="descrition != null">
+        descrition,
+      </if>
+      <if test="disPlayOrderBy != null">
+        dis_play_order_by,
+      </if>
+      <if test="hasChild != null">
+        has_child,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        last_update_date_time,
+      </if>
+      <if test="lastUpdateUserId != null">
+        last_update_user_id,
+      </if>
+      <if test="lastUpdateUserName != null">
+        last_update_user_name,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{descrition,jdbcType=VARCHAR},
+      </if>
+      <if test="disPlayOrderBy != null">
+        #{disPlayOrderBy,jdbcType=INTEGER},
+      </if>
+      <if test="hasChild != null">
+        #{hasChild,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.Menu">
+    update menu
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="createdDateTime != null">
+        created_date_time = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        created_user_id = #{createdUserId,jdbcType=INTEGER},
+      </if>
+      <if test="createdUserName != null">
+        created_user_name = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="descrition != null">
+        descrition = #{descrition,jdbcType=VARCHAR},
+      </if>
+      <if test="disPlayOrderBy != null">
+        dis_play_order_by = #{disPlayOrderBy,jdbcType=INTEGER},
+      </if>
+      <if test="hasChild != null">
+        has_child = #{hasChild,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        last_update_date_time = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        last_update_user_id = #{lastUpdateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateUserName != null">
+        last_update_user_name = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.Menu">
+    update menu
+    set code = #{code,jdbcType=INTEGER},
+      created_date_time = #{createdDateTime,jdbcType=TIMESTAMP},
+      created_user_id = #{createdUserId,jdbcType=INTEGER},
+      created_user_name = #{createdUserName,jdbcType=VARCHAR},
+      descrition = #{descrition,jdbcType=VARCHAR},
+      dis_play_order_by = #{disPlayOrderBy,jdbcType=INTEGER},
+      has_child = #{hasChild,jdbcType=INTEGER},
+      is_show = #{isShow,jdbcType=INTEGER},
+      last_update_date_time = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      last_update_user_id = #{lastUpdateUserId,jdbcType=INTEGER},
+      last_update_user_name = #{lastUpdateUserName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+  select
+  m.id, m.code ,m.dis_play_order_by,
+  m.has_child,m.path,m.icon,m.ename,
+  m.name, m.parent_id,m.is_show
+  from menu m
+  where m.is_show = 0
+  and m.code like 'M_ATTENDANCE'||'%'
+  ORDER BY m.LAST_UPDATE_DATE_TIME DESC
+</select>
+
+
+  <select id="findByRoles" resultMap="BaseResultMap">
+    SELECT
+    temp.*
+    FROM
+    (
+    SELECT
+    M . ID,
+    M .code,
+    M .dis_play_order_by,
+    M .has_child,
+    M . PATH,
+    M .icon,
+    M .ename,
+    M . NAME,
+    M .parent_id,
+    M .is_show,
+    m.LAST_UPDATE_DATE_TIME,
+    ROW_NUMBER () OVER (
+    PARTITION BY m.ID
+    ORDER BY m.ID desc
+    ) AS row_flg
+    FROM
+    menu M
+    LEFT JOIN role_menu rm ON rm.menu_id = M . ID
+    WHERE
+    M .is_show = 0
+    AND rm.role_id IN
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+      #{item}
+    </foreach>
+    AND M .code LIKE 'M_ATTENDANCE' || '%'
+    ) temp
+    WHERE
+    temp.row_flg = '1'
+    ORDER BY
+    temp.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+
+</mapper>

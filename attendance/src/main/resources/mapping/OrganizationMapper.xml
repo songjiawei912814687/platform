@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.OrganizationMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.model.Organization">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ORGANIZATION_NO" jdbcType="VARCHAR" property="organizationNo" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="TYPE" jdbcType="DECIMAL" property="type" />
+    <result column="ASSESSMENT_STATE" jdbcType="DECIMAL" property="assessmentState" />
+    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="OFFICE_PHONE" jdbcType="VARCHAR" property="officePhone" />
+    <result column="FAX" jdbcType="VARCHAR" property="fax" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="LEADERSHIP" jdbcType="DECIMAL" property="leadership" />
+    <result column="DEPARTMENTAL_MANAGER" jdbcType="DECIMAL" property="departmentalManager" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="PATH" jdbcType="VARCHAR" property="path" />
+    <result column="ORGANIZATION_CODE" jdbcType="VARCHAR" property="organizationCode" />
+    <result column="ATTENDANCE_RULE_CONFIG_ID" jdbcType="DECIMAL" property="attendanceRuleConfigId"/>
+    <result column="CONFIG_APPROVE" jdbcType="DECIMAL" property="configApprove"/>
+    <result column="APPROVE_RULE" jdbcType="DECIMAL" property="approveRule"/>
+  </resultMap>
+
+  <resultMap id="BaseResultMapOutput" type="com.attendance.domian.output.OrganizationOutput">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ORGANIZATION_NO" jdbcType="VARCHAR" property="organizationNo" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="TYPE" jdbcType="DECIMAL" property="type" />
+    <result column="ASSESSMENT_STATE" jdbcType="DECIMAL" property="assessmentState" />
+    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="OFFICE_PHONE" jdbcType="VARCHAR" property="officePhone" />
+    <result column="FAX" jdbcType="VARCHAR" property="fax" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="LEADERSHIP" jdbcType="DECIMAL" property="leadership" />
+    <result column="DEPARTMENTAL_MANAGER" jdbcType="DECIMAL" property="departmentalManager" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="PATH" jdbcType="VARCHAR" property="path" />
+    <result column="ORGANIZATION_CODE" jdbcType="VARCHAR" property="organizationCode" />
+    <result column="ATTENDANCE_RULE_CONFIG_ID" jdbcType="DECIMAL" property="attendanceRuleConfigId"/>
+    <result column="CONFIG_APPROVE" jdbcType="DECIMAL" property="configApprove"/>
+    <result column="APPROVE_RULE" jdbcType="DECIMAL" property="approveRule"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ORGANIZATION_NO, NAME,
+      PARENT_ID, TYPE, ASSESSMENT_STATE,
+      PHONE_NUMBER, OFFICE_PHONE, FAX,
+      ADDRESS, DESCRIPTION, LEADERSHIP,
+      DEPARTMENTAL_MANAGER, CREATED_USER_ID, CREATED_USER_NAME,
+      CREATED_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+      LAST_UPDATE_DATE_TIME, AMPUTATED, PATH,ORGANIZATION_CODE,
+      ATTENDANCE_RULE_CONFIG_ID,CONFIG_APPROVE,APPROVE_RULE
+  </sql>
+
+  <select id="selectOrNoByOrId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from ORGANIZATION
+    where  ID = #{orgaId,jdbcType=DECIMAL} and AMPUTATED = 0
+  </select>
+
+  <select id="selectByAttendanceRuleConfigIdAndEmpNo" parameterType="map" resultMap="BaseResultMapOutput">
+ select
+    org.id,
+		org.ORGANIZATION_NO,
+		org.NAME AS orgName,
+    emp.NAME as employeesName,
+    emp.EMPLOYEE_NO as employeesNo,
+		emp.JOBS_ID,
+    arc.NAME as ruleConfigName,
+    arn.NAME as attendanceRuleName,
+    arn.VALUE as attendanceRuleValue
+    from ORGANIZATION org
+    left join EMPLOYEES emp
+    on emp.ORGANIZATION_ID = org.ID and emp.AMPUTATED = 0
+    left join ATTENDANCE_RULE_CONFIG arc
+    on arc.ID = org.ATTENDANCE_RULE_CONFIG_ID and arc.AMPUTATED = 0
+    left join ATTENDANCE_RULE_NEW arn
+    on arn.ATTENDANCE_RULE_CONFIG_ID = org.ATTENDANCE_RULE_CONFIG_ID and arn.AMPUTATED = 0
+    where org.ATTENDANCE_RULE_CONFIG_ID = #{ruleConfigId} and org.AMPUTATED = 0
+	and  arn.TYPE =1 and arn.state = 1
+		and EMP.EMPLOYEE_NO = #{empNo}
+	ORDER BY EMP.EMPLOYEE_NO
+  </select>
+
+  <select id="selectByPath" resultMap="BaseResultMap">
+    select
+    id from ORGANIZATION where AMPUTATED = 0 and
+    CONCAT(ORGANIZATION.PATH ,',') like '%'||#{organizationId}||',%'
+  </select>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    organization.ID,
+    organization.ORGANIZATION_NO,
+    organization.NAME,
+    organization.PARENT_ID,
+    organization.TYPE,
+    organization.ASSESSMENT_STATE,
+    organization.PHONE_NUMBER,
+    organization.OFFICE_PHONE,
+    organization.FAX,
+    organization.ADDRESS,
+    organization.DESCRIPTION,
+    organization.LEADERSHIP,
+    organization.DEPARTMENTAL_MANAGER,
+    organization.CREATED_USER_ID,
+    organization.CREATED_USER_NAME,
+    organization.CREATED_DATE_TIME,
+    organization.LAST_UPDATE_USER_ID,
+    organization.LAST_UPDATE_USER_NAME,
+    organization.LAST_UPDATE_DATE_TIME,
+    organization.AMPUTATED,
+    organization.PATH,
+    organization.DISPLAY_ORDER,
+    organization.ATTENDANCE_RULE_CONFIG_ID
+    FROM
+    ORGANIZATION organization
+    WHERE  organization.AMPUTATED = 0
+    <trim prefix="and" suffixOverrides="and">
+      <if test="name!=null">organization.NAME like  '%'||#{name}||'%'  and </if>
+    </trim>
+    ORDER BY organization.DISPLAY_ORDER
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    organization.ID,
+    organization.ORGANIZATION_NO,
+    organization.organization_code,
+    organization.NAME,
+    organization.PARENT_ID,
+    organization.TYPE,
+    organization.ASSESSMENT_STATE,
+    organization.PHONE_NUMBER,
+    organization.OFFICE_PHONE,
+    organization.FAX,
+    organization.ADDRESS,
+    organization.DESCRIPTION,
+    organization.LEADERSHIP,
+    organization.DEPARTMENTAL_MANAGER,
+    organization.CREATED_USER_ID,
+    organization.CREATED_USER_NAME,
+    organization.CREATED_DATE_TIME,
+    organization.LAST_UPDATE_USER_ID,
+    organization.LAST_UPDATE_USER_NAME,
+    organization.LAST_UPDATE_DATE_TIME,
+    organization.AMPUTATED,
+    organization.PATH,
+    organization.ORGANIZATION_CODE,
+    organization.DISPLAY_ORDER,
+    organization.ATTENDANCE_RULE_CONFIG_ID
+    FROM
+    ORGANIZATION organization
+    WHERE  organization.AMPUTATED = 0
+    ORDER BY organization.DISPLAY_ORDER
+  </select>
+  <select id="selectCountName" parameterType="string" resultType="int">
+    select count(1)
+    from ORGANIZATION organization
+    where NAME = #{name,jdbcType=VARCHAR} and AMPUTATED = 0
+    ORDER BY organization.DISPLAY_ORDER
+  </select>
+  <select id="selectAllOrg" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    organization.ID,
+    organization.ORGANIZATION_NO,
+    organization.NAME,
+    organization.PARENT_ID,
+    organization.TYPE,
+    organization.ASSESSMENT_STATE,
+    organization.PHONE_NUMBER,
+    organization.OFFICE_PHONE,
+    organization.FAX,
+    organization.ADDRESS,
+    organization.DESCRIPTION,
+    organization.LEADERSHIP,
+    organization.DEPARTMENTAL_MANAGER,
+    organization.CREATED_USER_ID,
+    organization.CREATED_USER_NAME,
+    organization.CREATED_DATE_TIME,
+    organization.LAST_UPDATE_USER_ID,
+    organization.LAST_UPDATE_USER_NAME,
+    organization.LAST_UPDATE_DATE_TIME,
+    organization.AMPUTATED,
+    organization.PATH,
+    organization.DISPLAY_ORDER,
+    organization.organization_code
+    FROM
+    ORGANIZATION organization
+    WHERE  organization.AMPUTATED = 0
+    ORDER BY organization.DISPLAY_ORDER
+  </select>
+  <select id="selectOrganizationIdOrganizationByName" parameterType="string" resultType="int">
+    select ID
+    from ORGANIZATION organization
+    where NAME = #{name,jdbcType=VARCHAR} and AMPUTATED = 0
+    ORDER BY organization.DISPLAY_ORDER
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ORGANIZATION WHERE AMPUTATED = 0 and
+    NAME = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectMaxNo" resultType="String">
+    select max(ORGANIZATION_NO) from ORGANIZATION
+  </select>
+  <select id="selectByNo" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List" />
+    from ORGANIZATION WHERE  AMPUTATED = 0
+    and ORGANIZATION_NO = #{organizationNo,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByOrgaName" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from ORGANIZATION WHERE  AMPUTATED = 0
+    and NAME = #{organizationName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCheckCondition" parameterType="string" resultType="integer" >
+    select
+    count(1)
+    from
+    (select ID,ORGANIZATION_NO from ORGANIZATION
+        START WITH ID = 161
+        connect by prior ID=PARENT_ID)
+    where ORGANIZATION_NO = #{orgaNo,jdbcType=VARCHAR}
+
+  </select>
+  <select id="selectOrganizationMobile" parameterType="integer" resultMap="BaseResultMap">
+    select  DISTINCT inor.PHONE_NUMBER,inor."NAME",inor.ID,inor.ORGANIZATION_NO from "ORGANIZATION"  inor
+    LEFT JOIN "ORGANIZATION" outor
+    on INOR.ORGANIZATION_CODE = OUTOR.ORGANIZATION_CODE
+    and outor.AMPUTATED = 0
+    where inor.ID=#{organizationId,jdbcType=DECIMAL} and inor.AMPUTATED=0
+  </select>
+
+  <select id="selectRuleIdByOrgId" parameterType="int" resultType="int">
+  select ATTENDANCE_RULE_CONFIG_ID
+  from ORGANIZATION
+  where ID = #{orgId} and AMPUTATED = 0
+</select>
+
+  <select id="selectOrganizationByRuleId" parameterType="int" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List"/>
+    from ORGANIZATION
+    where ATTENDANCE_RULE_CONFIG_ID = #{ruleId} and AMPUTATED = 0
+  </select>
+
+  <select id="selectApproveRule" parameterType="integer" resultType="double">
+    select  APPROVE_RULE
+    from ORGANIZATION
+    where ID = #{orgId,jdbcType=DECIMAL} and AMPUTATED = 0
+    and CONFIG_APPROVE = 0
+  </select>
+
+</mapper>

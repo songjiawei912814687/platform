@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.AttendanceSourceDataMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.model.AttendanceSourceData">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="DEPT_UUID" jdbcType="VARCHAR" property="deptUuid" />
+    <result column="DEVICE_TYPE" jdbcType="DECIMAL" property="deviceType" />
+    <result column="DOOR_NAME" jdbcType="VARCHAR" property="doorName" />
+    <result column="DOOR_UUID" jdbcType="VARCHAR" property="doorUuid" />
+    <result column="EVENT_NAME" jdbcType="VARCHAR" property="eventName" />
+    <result column="EVENT_TIME" jdbcType="TIMESTAMP" property="eventTime" />
+    <result column="EVENT_TYPE" jdbcType="DECIMAL" property="eventType" />
+    <result column="EVENT_UUID" jdbcType="VARCHAR" property="eventUuid" />
+    <result column="PERSON_ID" jdbcType="DECIMAL" property="personId" />
+    <result column="PERSON_NAME" jdbcType="VARCHAR" property="personName" />
+    <result column="PIC_URL" jdbcType="VARCHAR" property="picUrl" />
+    <result column="VIDEO_URL" jdbcType="VARCHAR" property="videoUrl" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, DEPT_NAME, DEPT_UUID, DEVICE_TYPE, DOOR_NAME, DOOR_UUID, EVENT_NAME, 
+    EVENT_TIME, EVENT_TYPE, EVENT_UUID, PERSON_ID, PERSON_NAME, PIC_URL, VIDEO_URL, AMPUTATED
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ATTENDANCE_SOURCE_DATA
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ATTENDANCE_SOURCE_DATA
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.attendance.model.AttendanceSourceData">
+    insert into ATTENDANCE_SOURCE_DATA (ID, CARD_NO, DEPT_NAME, 
+      DEPT_UUID, DEVICE_TYPE, DOOR_NAME, 
+      DOOR_UUID, EVENT_NAME, EVENT_TIME, 
+      EVENT_TYPE, EVENT_UUID, PERSON_ID, 
+      PERSON_NAME, PIC_URL, VIDEO_URL, 
+      AMPUTATED)
+    values (#{id,jdbcType=DECIMAL}, #{cardNo,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, 
+      #{deptUuid,jdbcType=VARCHAR}, #{deviceType,jdbcType=DECIMAL}, #{doorName,jdbcType=VARCHAR}, 
+      #{doorUuid,jdbcType=VARCHAR}, #{eventName,jdbcType=VARCHAR}, #{eventTime,jdbcType=TIMESTAMP}, 
+      #{eventType,jdbcType=DECIMAL}, #{eventUuid,jdbcType=VARCHAR}, #{personId,jdbcType=DECIMAL}, 
+      #{personName,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, #{videoUrl,jdbcType=VARCHAR}, 
+      #{amputated,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.AttendanceSourceData">
+    insert into ATTENDANCE_SOURCE_DATA
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME,
+      </if>
+      <if test="deptUuid != null">
+        DEPT_UUID,
+      </if>
+      <if test="deviceType != null">
+        DEVICE_TYPE,
+      </if>
+      <if test="doorName != null">
+        DOOR_NAME,
+      </if>
+      <if test="doorUuid != null">
+        DOOR_UUID,
+      </if>
+      <if test="eventName != null">
+        EVENT_NAME,
+      </if>
+      <if test="eventTime != null">
+        EVENT_TIME,
+      </if>
+      <if test="eventType != null">
+        EVENT_TYPE,
+      </if>
+      <if test="eventUuid != null">
+        EVENT_UUID,
+      </if>
+      <if test="personId != null">
+        PERSON_ID,
+      </if>
+      <if test="personName != null">
+        PERSON_NAME,
+      </if>
+      <if test="picUrl != null">
+        PIC_URL,
+      </if>
+      <if test="videoUrl != null">
+        VIDEO_URL,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptUuid != null">
+        #{deptUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null">
+        #{deviceType,jdbcType=DECIMAL},
+      </if>
+      <if test="doorName != null">
+        #{doorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doorUuid != null">
+        #{doorUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="eventName != null">
+        #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTime != null">
+        #{eventTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventType != null">
+        #{eventType,jdbcType=DECIMAL},
+      </if>
+      <if test="eventUuid != null">
+        #{eventUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=DECIMAL},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null">
+        #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.AttendanceSourceData">
+    update ATTENDANCE_SOURCE_DATA
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptUuid != null">
+        DEPT_UUID = #{deptUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null">
+        DEVICE_TYPE = #{deviceType,jdbcType=DECIMAL},
+      </if>
+      <if test="doorName != null">
+        DOOR_NAME = #{doorName,jdbcType=VARCHAR},
+      </if>
+      <if test="doorUuid != null">
+        DOOR_UUID = #{doorUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="eventName != null">
+        EVENT_NAME = #{eventName,jdbcType=VARCHAR},
+      </if>
+      <if test="eventTime != null">
+        EVENT_TIME = #{eventTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventType != null">
+        EVENT_TYPE = #{eventType,jdbcType=DECIMAL},
+      </if>
+      <if test="eventUuid != null">
+        EVENT_UUID = #{eventUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="personId != null">
+        PERSON_ID = #{personId,jdbcType=DECIMAL},
+      </if>
+      <if test="personName != null">
+        PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        PIC_URL = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null">
+        VIDEO_URL = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.AttendanceSourceData">
+    update ATTENDANCE_SOURCE_DATA
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      DEPT_UUID = #{deptUuid,jdbcType=VARCHAR},
+      DEVICE_TYPE = #{deviceType,jdbcType=DECIMAL},
+      DOOR_NAME = #{doorName,jdbcType=VARCHAR},
+      DOOR_UUID = #{doorUuid,jdbcType=VARCHAR},
+      EVENT_NAME = #{eventName,jdbcType=VARCHAR},
+      EVENT_TIME = #{eventTime,jdbcType=TIMESTAMP},
+      EVENT_TYPE = #{eventType,jdbcType=DECIMAL},
+      EVENT_UUID = #{eventUuid,jdbcType=VARCHAR},
+      PERSON_ID = #{personId,jdbcType=DECIMAL},
+      PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      PIC_URL = #{picUrl,jdbcType=VARCHAR},
+      VIDEO_URL = #{videoUrl,jdbcType=VARCHAR},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByEmpNoAndDate" parameterType="map" resultType="integer">
+    select count(1)
+    from ATTENDANCE_SOURCE_DATA asd
+    where ASD.EVENT_TIME BETWEEN
+    to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss') and
+    to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss')and
+    ASD.CARD_NO=#{empNo,jdbcType=VARCHAR} and
+   to_char(ASD.EVENT_TIME,'yyyy-MM-dd hh24:mi:ss') = #{attendanceTime,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectSourceDateByCardNoAndEventTime" parameterType="map" resultType="int">
+    select count(1) from  ATTENDANCE_SOURCE_DATA asd
+    where asd.CARD_NO=#{cardNo,jdbcType=VARCHAR}
+    and to_char(asd.EVENT_TIME,'yyyy-MM-dd hh24:mi:ss') = to_char(#{eventTime,jdbcType=TIMESTAMP},'yyyy-MM-dd hh24:mi:ss')
+  </select>
+</mapper>

@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.PreApasInfoMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.PreApasInfoOutput">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="APPLY_CARD_NUMBER" jdbcType="VARCHAR" property="apply_CardNumber" />
+    <result column="APPLY_CARD_TYPE" jdbcType="VARCHAR" property="apply_CardType" />
+    <result column="APPLY_FROM" jdbcType="VARCHAR" property="applyFrom" />
+    <result column="APPLY_NAME" jdbcType="VARCHAR" property="applyName" />
+    <result column="APPLY_PROPERTIY" jdbcType="VARCHAR" property="apply_Propertiy" />
+    <result column="APPROVE_TYPE" jdbcType="VARCHAR" property="approve_Type" />
+    <result column="AREACODE" jdbcType="VARCHAR" property="areacode" />
+    <result column="BELONG_SYSTEM" jdbcType="VARCHAR" property="belongSystem" />
+    <result column="BELONGTO" jdbcType="VARCHAR" property="belongto" />
+    <result column="BUS_MODE" jdbcType="VARCHAR" property="bus_Mode" />
+    <result column="BUS_MODE_DESC" jdbcType="VARCHAR" property="bus_Mode_Desc" />
+    <result column="BUS_TYPE" jdbcType="VARCHAR" property="bus_Type" />
+    <result column="CONTACT_MAN" jdbcType="VARCHAR" property="contactMan" />
+    <result column="CONTACT_MAN_CARD_NUMBER" jdbcType="VARCHAR" property="contactMan_CardNumber" />
+    <result column="CONTACT_MAN_CARD_TYPE" jdbcType="VARCHAR" property="contactMan_CardType" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="create_Time" />
+    <result column="DATA_STATE" jdbcType="VARCHAR" property="dataState" />
+    <result column="DATA_VERSION" jdbcType="VARCHAR" property="dataVersion" />
+    <result column="DEPT_ID" jdbcType="VARCHAR" property="deptId" />
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="EXTEND" jdbcType="VARCHAR" property="extend" />
+    <result column="INFO_TYPE" jdbcType="VARCHAR" property="infoType" />
+    <result column="IS_MANUBRIUM" jdbcType="VARCHAR" property="is_Manubrium" />
+    <result column="LEGAL_MAN" jdbcType="VARCHAR" property="legalMan" />
+    <result column="OP" jdbcType="VARCHAR" property="op" />
+    <result column="POST_CODE" jdbcType="VARCHAR" property="postCode" />
+    <result column="PROJ_ID" jdbcType="VARCHAR" property="projId" />
+    <result column="PROJ_PWD" jdbcType="VARCHAR" property="projPwd" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="RECEIVE_NAME" jdbcType="VARCHAR" property="receive_Name" />
+    <result column="RECEIVE_TIME" jdbcType="VARCHAR" property="receiveTime" />
+    <result column="RECEIVE_USEID" jdbcType="VARCHAR" property="receive_UseId" />
+    <result column="REL_BUS_ID" jdbcType="VARCHAR" property="rel_Bus_Id" />
+    <result column="SERVICE_CODE" jdbcType="VARCHAR" property="serviceCode" />
+    <result column="SERVICE_DEPT_ID" jdbcType="VARCHAR" property="service_DeptId" />
+    <result column="SERVICE_NAME" jdbcType="VARCHAR" property="serviceName" />
+    <result column="SERVICE_VERSION" jdbcType="DECIMAL" property="serviceVersion" />
+    <result column="SS_ORG_CODE" jdbcType="VARCHAR" property="ss_OrgCode" />
+    <result column="SYNC_STATUS" jdbcType="VARCHAR" property="sync_Status" />
+    <result column="TEL_PHONE" jdbcType="VARCHAR" property="telPhone" />
+    <result column="TONGID" jdbcType="VARCHAR" property="tongid" />
+    <result column="TONG_TIME" jdbcType="TIMESTAMP" property="tong_Time" />
+    <result column="ORGANIZATIONNAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="ORGANIZATIONID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="sizeVal" jdbcType="DECIMAL" property="size" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ADDRESS, APPLY_CARD_NUMBER, APPLY_CARD_TYPE, APPLY_FROM, APPLY_NAME, APPLY_PROPERTIY,
+    APPROVE_TYPE, AREACODE, BELONG_SYSTEM, BELONGTO, BUS_MODE, BUS_MODE_DESC, BUS_TYPE,
+    CONTACT_MAN, CONTACT_MAN_CARD_NUMBER, CONTACT_MAN_CARD_TYPE, CREATE_TIME, DATA_STATE,
+    DATA_VERSION, DEPT_ID, DEPT_NAME, EXTEND, INFO_TYPE, IS_MANUBRIUM, LEGAL_MAN, OP,
+    POST_CODE, PROJ_ID, PROJ_PWD, PROJECT_NAME, RECEIVE_NAME, RECEIVE_TIME, RECEIVE_USEID,
+    REL_BUS_ID, SERVICE_CODE, SERVICE_DEPT_ID, SERVICE_NAME, SERVICE_VERSION, SS_ORG_CODE,
+    SYNC_STATUS, TEL_PHONE, TONGID, TONG_TIME,ORGANIZATIONNAME,ORGANIZATIONID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from PRE_APAS_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PRE_APAS_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.PreApasInfo">
+    insert into PRE_APAS_INFO (ID, ADDRESS, APPLY_CARD_NUMBER,
+      APPLY_CARD_TYPE, APPLY_FROM, APPLY_NAME,
+      APPLY_PROPERTIY, APPROVE_TYPE, AREACODE,
+      BELONG_SYSTEM, BELONGTO, BUS_MODE,
+      BUS_MODE_DESC, BUS_TYPE, CONTACT_MAN,
+      CONTACT_MAN_CARD_NUMBER, CONTACT_MAN_CARD_TYPE,
+      CREATE_TIME, DATA_STATE, DATA_VERSION,
+      DEPT_ID, DEPT_NAME, EXTEND,
+      INFO_TYPE, IS_MANUBRIUM, LEGAL_MAN,
+      OP, POST_CODE, PROJ_ID,
+      PROJ_PWD, PROJECT_NAME, RECEIVE_NAME,
+      RECEIVE_TIME, RECEIVE_USEID, REL_BUS_ID,
+      SERVICE_CODE, SERVICE_DEPT_ID, SERVICE_NAME,
+      SERVICE_VERSION, SS_ORG_CODE, SYNC_STATUS,
+      TEL_PHONE, TONGID, TONG_TIME
+      )
+    values (#{id,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{apply_CardNumber,jdbcType=VARCHAR},
+      #{apply_CardType,jdbcType=VARCHAR}, #{applyFrom,jdbcType=VARCHAR}, #{applyName,jdbcType=VARCHAR},
+      #{apply_Propertiy,jdbcType=VARCHAR}, #{approve_Type,jdbcType=VARCHAR}, #{areacode,jdbcType=VARCHAR},
+      #{belongSystem,jdbcType=VARCHAR}, #{belongto,jdbcType=VARCHAR}, #{bus_Mode,jdbcType=VARCHAR},
+      #{bus_Mode_Desc,jdbcType=VARCHAR}, #{bus_Type,jdbcType=VARCHAR}, #{contactMan,jdbcType=VARCHAR},
+      #{contactMan_CardNumber,jdbcType=VARCHAR}, #{contactMan_CardType,jdbcType=VARCHAR},
+      #{create_Time,jdbcType=VARCHAR}, #{dataState,jdbcType=VARCHAR}, #{dataVersion,jdbcType=VARCHAR},
+      #{deptId,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{extend,jdbcType=VARCHAR},
+      #{infoType,jdbcType=VARCHAR}, #{is_Manubrium,jdbcType=VARCHAR}, #{legalMan,jdbcType=VARCHAR},
+      #{op,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR}, #{projId,jdbcType=VARCHAR},
+      #{projPwd,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{receive_Name,jdbcType=VARCHAR},
+      #{receiveTime,jdbcType=VARCHAR}, #{receive_UseId,jdbcType=VARCHAR}, #{rel_Bus_Id,jdbcType=VARCHAR},
+      #{serviceCode,jdbcType=VARCHAR}, #{service_DeptId,jdbcType=VARCHAR}, #{serviceName,jdbcType=VARCHAR},
+      #{serviceVersion,jdbcType=DECIMAL}, #{ss_OrgCode,jdbcType=VARCHAR}, #{sync_Status,jdbcType=VARCHAR},
+      #{telPhone,jdbcType=VARCHAR}, #{tongid,jdbcType=VARCHAR}, #{tong_Time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.PreApasInfo">
+    insert into PRE_APAS_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="address != null">
+        ADDRESS,
+      </if>
+      <if test="apply_CardNumber != null">
+        APPLY_CARD_NUMBER,
+      </if>
+      <if test="apply_CardType != null">
+        APPLY_CARD_TYPE,
+      </if>
+      <if test="applyFrom != null">
+        APPLY_FROM,
+      </if>
+      <if test="applyName != null">
+        APPLY_NAME,
+      </if>
+      <if test="apply_Propertiy != null">
+        APPLY_PROPERTIY,
+      </if>
+      <if test="approve_Type != null">
+        APPROVE_TYPE,
+      </if>
+      <if test="areacode != null">
+        AREACODE,
+      </if>
+      <if test="belongSystem != null">
+        BELONG_SYSTEM,
+      </if>
+      <if test="belongto != null">
+        BELONGTO,
+      </if>
+      <if test="bus_Mode != null">
+        BUS_MODE,
+      </if>
+      <if test="bus_Mode_Desc != null">
+        BUS_MODE_DESC,
+      </if>
+      <if test="bus_Type != null">
+        BUS_TYPE,
+      </if>
+      <if test="contactMan != null">
+        CONTACT_MAN,
+      </if>
+      <if test="contactMan_CardNumber != null">
+        CONTACT_MAN_CARD_NUMBER,
+      </if>
+      <if test="contactMan_CardType != null">
+        CONTACT_MAN_CARD_TYPE,
+      </if>
+      <if test="create_Time != null">
+        CREATE_TIME,
+      </if>
+      <if test="dataState != null">
+        DATA_STATE,
+      </if>
+      <if test="dataVersion != null">
+        DATA_VERSION,
+      </if>
+      <if test="deptId != null">
+        DEPT_ID,
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME,
+      </if>
+      <if test="extend != null">
+        EXTEND,
+      </if>
+      <if test="infoType != null">
+        INFO_TYPE,
+      </if>
+      <if test="is_Manubrium != null">
+        IS_MANUBRIUM,
+      </if>
+      <if test="legalMan != null">
+        LEGAL_MAN,
+      </if>
+      <if test="op != null">
+        OP,
+      </if>
+      <if test="postCode != null">
+        POST_CODE,
+      </if>
+      <if test="projId != null">
+        PROJ_ID,
+      </if>
+      <if test="projPwd != null">
+        PROJ_PWD,
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME,
+      </if>
+      <if test="receive_Name != null">
+        RECEIVE_NAME,
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME,
+      </if>
+      <if test="receive_UseId != null">
+        RECEIVE_USEID,
+      </if>
+      <if test="rel_Bus_Id != null">
+        REL_BUS_ID,
+      </if>
+      <if test="serviceCode != null">
+        SERVICE_CODE,
+      </if>
+      <if test="service_DeptId != null">
+        SERVICE_DEPT_ID,
+      </if>
+      <if test="serviceName != null">
+        SERVICE_NAME,
+      </if>
+      <if test="serviceVersion != null">
+        SERVICE_VERSION,
+      </if>
+      <if test="ss_OrgCode != null">
+        SS_ORG_CODE,
+      </if>
+      <if test="sync_Status != null">
+        SYNC_STATUS,
+      </if>
+      <if test="telPhone != null">
+        TEL_PHONE,
+      </if>
+      <if test="tongid != null">
+        TONGID,
+      </if>
+      <if test="tong_Time != null">
+        TONG_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="apply_CardNumber != null">
+        #{apply_CardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="apply_CardType != null">
+        #{apply_CardType,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFrom != null">
+        #{applyFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="applyName != null">
+        #{applyName,jdbcType=VARCHAR},
+      </if>
+      <if test="apply_Propertiy != null">
+        #{apply_Propertiy,jdbcType=VARCHAR},
+      </if>
+      <if test="approve_Type != null">
+        #{approve_Type,jdbcType=VARCHAR},
+      </if>
+      <if test="areacode != null">
+        #{areacode,jdbcType=VARCHAR},
+      </if>
+      <if test="belongSystem != null">
+        #{belongSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="belongto != null">
+        #{belongto,jdbcType=VARCHAR},
+      </if>
+      <if test="bus_Mode != null">
+        #{bus_Mode,jdbcType=VARCHAR},
+      </if>
+      <if test="bus_Mode_Desc != null">
+        #{bus_Mode_Desc,jdbcType=VARCHAR},
+      </if>
+      <if test="bus_Type != null">
+        #{bus_Type,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMan != null">
+        #{contactMan,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMan_CardNumber != null">
+        #{contactMan_CardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMan_CardType != null">
+        #{contactMan_CardType,jdbcType=VARCHAR},
+      </if>
+      <if test="create_Time != null">
+        #{create_Time,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null">
+        #{dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVersion != null">
+        #{dataVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="extend != null">
+        #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="infoType != null">
+        #{infoType,jdbcType=VARCHAR},
+      </if>
+      <if test="is_Manubrium != null">
+        #{is_Manubrium,jdbcType=VARCHAR},
+      </if>
+      <if test="legalMan != null">
+        #{legalMan,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null">
+        #{op,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projId != null">
+        #{projId,jdbcType=VARCHAR},
+      </if>
+      <if test="projPwd != null">
+        #{projPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="receive_Name != null">
+        #{receive_Name,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        #{receiveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="receive_UseId != null">
+        #{receive_UseId,jdbcType=VARCHAR},
+      </if>
+      <if test="rel_Bus_Id != null">
+        #{rel_Bus_Id,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null">
+        #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="service_DeptId != null">
+        #{service_DeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null">
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceVersion != null">
+        #{serviceVersion,jdbcType=DECIMAL},
+      </if>
+      <if test="ss_OrgCode != null">
+        #{ss_OrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sync_Status != null">
+        #{sync_Status,jdbcType=VARCHAR},
+      </if>
+      <if test="telPhone != null">
+        #{telPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="tongid != null">
+        #{tongid,jdbcType=VARCHAR},
+      </if>
+      <if test="tong_Time != null">
+        #{tong_Time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.PreApasInfo">
+    update PRE_APAS_INFO
+    <set>
+      <if test="address != null">
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="apply_CardNumber != null">
+        APPLY_CARD_NUMBER = #{apply_CardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="apply_CardType != null">
+        APPLY_CARD_TYPE = #{apply_CardType,jdbcType=VARCHAR},
+      </if>
+      <if test="applyFrom != null">
+        APPLY_FROM = #{applyFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="applyName != null">
+        APPLY_NAME = #{applyName,jdbcType=VARCHAR},
+      </if>
+      <if test="apply_Propertiy != null">
+        APPLY_PROPERTIY = #{apply_Propertiy,jdbcType=VARCHAR},
+      </if>
+      <if test="approve_Type != null">
+        APPROVE_TYPE = #{approve_Type,jdbcType=VARCHAR},
+      </if>
+      <if test="areacode != null">
+        AREACODE = #{areacode,jdbcType=VARCHAR},
+      </if>
+      <if test="belongSystem != null">
+        BELONG_SYSTEM = #{belongSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="belongto != null">
+        BELONGTO = #{belongto,jdbcType=VARCHAR},
+      </if>
+      <if test="bus_Mode != null">
+        BUS_MODE = #{bus_Mode,jdbcType=VARCHAR},
+      </if>
+      <if test="bus_Mode_Desc != null">
+        BUS_MODE_DESC = #{bus_Mode_Desc,jdbcType=VARCHAR},
+      </if>
+      <if test="bus_Type != null">
+        BUS_TYPE = #{bus_Type,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMan != null">
+        CONTACT_MAN = #{contactMan,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMan_CardNumber != null">
+        CONTACT_MAN_CARD_NUMBER = #{contactMan_CardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="contactMan_CardType != null">
+        CONTACT_MAN_CARD_TYPE = #{contactMan_CardType,jdbcType=VARCHAR},
+      </if>
+      <if test="create_Time != null">
+        CREATE_TIME = #{create_Time,jdbcType=VARCHAR},
+      </if>
+      <if test="dataState != null">
+        DATA_STATE = #{dataState,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVersion != null">
+        DATA_VERSION = #{dataVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="extend != null">
+        EXTEND = #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="infoType != null">
+        INFO_TYPE = #{infoType,jdbcType=VARCHAR},
+      </if>
+      <if test="is_Manubrium != null">
+        IS_MANUBRIUM = #{is_Manubrium,jdbcType=VARCHAR},
+      </if>
+      <if test="legalMan != null">
+        LEGAL_MAN = #{legalMan,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null">
+        OP = #{op,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        POST_CODE = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projId != null">
+        PROJ_ID = #{projId,jdbcType=VARCHAR},
+      </if>
+      <if test="projPwd != null">
+        PROJ_PWD = #{projPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="receive_Name != null">
+        RECEIVE_NAME = #{receive_Name,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME = #{receiveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="receive_UseId != null">
+        RECEIVE_USEID = #{receive_UseId,jdbcType=VARCHAR},
+      </if>
+      <if test="rel_Bus_Id != null">
+        REL_BUS_ID = #{rel_Bus_Id,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceCode != null">
+        SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="service_DeptId != null">
+        SERVICE_DEPT_ID = #{service_DeptId,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null">
+        SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceVersion != null">
+        SERVICE_VERSION = #{serviceVersion,jdbcType=DECIMAL},
+      </if>
+      <if test="ss_OrgCode != null">
+        SS_ORG_CODE = #{ss_OrgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sync_Status != null">
+        SYNC_STATUS = #{sync_Status,jdbcType=VARCHAR},
+      </if>
+      <if test="telPhone != null">
+        TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="tongid != null">
+        TONGID = #{tongid,jdbcType=VARCHAR},
+      </if>
+      <if test="tong_Time != null">
+        TONG_TIME = #{tong_Time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.PreApasInfo">
+    update PRE_APAS_INFO
+    set ADDRESS = #{address,jdbcType=VARCHAR},
+      APPLY_CARD_NUMBER = #{apply_CardNumber,jdbcType=VARCHAR},
+      APPLY_CARD_TYPE = #{apply_CardType,jdbcType=VARCHAR},
+      APPLY_FROM = #{applyFrom,jdbcType=VARCHAR},
+      APPLY_NAME = #{applyName,jdbcType=VARCHAR},
+      APPLY_PROPERTIY = #{apply_Propertiy,jdbcType=VARCHAR},
+      APPROVE_TYPE = #{approve_Type,jdbcType=VARCHAR},
+      AREACODE = #{areacode,jdbcType=VARCHAR},
+      BELONG_SYSTEM = #{belongSystem,jdbcType=VARCHAR},
+      BELONGTO = #{belongto,jdbcType=VARCHAR},
+      BUS_MODE = #{bus_Mode,jdbcType=VARCHAR},
+      BUS_MODE_DESC = #{bus_Mode_Desc,jdbcType=VARCHAR},
+      BUS_TYPE = #{bus_Type,jdbcType=VARCHAR},
+      CONTACT_MAN = #{contactMan,jdbcType=VARCHAR},
+      CONTACT_MAN_CARD_NUMBER = #{contactMan_CardNumber,jdbcType=VARCHAR},
+      CONTACT_MAN_CARD_TYPE = #{contactMan_CardType,jdbcType=VARCHAR},
+      CREATE_TIME = #{create_Time,jdbcType=VARCHAR},
+      DATA_STATE = #{dataState,jdbcType=VARCHAR},
+      DATA_VERSION = #{dataVersion,jdbcType=VARCHAR},
+      DEPT_ID = #{deptId,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      EXTEND = #{extend,jdbcType=VARCHAR},
+      INFO_TYPE = #{infoType,jdbcType=VARCHAR},
+      IS_MANUBRIUM = #{is_Manubrium,jdbcType=VARCHAR},
+      LEGAL_MAN = #{legalMan,jdbcType=VARCHAR},
+      OP = #{op,jdbcType=VARCHAR},
+      POST_CODE = #{postCode,jdbcType=VARCHAR},
+      PROJ_ID = #{projId,jdbcType=VARCHAR},
+      PROJ_PWD = #{projPwd,jdbcType=VARCHAR},
+      PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      RECEIVE_NAME = #{receive_Name,jdbcType=VARCHAR},
+      RECEIVE_TIME = #{receiveTime,jdbcType=VARCHAR},
+      RECEIVE_USEID = #{receive_UseId,jdbcType=VARCHAR},
+      REL_BUS_ID = #{rel_Bus_Id,jdbcType=VARCHAR},
+      SERVICE_CODE = #{serviceCode,jdbcType=VARCHAR},
+      SERVICE_DEPT_ID = #{service_DeptId,jdbcType=VARCHAR},
+      SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      SERVICE_VERSION = #{serviceVersion,jdbcType=DECIMAL},
+      SS_ORG_CODE = #{ss_OrgCode,jdbcType=VARCHAR},
+      SYNC_STATUS = #{sync_Status,jdbcType=VARCHAR},
+      TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
+      TONGID = #{tongid,jdbcType=VARCHAR},
+      TONG_TIME = #{tong_Time,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getUnionVal" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT CONCAT(TONGID,PROJ_ID) FROM PRE_APAS_INFO
+  </select>
+
+  <select id="findByDate" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT ORGANIZATION_ID,"COUNT"(1) sizeVal FROM PRE_APAS_INFO where TO_CHAR (#{time},'YYYY-MM') =  TO_CHAR (TO_DATE (RECEIVE_TIME,'yyyy-mm-dd hh24:mi:ss'),'YYYY-MM') AND ORGANIZATION_ID IS NOT null GROUP BY ORGANIZATION_ID
+  </select>
+</mapper>

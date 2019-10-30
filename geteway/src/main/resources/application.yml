@@ -1,0 +1,104 @@
+eureka:
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 4000 # This is not required
+  client:
+    serviceUrl:
+#      defaultZone: http://118.31.3.79:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
+#      defaultZone: http://10.32.250.85:8761/eureka/
+  instance:
+    #优先使用IP地址作为主机名的标识
+    prefer-ip-address: true
+    #续约任务调用时间间隔
+    lease-renewal-interval-in-seconds: 5000
+    #服务失效时间
+    lease-expiration-duration-in-seconds: 5000
+server:
+  port: 8769
+
+zuul:
+  routes:
+    api-feign:
+      path: /api-feign/**
+      serviceId: feign
+    api-system:
+      path: /api-system/**
+      serviceId: bigdata
+    api-personnel:
+      path: /api-personnel/**
+      serviceId: personnel
+    api-attendance:
+      path: /api-attendance/**
+      serviceId: attendance
+    api-meeting:
+      path: /api-meeting/**
+      serviceId: meeting
+    api-assessment:
+      path: /api-assessment/**
+      serviceId: assessment
+    api-message:
+      path: /api-message/**
+      serviceId: message
+    api-api:
+      path: /api-api/**
+      serviceId: api
+    api-feedback:
+      path: /api-feedback/**
+      serviceId: feedback
+    api-knowledge:
+      path: /api-knowledge/**
+      serviceId: knowledge
+    api-selfservice:
+      path: /api-selfservice/**
+      serviceId: selfservice
+    api-wechatsug:
+      path: /api-wechatsug/**
+      serviceId: wechatsug
+    api-assistdecision:
+      path: /api-assistdecision/**
+      serviceId: assistdecision
+    api-screendata:
+      path: /api-screendata/**
+      serviceId: screendata
+    api-stamp:
+      path: /api-stamp/**
+      serviceId: stamp
+    api-screen:
+      path: /api-screen/**
+      serviceId: screen
+
+  sensitive-headers: "*"
+  host:
+    socket-timeout-millis: 30000
+    connect-timeout-millis: 30000
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeout-in-milliseconds: 30000
+
+
+spring:
+  application:
+    name: service-zuul
+
+    #redis配置
+  redis:
+    database: 0
+    host: 10.32.250.87
+#    host: 10.71.177.245
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: 5000ms
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000ms

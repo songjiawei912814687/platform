@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.AttendanceDataMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.domian.output.AttendanceDataOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ATTENDANCE_DEVICE_NAME" jdbcType="VARCHAR" property="attendanceDeviceName" />
+    <result column="AUTHENTICATION" jdbcType="DECIMAL" property="authentication" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="employeeName" jdbcType="VARCHAR" property="employeeName" />
+    <result column="employeeNo" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="JOBS_ID" jdbcType="DECIMAL" property="jobsId" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="PUNCH_TIME" jdbcType="TIMESTAMP" property="punchTime" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+
+  </resultMap>
+  <resultMap id="AttendanceDailyDateBaseMap" type="com.attendance.domian.output.AttendanceDailyDate">
+    <result column="employeeName" property="employeeName" />
+    <result column="employeeNo"  property="employeeNo" />
+    <result column="employeeId"  property="employeeId" />
+    <result column="organizationName"  property="organizationName" />
+    <result column="organizationId" jdbcType="DECIMAL" property="organizationId" />
+    <result column="jobsName" property="jobsName" />
+    <result column="signInTime" property="signInTime" />
+    <result column="signOutTime" property="signOutTime" />
+    <result column="punchTime" property="punchTime" />
+    <result column="phoneNumber" property="phoneNumber" />
+    <result column="ruleConfigId" property="ruleConfigId"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ATTENDANCE_DEVICE_NAME, AUTHENTICATION, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+    DESCRIPTION, EMPLOYEE_ID, JOBS_ID, LAST_UPDATE_DATE_TIME,LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, ORGANIZATION_ID, PUNCH_TIME,
+    STATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ATTENDANCE_DATA
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ATTENDANCE_DATA
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.attendance.model.AttendanceData">
+    insert into ATTENDANCE_DATA (ID, ATTENDANCE_DEVICE_NAME, AUTHENTICATION,
+      CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+      DESCRIPTION, EMPLOYEE_ID, EMPLOYEE_NAME,
+      EMPLOYEE_NO, JOBS_ID, JOBS_NAME,
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, ORGANIZATION_ID,
+      PUNCH_TIME, STATE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{attendanceDeviceName,jdbcType=VARCHAR}, #{authentication,jdbcType=DECIMAL},
+      #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR}, #{employeeId,jdbcType=DECIMAL}, #{employeeName,jdbcType=VARCHAR},
+      #{employeeNo,jdbcType=VARCHAR}, #{jobsId,jdbcType=DECIMAL}, #{jobsName,jdbcType=VARCHAR},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{organizationId,jdbcType=DECIMAL},
+      #{punchTime,jdbcType=TIMESTAMP}, #{state,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.AttendanceData">
+    insert into ATTENDANCE_DATA
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="attendanceDeviceName != null">
+        ATTENDANCE_DEVICE_NAME,
+      </if>
+      <if test="authentication != null">
+        AUTHENTICATION,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="employeeName != null">
+        EMPLOYEE_NAME,
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO,
+      </if>
+      <if test="jobsId != null">
+        JOBS_ID,
+      </if>
+      <if test="jobsName != null">
+        JOBS_NAME,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="punchTime != null">
+        PUNCH_TIME,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="attendanceDeviceName != null">
+        #{attendanceDeviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="authentication != null">
+        #{authentication,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="jobsId != null">
+        #{jobsId,jdbcType=DECIMAL},
+      </if>
+      <if test="jobsName != null">
+        #{jobsName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="punchTime != null">
+        #{punchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.AttendanceData">
+    update ATTENDANCE_DATA
+    <set>
+      <if test="attendanceDeviceName != null">
+        ATTENDANCE_DEVICE_NAME = #{attendanceDeviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="authentication != null">
+        AUTHENTICATION = #{authentication,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeName != null">
+        EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="jobsId != null">
+        JOBS_ID = #{jobsId,jdbcType=DECIMAL},
+      </if>
+      <if test="jobsName != null">
+        JOBS_NAME = #{jobsName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="punchTime != null">
+        PUNCH_TIME = #{punchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.AttendanceData">
+    update ATTENDANCE_DATA
+    set ATTENDANCE_DEVICE_NAME = #{attendanceDeviceName,jdbcType=VARCHAR},
+      AUTHENTICATION = #{authentication,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      JOBS_ID = #{jobsId,jdbcType=DECIMAL},
+      JOBS_NAME = #{jobsName,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      PUNCH_TIME = #{punchTime,jdbcType=TIMESTAMP},
+      STATE = #{state,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <!--月报表补录次数-->
+  <select id="selectSupplementTimes" parameterType="com.common.model.PageData" resultType="java.lang.Integer">
+    SELECT
+    count(1)
+    FROM
+    ATTENDANCE_DATA att
+    WHERE att.AUTHENTICATION = '补录'
+    and TO_DATE(#{startTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &lt;= att.PUNCH_TIME
+    and TO_DATE(#{endTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss') &gt;= att.PUNCH_TIME
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="empId!=null and empId !=''">
+        att.EMPLOYEE_ID =#{empId} and
+      </if>
+    </trim>
+  </select>
+
+  <!--考勤数据列表-->
+  <select id="selectAttendancePage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    att.ATTENDANCE_DEVICE_NAME,
+    att. AUTHENTICATION,
+    att. DESCRIPTION,
+    s.NAME AS employeeName,
+    s.EMPLOYEE_NO as employeeNo,
+    organization.NAME as organizationName,
+    att.PUNCH_TIME
+    FROM
+    ATTENDANCE_DATA att
+    left join EMPLOYEES s on s.ID=att.EMPLOYEE_ID
+    left join ORGANIZATION organization on organization.ID=att.ORGANIZATION_ID
+    where s.ATTENDANCE_STATE = 0
+    <if test="orgId!=null or employeeId!=null">
+    AND (EXISTS (
+    SELECT
+    organization.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    organization.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND organization.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    <if test="employeeId!=null">
+      or att.EMPLOYEE_ID = #{employeeId}
+    </if>
+    )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+
+      <if test="startDate!=null and startDate != '' and endDate !=null and endDate != ''">
+      TO_CHAR (att.PUNCH_TIME,'YYYY-MM-DD') &lt;= #{endDate} and
+      TO_CHAR (att.PUNCH_TIME,'YYYY-MM-DD') &gt;=#{startDate} and
+      </if>
+
+      <if test="employeeName!=null and employeeName !=''">s.NAME like '%'||#{employeeName}||'%' and </if>
+      <if test="no!=null and no != ''">s.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+      <if test="attendanceDeviceName!=null and attendanceDeviceName != ''">att.ATTENDANCE_DEVICE_NAME like '%'||#{attendanceDeviceName}||'%'and</if>
+      <if test="authentication!=null and authentication != ''">att.AUTHENTICATION like '%'||#{authentication}||'%'and</if>
+      <if test="organizationId!=null and organizationId!=''">CONCAT(organization.PATH ,',') like '%'||#{organizationId}||',%'and</if>
+      <!--<if test="startDate!=null and startDate!='' " >-->
+        <!--to_char(att.PUNCH_TIME,'yyyy-MM-dd') >= #{startDate} and-->
+      <!--</if>-->
+      <!--<if test="endDate!=null and endDate!='' " >-->
+        <!--to_char(att.PUNCH_TIME,'yyyy-MM-dd') &lt;= #{endDate} and-->
+      <!--</if>-->
+    </trim>
+    GROUP BY
+    att.ATTENDANCE_DEVICE_NAME,
+    att. AUTHENTICATION,
+    att. DESCRIPTION,
+    s.NAME,
+    s.EMPLOYEE_NO,
+    organization.NAME,
+    att.PUNCH_TIME
+    ORDER BY att.PUNCH_TIME desc
+  </select>
+
+  <select id="attendanceObjData" resultMap="AttendanceDailyDateBaseMap" parameterType="com.common.model.PageData">
+    SELECT
+    EMPLOYEES."NAME" employeeName,
+    EMPLOYEES.EMPLOYEE_NO employeeNo,
+    EMPLOYEES."ID" employeeId,
+    ORGANIZATION ."NAME" organizationName,
+    ORGANIZATION .id organizationId,
+    JOBS."NAME" jobsName,
+    ATTENDANCE_DATA.PUNCH_TIME punchTime
+    FROM
+    EMPLOYEES
+    LEFT JOIN ATTENDANCE_DATA ON EMPLOYEES."ID" = ATTENDANCE_DATA.EMPLOYEE_ID
+    LEFT JOIN ORGANIZATION ON EMPLOYEES.ORGANIZATION_ID = ORGANIZATION.ID
+    LEFT JOIN JOBS ON EMPLOYEES.JOBS_ID = JOBS."ID"
+    WHERE
+    EMPLOYEES.Attendance_State=0
+    and EMPLOYEES.Working_State=1
+    and EMPLOYEES.AMPUTATED = 0
+    and (TO_CHAR (ATTENDANCE_DATA.PUNCH_TIME,'YYYY-MM-DD') = #{days} OR ATTENDANCE_DATA.PUNCH_TIME IS NULL)
+    AND NOT EXISTS (
+    SELECT
+    LEAVE_APPLICATION.EMPLOYEES_ID
+    FROM
+    LEAVE_APPLICATION
+    WHERE
+    EMPLOYEES."ID" = LEAVE_APPLICATION.EMPLOYEES_ID
+    AND LEAVE_APPLICATION.APPLICATION_TYPE IN (3, 4, 5,6,7,8,9)
+    AND LEAVE_APPLICATION.STATUS = '1'
+    AND LEAVE_APPLICATION.AMPUTATED = '0'
+    AND TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') &lt;= TO_DATE (#{workTime}, 'yyyy-mm-dd hh24:mi:ss')
+    AND TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss')&gt;= TO_DATE (#{workOutTime}, 'yyyy-mm-dd hh24:mi:ss')
+    )
+    AND NOT EXISTS(
+	SELECT
+		OFF_APPLICATION."ID"
+	FROM
+		OFF_APPLICATION
+	WHERE
+		EMPLOYEES."ID" = OFF_APPLICATION.EMPLOYEES_ID
+        AND OFF_APPLICATION.STATUS = '1'
+        AND OFF_APPLICATION.AMPUTATED = '0'
+        AND TO_CHAR (OFF_APPLICATION.REST_TIME,'YYYY-MM-DD')  = #{days}
+    )
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">EMPLOYEES.NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">EMPLOYEES.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+      <if test="organizationId!=null and organizationId!=''">EMPLOYEES.ORGANIZATION_ID = #{organizationId} and</if>
+      <if test="jobsId!=null and jobsId!=''">EMPLOYEES.JOBS_ID = #{jobsId} and</if>
+    </trim>
+    ORDER BY EMPLOYEES."ID"
+  </select>
+
+  <select id="overtimeObjData" resultMap="AttendanceDailyDateBaseMap" parameterType="com.common.model.PageData">
+    SELECT
+	EMPLOYEES."NAME" employeeName,
+	EMPLOYEES.EMPLOYEE_NO employeeNo,
+	EMPLOYEES."ID" employeeId,
+	ORGANIZATION ."NAME" organizationName,
+	JOBS."NAME" jobsName,
+	ATTENDANCE_DATA.PUNCH_TIME punchTime
+    FROM
+        EMPLOYEES
+    RIGHT JOIN OVERTIME_APPLICATION ON OVERTIME_APPLICATION.EMPLOYEES_ID = EMPLOYEES. ID
+    LEFT JOIN ATTENDANCE_DATA ON OVERTIME_APPLICATION.EMPLOYEES_ID = ATTENDANCE_DATA.EMPLOYEE_ID
+    LEFT JOIN ORGANIZATION ON EMPLOYEES.ORGANIZATION_ID = ORGANIZATION.ID
+    LEFT JOIN JOBS ON EMPLOYEES.JOBS_ID = JOBS."ID"
+    WHERE
+    EMPLOYEES.AMPUTATED = 0 and
+    OVERTIME_APPLICATION.STATUS = 1
+    AND OVERTIME_APPLICATION.AMPUTATED = 0
+    AND TO_CHAR (OVERTIME_APPLICATION.OVER_TIME_DATE,'YYYY-MM-DD') =  #{days}
+    AND NOT EXISTS (
+    SELECT
+    LEAVE_APPLICATION.EMPLOYEES_ID
+    FROM
+    LEAVE_APPLICATION
+    WHERE
+    EMPLOYEES."ID" = LEAVE_APPLICATION.EMPLOYEES_ID
+    AND LEAVE_APPLICATION.APPLICATION_TYPE IN (3, 4, 5,6,7,8,9)
+    AND LEAVE_APPLICATION.STATUS = '1'
+    AND LEAVE_APPLICATION.AMPUTATED = '0'
+    AND TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') &lt;= TO_DATE (#{workTime}, 'yyyy-mm-dd hh24:mi:ss')
+    AND TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') >= TO_DATE (#{workOutTime}, 'yyyy-mm-dd hh24:mi:ss')
+    )
+    AND NOT EXISTS(
+    SELECT
+    OFF_APPLICATION."ID"
+    FROM
+    OFF_APPLICATION
+    WHERE
+    EMPLOYEES."ID" = OFF_APPLICATION.EMPLOYEES_ID
+    AND OFF_APPLICATION.STATUS = '1'
+    AND OFF_APPLICATION.AMPUTATED = '0'
+    AND TO_CHAR (OFF_APPLICATION.REST_TIME,'YYYY-MM-DD')  = #{days}
+    )
+    AND (
+        TO_CHAR (ATTENDANCE_DATA.PUNCH_TIME,'YYYY-MM-DD') =  #{days}
+        OR ATTENDANCE_DATA.PUNCH_TIME IS NULL
+    )
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">EMPLOYEES.NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">EMPLOYEES.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+      <if test="organizationId!=null and organizationId!=''">EMPLOYEES.ORGANIZATION_ID = #{organizationId} and</if>
+      <if test="jobsId!=null and jobsId!=''">EMPLOYEES.JOBS_ID = #{jobsId} and</if>
+    </trim>
+    ORDER BY EMPLOYEES."ID"
+  </select>
+
+  <select id="getInfoByEmployId" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT EMPLOYEES.ORGANIZATION_ID ,EMPLOYEES.JOBS_ID FROM EMPLOYEES where EMPLOYEES."ID" = #{employeeId}
+  </select>
+
+
+  <select id="attendanceDailyData" resultMap="AttendanceDailyDateBaseMap" parameterType="com.common.model.PageData">
+    SELECT
+    EMPLOYEES."NAME" employeeName,
+    EMPLOYEES.EMPLOYEE_NO employeeNo,
+    EMPLOYEES."ID" employeeId,
+    EMPLOYEES.PHONE_NUMBER phoneNumber,
+    ORGANIZATION."NAME" organizationName,
+    ORGANIZATION.id organizationId,
+    ORGANIZATION.ATTENDANCE_RULE_CONFIG_ID as ruleConfigId,
+    JOBS."NAME" jobsName,
+    min(ATTENDANCE_DATA.PUNCH_TIME) as signInTime,
+    max(ATTENDANCE_DATA.PUNCH_TIME) as signOutTime
+    FROM
+    EMPLOYEES
+    LEFT JOIN ATTENDANCE_DATA ON EMPLOYEES."ID" = ATTENDANCE_DATA.EMPLOYEE_ID
+    and (TO_CHAR (ATTENDANCE_DATA.PUNCH_TIME,'YYYY-MM-DD') = #{days} OR ATTENDANCE_DATA.PUNCH_TIME IS NULL)
+    LEFT JOIN ORGANIZATION ON EMPLOYEES.ORGANIZATION_ID = ORGANIZATION.ID
+    LEFT JOIN JOBS ON EMPLOYEES.JOBS_ID = JOBS."ID"
+    WHERE
+    EMPLOYEES.Attendance_State = 0
+    AND EMPLOYEES.Working_State = 1
+    AND EMPLOYEES.AMPUTATED = 0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(ORGANIZATION.PATH ,',')
+        like '%'||#{organizationId}||',%'and
+      </if>
+    </trim>
+      AND NOT EXISTS(
+    SELECT
+    OFF_APPLICATION."ID"
+    FROM
+    OFF_APPLICATION
+    WHERE
+    EMPLOYEES."ID" = OFF_APPLICATION.EMPLOYEES_ID
+    AND OFF_APPLICATION.STATUS = '1'
+    AND OFF_APPLICATION.AMPUTATED = '0'
+    AND TO_CHAR (OFF_APPLICATION.REST_TIME,'YYYY-MM-DD')  = #{days}
+    )
+    GROUP BY
+    EMPLOYEES."NAME",
+    EMPLOYEES.EMPLOYEE_NO,
+    EMPLOYEES."ID",
+    EMPLOYEES.PHONE_NUMBER,
+    ORGANIZATION."NAME",
+    ORGANIZATION.id,
+    ORGANIZATION.ATTENDANCE_RULE_CONFIG_ID,
+    JOBS."NAME"
+    ORDER BY EMPLOYEES."ID"
+  </select>
+
+  <select id="overtimeDailyData" resultMap="AttendanceDailyDateBaseMap" parameterType="com.common.model.PageData">
+    SELECT
+    EMPLOYEES."NAME" employeeName,
+    EMPLOYEES.EMPLOYEE_NO employeeNo,
+    EMPLOYEES."ID" employeeId,
+    EMPLOYEES.PHONE_NUMBER phoneNumber,
+    ORGANIZATION."NAME" organizationName,
+    ORGANIZATION.id organizationId,
+    ORGANIZATION.ATTENDANCE_RULE_CONFIG_ID as ruleConfigId,
+    JOBS."NAME" jobsName,
+    min(ATTENDANCE_DATA.PUNCH_TIME) as signInTime,
+    max(ATTENDANCE_DATA.PUNCH_TIME) as signOutTime
+    FROM
+    EMPLOYEES
+    RIGHT JOIN OVERTIME_APPLICATION ON OVERTIME_APPLICATION.EMPLOYEES_ID = EMPLOYEES. ID
+    LEFT JOIN ATTENDANCE_DATA ON OVERTIME_APPLICATION.EMPLOYEES_ID = ATTENDANCE_DATA.EMPLOYEE_ID
+    and (TO_CHAR (ATTENDANCE_DATA.PUNCH_TIME,'YYYY-MM-DD') = #{days} OR ATTENDANCE_DATA.PUNCH_TIME IS NULL)
+    LEFT JOIN ORGANIZATION ON EMPLOYEES.ORGANIZATION_ID = ORGANIZATION.ID
+    LEFT JOIN JOBS ON EMPLOYEES.JOBS_ID = JOBS."ID"
+    WHERE
+    EMPLOYEES.AMPUTATED = 0
+    and EMPLOYEES.Attendance_State = 0
+    AND EMPLOYEES.Working_State = 1
+    AND OVERTIME_APPLICATION.STATUS = 1
+    AND OVERTIME_APPLICATION.AMPUTATED = 0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(ORGANIZATION.PATH ,',') like '%'||#{organizationId}||',%'and
+      </if>
+    </trim>
+    AND TO_CHAR (OVERTIME_APPLICATION.OVER_TIME_DATE,'YYYY-MM-DD') =  #{days}
+    GROUP BY
+    EMPLOYEES."NAME",
+    EMPLOYEES.EMPLOYEE_NO,
+    EMPLOYEES."ID",
+    EMPLOYEES.PHONE_NUMBER,
+    ORGANIZATION."NAME",
+    ORGANIZATION.id,
+    JOBS."NAME",
+    ORGANIZATION.ATTENDANCE_RULE_CONFIG_ID
+    ORDER BY 	EMPLOYEES."ID"
+  </select>
+
+  <select id="selectByEmployeeId" parameterType="com.common.model.PageData" resultMap="AttendanceDailyDateBaseMap">
+     SELECT
+     min(PUNCH_TIME) as signInTime,
+    max(PUNCH_TIME) as signOutTime
+    from ATTENDANCE_DATA
+    where Employee_id=#{employeeId} and TO_CHAR (PUNCH_TIME,'YYYY-MM-DD') = #{days}
+  </select>
+
+  <select id="selectByDate" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT
+	Employee_id,
+	ORGANIZATION_ID,
+	PUNCH_TIME
+FROM
+	ATTENDANCE_DATA
+WHERE
+ 1=1
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="days!=null">
+        TO_CHAR (PUNCH_TIME, 'YYYY-MM-DD') = #{days} and
+      </if>
+    </trim>
+    ORDER BY PUNCH_TIME
+  </select>
+
+  <select id="selectBuluCont" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT
+    ATT.EMPLOYEE_ID,
+    ATT.PUNCH_TIME,
+    count(1) as count
+    FROM
+    ATTENDANCE_DATA att
+    WHERE att.AUTHENTICATION = '补录'
+    and to_char(ATT.PUNCH_TIME,'yyyy-MM-dd hh24:mi:ss') &gt;= #{startTime} and
+    to_char(ATT.PUNCH_TIME,'yyyy-MM-dd hh24:mi:ss') &lt;=#{endTime}
+    GROUP BY ATT.EMPLOYEE_ID,ATT.PUNCH_TIME
+  </select>
+
+</mapper>

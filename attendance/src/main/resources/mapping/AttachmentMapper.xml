@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.AttachmentMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.model.Attachment">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ATTACHMENT_SIZE" jdbcType="DECIMAL" property="attachmentSize" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="RESOURCES_ID" jdbcType="DECIMAL" property="resourcesId" />
+    <result column="RESOURCES_TYPE" jdbcType="DECIMAL" property="resourcesType" />
+    <result column="SOURCE_FILE_NAME" jdbcType="VARCHAR" property="sourceFileName" />
+    <result column="SUFFIX" jdbcType="VARCHAR" property="suffix" />
+    <result column="TAG" jdbcType="VARCHAR" property="tag" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ATTACHMENT_SIZE, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, FILE_NAME,
+    AMPUTATED, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, RESOURCES_ID,
+    RESOURCES_TYPE, SOURCE_FILE_NAME, SUFFIX, TAG, URL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ATTACHMENT
+    where ID = #{id,jdbcType=DECIMAL} and AMPUTATED = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ATTACHMENT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.attendance.model.Attachment">
+    insert into ATTACHMENT (ID, ATTACHMENT_SIZE, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, FILE_NAME,
+      AMPUTATED, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, RESOURCES_ID, RESOURCES_TYPE,
+      SOURCE_FILE_NAME, SUFFIX, TAG,
+      URL)
+      URL)
+    values (#{id,jdbcType=DECIMAL}, #{attachmentSize,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR},
+      #{amputated,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{resourcesId,jdbcType=DECIMAL}, #{resourcesType,jdbcType=DECIMAL},
+      #{sourceFileName,jdbcType=VARCHAR}, #{suffix,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.Attachment">
+    insert into ATTACHMENT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="attachmentSize != null">
+        ATTACHMENT_SIZE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="resourcesId != null">
+        RESOURCES_ID,
+      </if>
+      <if test="resourcesType != null">
+        RESOURCES_TYPE,
+      </if>
+      <if test="sourceFileName != null">
+        SOURCE_FILE_NAME,
+      </if>
+      <if test="suffix != null">
+        SUFFIX,
+      </if>
+      <if test="tag != null">
+        TAG,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="attachmentSize != null">
+        #{attachmentSize,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourcesId != null">
+        #{resourcesId,jdbcType=DECIMAL},
+      </if>
+      <if test="resourcesType != null">
+        #{resourcesType,jdbcType=DECIMAL},
+      </if>
+      <if test="sourceFileName != null">
+        #{sourceFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null">
+        #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.Attachment">
+    update ATTACHMENT
+    <set>
+      <if test="attachmentSize != null">
+        ATTACHMENT_SIZE = #{attachmentSize,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourcesId != null">
+        RESOURCES_ID = #{resourcesId,jdbcType=DECIMAL},
+      </if>
+      <if test="resourcesType != null">
+        RESOURCES_TYPE = #{resourcesType,jdbcType=DECIMAL},
+      </if>
+      <if test="sourceFileName != null">
+        SOURCE_FILE_NAME = #{sourceFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="suffix != null">
+        SUFFIX = #{suffix,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        TAG = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.Attachment">
+    update ATTACHMENT
+    set ATTACHMENT_SIZE = #{attachmentSize,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      RESOURCES_ID = #{resourcesId,jdbcType=DECIMAL},
+      RESOURCES_TYPE = #{resourcesType,jdbcType=DECIMAL},
+      SOURCE_FILE_NAME = #{sourceFileName,jdbcType=VARCHAR},
+      SUFFIX = #{suffix,jdbcType=VARCHAR},
+      TAG = #{tag,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

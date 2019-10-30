@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AttendanceStatisticsMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.model.AttendanceStatistics">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="BE_LATE" jdbcType="VARCHAR" property="beLate" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NAME" jdbcType="VARCHAR" property="employeeName" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="LEAVE_EARLY" jdbcType="VARCHAR" property="leaveEarly" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="PUNCH" jdbcType="VARCHAR" property="punch" />
+    <result column="PUNCH_TIME" jdbcType="TIMESTAMP" property="punchTime" />
+    <result column="SIGN_IN_TIME" jdbcType="TIMESTAMP" property="signInTime" />
+    <result column="SIGN_OUT_TIME" jdbcType="TIMESTAMP" property="signOutTime" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ATTENDANCE_DATE" jdbcType="TIMESTAMP" property="attendanceDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BE_LATE, EMPLOYEE_ID, EMPLOYEE_NAME, EMPLOYEE_NO, JOBS_NAME, LEAVE_EARLY, ORGANIZATION_NAME, 
+    PUNCH, PUNCH_TIME, SIGN_IN_TIME, SIGN_OUT_TIME, STATUS_NAME, ORGANIZATION_ID, ATTENDANCE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ATTENDANCE_STATISTICS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ATTENDANCE_STATISTICS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AttendanceStatistics">
+    insert into ATTENDANCE_STATISTICS (ID, BE_LATE, EMPLOYEE_ID, 
+      EMPLOYEE_NAME, EMPLOYEE_NO, JOBS_NAME, 
+      LEAVE_EARLY, ORGANIZATION_NAME, PUNCH, 
+      PUNCH_TIME, SIGN_IN_TIME, SIGN_OUT_TIME, 
+      STATUS_NAME, ORGANIZATION_ID, ATTENDANCE_DATE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{beLate,jdbcType=VARCHAR}, #{employeeId,jdbcType=DECIMAL}, 
+      #{employeeName,jdbcType=VARCHAR}, #{employeeNo,jdbcType=VARCHAR}, #{jobsName,jdbcType=VARCHAR}, 
+      #{leaveEarly,jdbcType=VARCHAR}, #{organizationName,jdbcType=VARCHAR}, #{punch,jdbcType=VARCHAR}, 
+      #{punchTime,jdbcType=TIMESTAMP}, #{signInTime,jdbcType=TIMESTAMP}, #{signOutTime,jdbcType=TIMESTAMP}, 
+      #{statusName,jdbcType=VARCHAR}, #{organizationId,jdbcType=DECIMAL}, #{attendanceDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AttendanceStatistics">
+    insert into ATTENDANCE_STATISTICS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="beLate != null">
+        BE_LATE,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="employeeName != null">
+        EMPLOYEE_NAME,
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO,
+      </if>
+      <if test="jobsName != null">
+        JOBS_NAME,
+      </if>
+      <if test="leaveEarly != null">
+        LEAVE_EARLY,
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME,
+      </if>
+      <if test="punch != null">
+        PUNCH,
+      </if>
+      <if test="punchTime != null">
+        PUNCH_TIME,
+      </if>
+      <if test="signInTime != null">
+        SIGN_IN_TIME,
+      </if>
+      <if test="signOutTime != null">
+        SIGN_OUT_TIME,
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="attendanceDate != null">
+        ATTENDANCE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="beLate != null">
+        #{beLate,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="jobsName != null">
+        #{jobsName,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveEarly != null">
+        #{leaveEarly,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null">
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="punch != null">
+        #{punch,jdbcType=VARCHAR},
+      </if>
+      <if test="punchTime != null">
+        #{punchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signInTime != null">
+        #{signInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signOutTime != null">
+        #{signOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusName != null">
+        #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="attendanceDate != null">
+        #{attendanceDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AttendanceStatistics">
+    update ATTENDANCE_STATISTICS
+    <set>
+      <if test="beLate != null">
+        BE_LATE = #{beLate,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeName != null">
+        EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="jobsName != null">
+        JOBS_NAME = #{jobsName,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveEarly != null">
+        LEAVE_EARLY = #{leaveEarly,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="punch != null">
+        PUNCH = #{punch,jdbcType=VARCHAR},
+      </if>
+      <if test="punchTime != null">
+        PUNCH_TIME = #{punchTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signInTime != null">
+        SIGN_IN_TIME = #{signInTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signOutTime != null">
+        SIGN_OUT_TIME = #{signOutTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusName != null">
+        STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="attendanceDate != null">
+        ATTENDANCE_DATE = #{attendanceDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AttendanceStatistics">
+    update ATTENDANCE_STATISTICS
+    set BE_LATE = #{beLate,jdbcType=VARCHAR},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      JOBS_NAME = #{jobsName,jdbcType=VARCHAR},
+      LEAVE_EARLY = #{leaveEarly,jdbcType=VARCHAR},
+      ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      PUNCH = #{punch,jdbcType=VARCHAR},
+      PUNCH_TIME = #{punchTime,jdbcType=TIMESTAMP},
+      SIGN_IN_TIME = #{signInTime,jdbcType=TIMESTAMP},
+      SIGN_OUT_TIME = #{signOutTime,jdbcType=TIMESTAMP},
+      STATUS_NAME = #{statusName,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      ATTENDANCE_DATE = #{attendanceDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByDate" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ATTENDANCE_STATISTICS
+    where
+    TO_CHAR (ATTENDANCE_DATE,'yyyy-mm') = #{date,jdbcType=VARCHAR}
+  </select>
+</mapper>

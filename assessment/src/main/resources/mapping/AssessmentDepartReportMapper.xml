@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AssessmentDepartReportMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.AssessmentDepartReportOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DATA_COMPACTION" jdbcType="DECIMAL" property="dataCompaction" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="DO_THINGS" jdbcType="DECIMAL" property="doThings" />
+    <result column="INNOVATION_WORK" jdbcType="DECIMAL" property="innovationWork" />
+    <result column="INTERMEDIARY_SERVICE" jdbcType="DECIMAL" property="intermediaryService" />
+    <result column="JOB_LOGGING" jdbcType="DECIMAL" property="jobLogging" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MATTER_SEEC" jdbcType="DECIMAL" property="matterSeec" />
+    <result column="MONTH" jdbcType="DECIMAL" property="month" />
+    <result column="MOUTH_INDEX" jdbcType="DECIMAL" property="mouthIndex" />
+    <result column="ONLINE_REPORTING" jdbcType="DECIMAL" property="onlineReporting" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="ORGANIZATION_CODE" jdbcType="VARCHAR" property="organizationCode" />
+    <result column="PEOPLE_SATISFACTION" jdbcType="DECIMAL" property="peopleSatisfaction" />
+    <result column="PLAN_ID" jdbcType="DECIMAL" property="planId" />
+    <result column="TEMPLATE_ID" jdbcType="DECIMAL" property="templateId" />
+    <result column="TRANSACT_NORM" jdbcType="DECIMAL" property="transactNorm" />
+    <result column="WINDOW_ACCEPT" jdbcType="DECIMAL" property="windowAccept" />
+    <result column="YEAR" jdbcType="DECIMAL" property="year" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DATA_COMPACTION,
+    DISPLAY_ORDER, DO_THINGS, INNOVATION_WORK, INTERMEDIARY_SERVICE, JOB_LOGGING, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MATTER_SEEC, MONTH, MOUTH_INDEX, ONLINE_REPORTING,
+    ORGANIZATION_ID, PEOPLE_SATISFACTION, PLAN_ID, TRANSACT_NORM,
+    WINDOW_ACCEPT, YEAR,TEMPLATE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ASSESSMENT_DEPART_REPORT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ASSESSMENT_DEPART_REPORT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AssessmentDepartReport">
+    insert into ASSESSMENT_DEPART_REPORT (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DATA_COMPACTION,
+      DISPLAY_ORDER, DO_THINGS, INNOVATION_WORK,
+      INTERMEDIARY_SERVICE, JOB_LOGGING, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MATTER_SEEC,
+      MONTH, MOUTH_INDEX, ONLINE_REPORTING,
+      ORGANIZATION_ID, ORGANIZATION_NAME, PEOPLE_SATISFACTION,
+      PLAN_ID, TRANSACT_NORM, WINDOW_ACCEPT,
+      YEAR,TEMPLATE_ID)
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{dataCompaction,jdbcType=DECIMAL},
+      #{displayOrder,jdbcType=DECIMAL}, #{doThings,jdbcType=DECIMAL}, #{innovationWork,jdbcType=DECIMAL},
+      #{intermediaryService,jdbcType=DECIMAL}, #{jobLogging,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{matterSeec,jdbcType=DECIMAL},
+      #{month,jdbcType=DECIMAL}, #{mouthIndex,jdbcType=DECIMAL}, #{onlineReporting,jdbcType=DECIMAL},
+      #{organizationId,jdbcType=DECIMAL}, #{organizationName,jdbcType=VARCHAR}, #{peopleSatisfaction,jdbcType=DECIMAL},
+      #{planId,jdbcType=DECIMAL}, #{transactNorm,jdbcType=DECIMAL}, #{windowAccept,jdbcType=DECIMAL},
+      #{year,jdbcType=DECIMAL},
+      #{templateId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AssessmentDepartReport">
+    insert into ASSESSMENT_DEPART_REPORT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="dataCompaction != null">
+        DATA_COMPACTION,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="doThings != null">
+        DO_THINGS,
+      </if>
+      <if test="innovationWork != null">
+        INNOVATION_WORK,
+      </if>
+      <if test="intermediaryService != null">
+        INTERMEDIARY_SERVICE,
+      </if>
+      <if test="jobLogging != null">
+        JOB_LOGGING,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="matterSeec != null">
+        MATTER_SEEC,
+      </if>
+      <if test="month != null">
+        MONTH,
+      </if>
+      <if test="mouthIndex != null">
+        MOUTH_INDEX,
+      </if>
+      <if test="onlineReporting != null">
+        ONLINE_REPORTING,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME,
+      </if>
+      <if test="peopleSatisfaction != null">
+        PEOPLE_SATISFACTION,
+      </if>
+      <if test="planId != null">
+        PLAN_ID,
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID,
+      </if>
+      <if test="transactNorm != null">
+        TRANSACT_NORM,
+      </if>
+      <if test="windowAccept != null">
+        WINDOW_ACCEPT,
+      </if>
+      <if test="year != null">
+        YEAR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCompaction != null">
+        #{dataCompaction,jdbcType=DECIMAL},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="doThings != null">
+        #{doThings,jdbcType=DECIMAL},
+      </if>
+      <if test="innovationWork != null">
+        #{innovationWork,jdbcType=DECIMAL},
+      </if>
+      <if test="intermediaryService != null">
+        #{intermediaryService,jdbcType=DECIMAL},
+      </if>
+      <if test="jobLogging != null">
+        #{jobLogging,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="matterSeec != null">
+        #{matterSeec,jdbcType=DECIMAL},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=DECIMAL},
+      </if>
+      <if test="mouthIndex != null">
+        #{mouthIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="onlineReporting != null">
+        #{onlineReporting,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationName != null">
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleSatisfaction != null">
+        #{peopleSatisfaction,jdbcType=DECIMAL},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="transactNorm != null">
+        #{transactNorm,jdbcType=DECIMAL},
+      </if>
+      <if test="windowAccept != null">
+        #{windowAccept,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AssessmentDepartReport">
+    update ASSESSMENT_DEPART_REPORT
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCompaction != null">
+        DATA_COMPACTION = #{dataCompaction,jdbcType=DECIMAL},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="doThings != null">
+        DO_THINGS = #{doThings,jdbcType=DECIMAL},
+      </if>
+      <if test="innovationWork != null">
+        INNOVATION_WORK = #{innovationWork,jdbcType=DECIMAL},
+      </if>
+      <if test="intermediaryService != null">
+        INTERMEDIARY_SERVICE = #{intermediaryService,jdbcType=DECIMAL},
+      </if>
+      <if test="jobLogging != null">
+        JOB_LOGGING = #{jobLogging,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="matterSeec != null">
+        MATTER_SEEC = #{matterSeec,jdbcType=DECIMAL},
+      </if>
+      <if test="month != null">
+        MONTH = #{month,jdbcType=DECIMAL},
+      </if>
+      <if test="mouthIndex != null">
+        MOUTH_INDEX = #{mouthIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="onlineReporting != null">
+        ONLINE_REPORTING = #{onlineReporting,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="peopleSatisfaction != null">
+        PEOPLE_SATISFACTION = #{peopleSatisfaction,jdbcType=DECIMAL},
+      </if>
+      <if test="planId != null">
+        PLAN_ID = #{planId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="transactNorm != null">
+        TRANSACT_NORM = #{transactNorm,jdbcType=DECIMAL},
+      </if>
+      <if test="windowAccept != null">
+        WINDOW_ACCEPT = #{windowAccept,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null">
+        YEAR = #{year,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AssessmentDepartReport">
+    update ASSESSMENT_DEPART_REPORT
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DATA_COMPACTION = #{dataCompaction,jdbcType=DECIMAL},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      DO_THINGS = #{doThings,jdbcType=DECIMAL},
+      INNOVATION_WORK = #{innovationWork,jdbcType=DECIMAL},
+      INTERMEDIARY_SERVICE = #{intermediaryService,jdbcType=DECIMAL},
+      JOB_LOGGING = #{jobLogging,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MATTER_SEEC = #{matterSeec,jdbcType=DECIMAL},
+      MONTH = #{month,jdbcType=DECIMAL},
+      MOUTH_INDEX = #{mouthIndex,jdbcType=DECIMAL},
+      ONLINE_REPORTING = #{onlineReporting,jdbcType=DECIMAL},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      PEOPLE_SATISFACTION = #{peopleSatisfaction,jdbcType=DECIMAL},
+      PLAN_ID = #{planId,jdbcType=DECIMAL},
+      TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      TRANSACT_NORM = #{transactNorm,jdbcType=DECIMAL},
+      WINDOW_ACCEPT = #{windowAccept,jdbcType=DECIMAL},
+      YEAR = #{year,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectDepartReportByCondition" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    DR.ORGANIZATION_ID,
+    DR.ORGANIZATION_NAME,
+    DR.DO_THINGS,
+    DR.WINDOW_ACCEPT,
+    DR.ONLINE_REPORTING,
+    DR.MATTER_SEEC,
+    DR.DATA_COMPACTION,
+    DR.INTERMEDIARY_SERVICE,
+    DR.PEOPLE_SATISFACTION,
+    DR.JOB_LOGGING,
+    DR.TRANSACT_NORM,
+    DR.INNOVATION_WORK,
+    DR.MOUTH_INDEX,
+    DR.YEAR,
+    DR.MONTH,
+    ORGANIZATION.ORGANIZATION_CODE
+    from ASSESSMENT_DEPART_REPORT DR
+    left join ORGANIZATION on ORGANIZATION.id = DR.ORGANIZATION_ID
+    WHERE
+    DR.AMPUTATED=0
+    <if test="userId!=null and userId!=''">
+    AND EXISTS (
+    SELECT
+    ORGANIZATION.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    ORGANIZATION.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND ORGANIZATION.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year !=''"> DR.YEAR = #{year,jdbcType=DECIMAL} and </if>
+      <if test="month!=null and month !=''"> DR.MONTH = #{month,jdbcType=DECIMAL}and </if>
+      <if test="organizationId!=null and organizationId!=''"> CONCAT(ORGANIZATION.PATH ,',') like '%'||#{organizationId}||',%'and  </if>
+    </trim>
+    ORDER BY DR.MOUTH_INDEX DESC,NLSSORT(DR.ORGANIZATION_NAME, 'NLS_SORT=SCHINESE_PINYIN_M')
+  </select>
+
+  <select id="selectAverageDepartReportByCondition" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    AVG(DR.DO_THINGS) DO_THINGS ,
+    AVG(DR.WINDOW_ACCEPT) WINDOW_ACCEPT,
+    AVG(DR.ONLINE_REPORTING) ONLINE_REPORTING,
+    AVG(DR.MATTER_SEEC) MATTER_SEEC,
+    AVG(DR.DATA_COMPACTION) DATA_COMPACTION,
+    AVG(DR.INTERMEDIARY_SERVICE) INTERMEDIARY_SERVICE,
+    AVG(DR.PEOPLE_SATISFACTION) PEOPLE_SATISFACTION,
+    AVG(DR.JOB_LOGGING) JOB_LOGGING,
+    AVG(DR.TRANSACT_NORM) TRANSACT_NORM,
+    AVG(DR.INNOVATION_WORK) INNOVATION_WORK,
+    AVG(DR.MOUTH_INDEX) MOUTH_INDEX,
+    DR.YEAR,
+    DR.MONTH,
+    ORGANIZATION.ORGANIZATION_CODE
+    from ASSESSMENT_DEPART_REPORT DR
+    left join ORGANIZATION on ORGANIZATION.id = DR.ORGANIZATION_ID
+    WHERE
+    DR.AMPUTATED=0
+    and ORGANIZATION.ORGANIZATION_CODE is  not  null
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year !=''"> DR.YEAR = #{year,jdbcType=DECIMAL} and </if>
+      <if test="month!=null and month !=''"> DR.MONTH = #{month,jdbcType=DECIMAL}and </if>
+    </trim>
+    group BY ORGANIZATION.ORGANIZATION_CODE,DR.YEAR,DR.MONTH
+  </select>
+
+  <update id="deleteByTemplateIdAndDate" parameterType="com.assessment.model.AssessmentDepartReport">
+    update ASSESSMENT_DEPART_REPORT
+    set AMPUTATED = 1,
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR}
+    where TEMPLATE_ID = #{templateId,jdbcType=DECIMAL} and YEAR = #{year,jdbcType=DECIMAL} and MONTH = #{month,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPlanId" parameterType="com.assessment.model.AssessmentDepartReport">
+    update ASSESSMENT_DEPART_REPORT
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataCompaction != null">
+        DATA_COMPACTION = #{dataCompaction,jdbcType=DECIMAL},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="doThings != null">
+        DO_THINGS = #{doThings,jdbcType=DECIMAL},
+      </if>
+      <if test="innovationWork != null">
+        INNOVATION_WORK = #{innovationWork,jdbcType=DECIMAL},
+      </if>
+      <if test="intermediaryService != null">
+        INTERMEDIARY_SERVICE = #{intermediaryService,jdbcType=DECIMAL},
+      </if>
+      <if test="jobLogging != null">
+        JOB_LOGGING = #{jobLogging,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="matterSeec != null">
+        MATTER_SEEC = #{matterSeec,jdbcType=DECIMAL},
+      </if>
+      <if test="month != null">
+        MONTH = #{month,jdbcType=DECIMAL},
+      </if>
+      <if test="mouthIndex != null">
+        MOUTH_INDEX = #{mouthIndex,jdbcType=DECIMAL},
+      </if>
+      <if test="onlineReporting != null">
+        ONLINE_REPORTING = #{onlineReporting,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="peopleSatisfaction != null">
+        PEOPLE_SATISFACTION = #{peopleSatisfaction,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="transactNorm != null">
+        TRANSACT_NORM = #{transactNorm,jdbcType=DECIMAL},
+      </if>
+      <if test="windowAccept != null">
+        WINDOW_ACCEPT = #{windowAccept,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null">
+        YEAR = #{year,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where PLAN_ID = #{planId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="findByPlanId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT ASSESSMENT_DEPART_REPORT.id,DO_THINGS,WINDOW_ACCEPT,ONLINE_REPORTING,MATTER_SEEC,DATA_COMPACTION,INTERMEDIARY_SERVICE,PEOPLE_SATISFACTION,JOB_LOGGING,
+     TRANSACT_NORM,INNOVATION_WORK FROM ASSESSMENT_DEPART_REPORT left join APPRAISAL_PLAN_ITEM on ASSESSMENT_DEPART_REPORT.PLAN_ID = APPRAISAL_PLAN_ITEM.PLAN_ID
+	where  APPRAISAL_PLAN_ITEM.id = #{id}
+  </select>
+</mapper>

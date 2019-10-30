@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assistdecision.mapper.mybatis.AppraisalPlanMapper">
+  <resultMap id="BaseResultMap" type="com.assistdecision.domain.output.AppraisalPlanOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DATUM_VALUE" jdbcType="DECIMAL" property="datumValue" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MONTH" jdbcType="DECIMAL" property="month" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="OBJECT_TYPE" jdbcType="DECIMAL" property="objectType" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="TEMPLATE_ID" jdbcType="DECIMAL" property="templateId" />
+    <result column="TYPE" jdbcType="DECIMAL" property="type" />
+    <result column="YEAR" jdbcType="DECIMAL" property="year" />
+    <result column="APPROVA_DATE_TIME" jdbcType="TIMESTAMP" property="approvaDateTime" />
+    <result column="APPROVA_USER_ID" jdbcType="DECIMAL" property="approvaUserId" />
+    <result column="APPROVA_USER_NAME" jdbcType="VARCHAR" property="approvaUserName" />
+    <result column="FINAL_SCORE" jdbcType="DECIMAL" property="finalScore" />
+    <result column="IS_STAR" jdbcType="DECIMAL" property="isStar" />
+    <result column="APPROVA_USER_NAME" jdbcType="VARCHAR" property="approvaUserName" />
+    <result column="employeeName" jdbcType="VARCHAR" property="employeeName" />
+    <result column="organizationName" jdbcType="VARCHAR" property="organizationName" />
+    <result column="office" jdbcType="VARCHAR" property="office" />
+    <result column="windowName" jdbcType="VARCHAR" property="windowName" />
+    <result column="window_state" jdbcType="DECIMAL" property="windowState" />
+    <result column="BANK_CARD_NUMBER" jdbcType="DECIMAL" property="bankCardNumber" />
+    <result column="IS_ENABLED" jdbcType="DECIMAL" property="isEnabled" />
+    <result column="ABSENCE_DAYS" jdbcType="DECIMAL" property="absenceDays" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DATUM_VALUE,
+    DESCRIPTION, DISPLAY_ORDER, EMPLOYEE_ID, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+    LAST_UPDATE_USER_NAME,MONTH, NAME, OBJECT_TYPE, ORGANIZATION_ID, STATE,
+    TEMPLATE_ID, TYPE, YEAR, APPROVA_DATE_TIME, APPROVA_USER_ID, APPROVA_USER_NAME, FINAL_SCORE,IS_STAR
+  </sql>
+
+<select id="selectScore" resultType="com.common.model.PageData" resultMap="BaseResultMap">
+  select t.orid as ORGANIZATION_ID ,t.orName as organizationName ,t.score as  FINAL_SCORE from
+  (select  ap.ORGANIZATION_ID as orid, o.NAME as orName, ap.FINAL_SCORE as score  from APPRAISAL_PLAN ap
+  left join "ORGANIZATION" o on o.ID = ap.ORGANIZATION_ID and o.AMPUTATED = 0 and ap.AMPUTATED = 0
+  where ORGANIZATION_ID is not null
+  <trim prefix="AND" suffixOverrides="and">
+    <if test="year!=null and year!=''">
+      AP.YEAR = #{year,jdbcType=DECIMAL} and
+    </if>
+    <if test="month!=null and month!=''">
+      AP.MONTH = #{month,jdbcType=DECIMAL} and
+    </if>
+     ap.FINAL_SCORE is not null order by ap.FINAL_SCORE desc)t
+    where ROWNUM &lt;13
+  </trim>
+</select>
+
+  <select id="selectScoreByDate" resultType="com.common.model.PageData" resultMap="BaseResultMap">
+     select
+		a.EMPLOYEE_ID,
+        a.FINAL_SCORE,
+		ai.DESCRIPTION as description ,
+		ai.SCORE_TYPE as scoreType,
+        (AI.DATUM_VALUE-AI.INDEX_SCORE) as ruleScore
+        from APPRAISAL_PLAN a
+        LEFT JOIN APPRAISAL_PLAN_ITEM ai
+        on AI.PLAN_ID=a."ID"
+        where
+		AI.QUANTITY > 0
+        and a.OBJECT_TYPE=1
+        and a.AMPUTATED = 0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and startTime!=''">
+        a."YEAR" = #{year,jdbcType=DECIMAL} and
+      </if>
+      <if test="month!=null and month!=''">
+        a."MONTH" =#{month,jdbcType=DECIMAL} and
+      </if>
+    </trim>
+    order by a.EMPLOYEE_ID
+  </select>
+
+</mapper>
+

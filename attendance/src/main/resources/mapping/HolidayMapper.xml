@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.HolidayMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.domian.output.HolidayOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="HOLIDAY_NAME" jdbcType="VARCHAR" property="holidayName" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="IS_WORK_DAY" jdbcType="DECIMAL" property="isWorkDay" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="ORDER_NUMBER" jdbcType="DECIMAL" property="orderNumber" />
+    <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION, END_DATE,
+    HOLIDAY_NAME, AMPUTATED, IS_WORK_DAY, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+    LAST_UPDATE_USER_NAME, ORDER_NUMBER, START_DATE, STATUS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from HOLIDAY
+    where ID = #{id,jdbcType=DECIMAL} and AMPUTATED = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from HOLIDAY
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.attendance.model.Holiday">
+    insert into HOLIDAY (ID, CREATED_DATE_TIME, CREATED_USER_ID,
+      CREATED_USER_NAME, DESCRIPTION, END_DATE,
+      HOLIDAY_NAME, AMPUTATED, IS_WORK_DAY,
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, ORDER_NUMBER, START_DATE,
+      STATUS)
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL},
+      #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{endDate,jdbcType=TIMESTAMP},
+      #{holidayName,jdbcType=VARCHAR}, #{amputated,jdbcType=DECIMAL}, #{isWorkDay,jdbcType=DECIMAL},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{orderNumber,jdbcType=DECIMAL}, #{startDate,jdbcType=TIMESTAMP},
+      #{status,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.Holiday">
+    insert into HOLIDAY
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="endDate != null">
+        END_DATE,
+      </if>
+      <if test="holidayName != null">
+        HOLIDAY_NAME,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="isWorkDay != null">
+        IS_WORK_DAY,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="orderNumber != null">
+        ORDER_NUMBER,
+      </if>
+      <if test="startDate != null">
+        START_DATE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="holidayName != null">
+        #{holidayName,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="isWorkDay != null">
+        #{isWorkDay,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.Holiday">
+    update HOLIDAY
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="endDate != null">
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="holidayName != null">
+        HOLIDAY_NAME = #{holidayName,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="isWorkDay != null">
+        IS_WORK_DAY = #{isWorkDay,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        ORDER_NUMBER = #{orderNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="startDate != null">
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.Holiday">
+    update HOLIDAY
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      HOLIDAY_NAME = #{holidayName,jdbcType=VARCHAR},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      IS_WORK_DAY = #{isWorkDay,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      ORDER_NUMBER = #{orderNumber,jdbcType=DECIMAL},
+      START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from HOLIDAY
+    WHERE  AMPUTATED=0
+    <trim prefix="and" suffixOverrides="and">
+      <if test="holidayName!=null and holidayName !='' ">
+        HOLIDAY_NAME like '%'||#{holidayName,jdbcType=VARCHAR}||'%' and
+      </if>
+    </trim>
+    ORDER BY HOLIDAY.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from HOLIDAY
+    WHERE  AMPUTATED=0
+    <trim prefix="and" suffixOverrides="and">
+      <if test="holidayName!=null and holidayName !='' ">
+        HOLIDAY_NAME like '%'||#{holidayName,jdbcType=VARCHAR}||'%' and
+      </if>
+    </trim>
+    ORDER BY HOLIDAY.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+  <select id="selectStatusById" parameterType="int" resultType="int">
+    select STATUS
+    from HOLIDAY
+    where ID = #{id,jdbcType=DECIMAL}
+    ORDER BY HOLIDAY.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+
+  <select id="findByIsWorkDay" resultMap="BaseResultMap">
+    select
+    START_DATE,END_DATE
+    from HOLIDAY
+    where IS_WORK_DAY=1;
+  </select>
+
+  <select id="isHoliday" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from HOLIDAY
+    WHERE  AMPUTATED=0 and STATUS =1 and IS_WORK_DAY = 1
+    and  START_DATE &lt;= TO_DATE (#{days},'yyyy-mm-dd') and END_DATE &gt;= TO_DATE (#{days},'yyyy-mm-dd')
+  </select>
+
+  <select id="isWorkDay" parameterType="java.lang.String"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from HOLIDAY
+    WHERE  AMPUTATED=0 and STATUS =1 and IS_WORK_DAY = 3
+    and  START_DATE &lt;=TO_DATE (#{days},'yyyy-mm-dd') and END_DATE &gt;= TO_DATE (#{days},'yyyy-mm-dd')
+  </select>
+
+  <select id="holidayAll" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from HOLIDAY
+    WHERE  AMPUTATED=0
+      and STATUS =1
+      and IS_WORK_DAY = #{isWorkday,jdbcType=DECIMAL}
+      and START_DATE &lt;= #{endDate,jdbcType=TIMESTAMP} and END_DATE &gt;= #{startDate,jdbcType=TIMESTAMP}
+  </select>
+
+</mapper>

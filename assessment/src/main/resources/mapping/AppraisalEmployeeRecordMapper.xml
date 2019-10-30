@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalEmployeeRecordMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.AppraisalEmployeeRecordOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="APPRAISAL_ID" jdbcType="DECIMAL" property="appraisalId" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DEFAULT_SCORE" jdbcType="DECIMAL" property="defaultScore" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="LIMITS" jdbcType="DECIMAL" property="limits" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="RULE_ID" jdbcType="DECIMAL" property="ruleId" />
+    <result column="SCORE" jdbcType="DECIMAL" property="score" />
+    <result column="SCORE_SOURCE" jdbcType="DECIMAL" property="scoreSource" />
+    <result column="SCORE_TYPE" jdbcType="DECIMAL" property="scoreType" />
+    <result column="VALUE" jdbcType="DECIMAL" property="value" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="RECORD_DATE_TIME" jdbcType="TIMESTAMP" property="recordDateTime" />
+     <result column="IS_VALID" jdbcType="DECIMAL" property="isValid"/>
+    <result column="rulename" jdbcType="VARCHAR" property="ruleName" />
+    <result column="indexname" jdbcType="VARCHAR" property="indexName" />
+    <result column="employeename" jdbcType="VARCHAR" property="employeeName" />
+    <result column="organizationname" jdbcType="VARCHAR" property="organizationName" />
+  </resultMap>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+       SELECT
+	RECORDS.APPRAISAL_ID,
+	RECORDS.ID,
+	RECORDS.CREATED_DATE_TIME,
+	RECORDS.RECORD_DATE_TIME,
+	RECORDS.CREATED_USER_ID,
+	RECORDS.CREATED_USER_NAME,
+	RECORDS.DEFAULT_SCORE,
+	RECORDS.DESCRIPTION,
+	RECORDS.DISPLAY_ORDER,
+	RECORDS.EMPLOYEE_ID,
+	RECORDS.LAST_UPDATE_DATE_TIME,
+	RECORDS.LAST_UPDATE_USER_ID,
+	RECORDS.LAST_UPDATE_USER_NAME,
+	RECORDS.LIMITS,
+	RECORDS.ORGANIZATION_ID,
+	RECORDS.RULE_ID,
+	RECORDS.SCORE,
+	RECORDS.SCORE_SOURCE,
+	RECORDS.VALUE,
+	RECORDS.SCORE_TYPE,
+	RECORDS.AMPUTATED,
+	RECORDS.STATE,
+	RECORDS.IS_VALID,
+	rule.NAME AS rulename,
+	a.NAME AS indexname,
+	EMPLOYEES.name as employeename,
+	organ.name as organizationname
+FROM
+	APPRAISAL_EMPLOYEE_RECORD RECORDS
+	LEFT JOIN APPRAISAL_RULE rule ON rule.id = RECORDS.RULE_ID
+	LEFT JOIN APPRAISAL_INDEX a ON RECORDS.APPRAISAL_ID=a.id
+	left JOIN EMPLOYEES employees on EMPLOYEES.id=RECORDS.EMPLOYEE_ID
+	left JOIN ORGANIZATION organ on organ.id=RECORDS.ORGANIZATION_ID
+    where RECORDS.ID = #{id,jdbcType=DECIMAL} and RECORDS.AMPUTATED=0
+  </select>
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+        SELECT
+	RECORDS.APPRAISAL_ID,
+	RECORDS.ID,
+	RECORDS.CREATED_DATE_TIME,
+	RECORDS.CREATED_USER_ID,
+	RECORDS.CREATED_USER_NAME,
+    RECORDS.RECORD_DATE_TIME,
+	RECORDS.DEFAULT_SCORE,
+	RECORDS.DESCRIPTION,
+	RECORDS.DISPLAY_ORDER,
+	RECORDS.EMPLOYEE_ID,
+	RECORDS.LAST_UPDATE_DATE_TIME,
+	RECORDS.LAST_UPDATE_USER_ID,
+	RECORDS.LAST_UPDATE_USER_NAME,
+	RECORDS.LIMITS,
+	RECORDS.ORGANIZATION_ID,
+	RECORDS.RULE_ID,
+	RECORDS.SCORE,
+	RECORDS.SCORE_SOURCE,
+	RECORDS.VALUE,
+	RECORDS.SCORE_TYPE,
+	RECORDS.AMPUTATED,
+    RECORDS.STATE,
+    RECORDS.IS_VALID,
+	rule.NAME AS rulename,
+	a.NAME AS indexname,
+      employees.name as employeename,
+      employees.EMPLOYEE_NO,
+      organization.name as organizationname
+FROM
+	APPRAISAL_EMPLOYEE_RECORD RECORDS
+	LEFT JOIN APPRAISAL_RULE rule ON rule.id = RECORDS.RULE_ID
+	LEFT JOIN APPRAISAL_INDEX a ON RECORDS.APPRAISAL_ID=a.id
+	left JOIN EMPLOYEES employees on EMPLOYEES.id=RECORDS.EMPLOYEE_ID
+	left JOIN ORGANIZATION organization on organization.id=RECORDS.ORGANIZATION_ID
+    WHERE  RECORDS.AMPUTATED=0
+      <if test="orgId!=null or employeeId!=null">
+      AND (EXISTS (
+      SELECT
+      organization.ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      organization.id = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+          UNION ALL
+          SELECT
+          organ.ID
+          FROM
+          ORGANIZATION organ
+          WHERE
+          (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+          AND organization.id = organ.id
+          AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeId!=null">
+          or RECORDS.EMPLOYEE_ID = #{employeeId}
+      </if>
+      )
+      </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="ruleId!=null and ruleId !=''"> RECORDS.RULE_ID = #{ruleId,jdbcType=DECIMAL} and </if>
+      <if test="appraisalId !=null and appraisalId !=''"> RECORDS.APPRAISAL_ID = #{appraisalId,jdbcType=DECIMAL} and </if>
+      <if test="employeesId !=null and employeesId !=''">RECORDS.EMPLOYEE_ID = #{employeesId,jdbcType=DECIMAL} and </if>
+      <if test="path !=null and path !=''">CONCAT(organization.path,',') like '%'||#{path}||'%'and </if>
+      <if test="name !=null and name !=''"> employees.name  like '%'||#{name}||'%' and </if>
+
+        <if test="startDate!=null and startDate != '' and endDate !=null and endDate != ''">
+            TO_DATE (#{startDate},'YYYY-MM-DD') &lt; = RECORDS.RECORD_DATE_TIME and
+            TO_DATE (#{endDate},'YYYY-MM-DD') &gt; = RECORDS.RECORD_DATE_TIME  and
+        </if>
+    </trim>
+      ORDER BY organization.NAME,employees.EMPLOYEE_NO DESC
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+      SELECT
+      RECORDS.APPRAISAL_ID,
+      RECORDS.ID,
+      RECORDS.CREATED_DATE_TIME,
+      RECORDS.CREATED_USER_ID,
+      RECORDS.CREATED_USER_NAME,
+      RECORDS.RECORD_DATE_TIME,
+      RECORDS.DEFAULT_SCORE,
+      RECORDS.DESCRIPTION,
+      RECORDS.DISPLAY_ORDER,
+      RECORDS.EMPLOYEE_ID,
+      RECORDS.LAST_UPDATE_DATE_TIME,
+      RECORDS.LAST_UPDATE_USER_ID,
+      RECORDS.LAST_UPDATE_USER_NAME,
+      RECORDS.LIMITS,
+      RECORDS.ORGANIZATION_ID,
+      RECORDS.RULE_ID,
+      RECORDS.SCORE,
+      RECORDS.SCORE_SOURCE,
+      RECORDS.VALUE,
+      RECORDS.SCORE_TYPE,
+      RECORDS.AMPUTATED,
+      RECORDS.STATE,
+      RECORDS.IS_VALID,
+      rule.NAME AS rulename,
+      a.NAME AS indexname,
+      employees.name as employeename,
+      organization.name as organizationname
+      FROM
+      APPRAISAL_EMPLOYEE_RECORD RECORDS
+      LEFT JOIN APPRAISAL_RULE rule ON rule.id = RECORDS.RULE_ID
+      LEFT JOIN APPRAISAL_INDEX a ON RECORDS.APPRAISAL_ID=a.id
+      left JOIN EMPLOYEES employees on EMPLOYEES.id=RECORDS.EMPLOYEE_ID
+      left JOIN ORGANIZATION organization on organization.id=RECORDS.ORGANIZATION_ID
+      WHERE  RECORDS.AMPUTATED=0
+      <if test="orgId!=null or employeeId!=null">
+      AND (EXISTS (
+      SELECT
+      organization.ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      organization.id = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+          UNION ALL
+          SELECT
+          organ.ID
+          FROM
+          ORGANIZATION organ
+          WHERE
+          (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+          AND organization.id = organ.id
+          AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeId!=null">
+          or RECORDS.EMPLOYEE_ID = #{employeeId}
+      </if>
+      )
+      </if>
+      <trim prefix="AND" suffixOverrides="and">
+          <if test="ruleId!=null and ruleId !=''"> RECORDS.RULE_ID = #{ruleId,jdbcType=DECIMAL} and </if>
+          <if test="appraisalId !=null and appraisalId !=''"> RECORDS.APPRAISAL_ID = #{appraisalId,jdbcType=DECIMAL} and </if>
+          <if test="employeesId !=null and employeesId !=''"> RECORDS.EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL} and </if>
+          <if test="name !=null and name !=''">  employees.name  like '%'||#{name}||'%' and  and </if>
+          <if test="path !=null and path !=''">CONCAT(organization.path,',') like '%'||#{path}||'%'and </if>
+
+          <if test="startDate!=null and startDate != '' and endDate !=null and endDate != ''">
+              TO_DATE (#{startDate},'YYYY-MM-DD') &lt; = RECORDS.RECORD_DATE_TIME and
+              TO_DATE (#{endDate},'YYYY-MM-DD') &gt; = RECORDS.RECORD_DATE_TIME  and
+          </if>
+
+      </trim>
+      ORDER BY RECORDS.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+    <select id="selectByPlan" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+        SELECT
+        RECORDS.APPRAISAL_ID,
+        RECORDS.ID,
+        RECORDS.CREATED_DATE_TIME,
+        RECORDS.CREATED_USER_ID,
+        RECORDS.CREATED_USER_NAME,
+        RECORDS.RECORD_DATE_TIME,
+        RECORDS.DEFAULT_SCORE,
+        RECORDS.DESCRIPTION,
+        RECORDS.DISPLAY_ORDER,
+        RECORDS.EMPLOYEE_ID,
+        RECORDS.LAST_UPDATE_DATE_TIME,
+        RECORDS.LAST_UPDATE_USER_ID,
+        RECORDS.LAST_UPDATE_USER_NAME,
+        RECORDS.LIMITS,
+        RECORDS.ORGANIZATION_ID,
+        RECORDS.RULE_ID,
+        RECORDS.SCORE,
+        RECORDS.SCORE_SOURCE,
+        RECORDS.VALUE,
+        RECORDS.SCORE_TYPE,
+        RECORDS.AMPUTATED,
+        RECORDS.STATE,
+        RECORDS.IS_VALID,
+        rule.NAME AS rulename,
+        a.NAME AS indexname,
+        EMPLOYEES.name as employeename,
+        organ.name as organizationname
+        FROM
+        APPRAISAL_EMPLOYEE_RECORD RECORDS
+        LEFT JOIN APPRAISAL_RULE rule ON rule.id = RECORDS.RULE_ID
+        LEFT JOIN APPRAISAL_INDEX a ON RECORDS.APPRAISAL_ID=a.id
+        left JOIN EMPLOYEES employees on EMPLOYEES.id=RECORDS.EMPLOYEE_ID
+        left JOIN ORGANIZATION organ on organ.id=RECORDS.ORGANIZATION_ID
+        WHERE  RECORDS.AMPUTATED=0
+        and RECORDS.IS_VALID = 0
+        and TO_CHAR (RECORDS.RECORD_DATE_TIME,'yyyy-mm') = #{date,jdbcType=VARCHAR}
+        and RECORDS.EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL}
+        ORDER BY RECORDS.LAST_UPDATE_DATE_TIME DESC
+    </select>
+
+
+    <select id="selectByDate" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+        SELECT
+        RECORDS.APPRAISAL_ID,
+        RECORDS.ID,
+        RECORDS.CREATED_DATE_TIME,
+        RECORDS.CREATED_USER_ID,
+        RECORDS.CREATED_USER_NAME,
+        RECORDS.RECORD_DATE_TIME,
+        RECORDS.DEFAULT_SCORE,
+        RECORDS.DESCRIPTION,
+        RECORDS.DISPLAY_ORDER,
+        RECORDS.EMPLOYEE_ID,
+        RECORDS.LAST_UPDATE_DATE_TIME,
+        RECORDS.LAST_UPDATE_USER_ID,
+        RECORDS.LAST_UPDATE_USER_NAME,
+        RECORDS.LIMITS,
+        RECORDS.ORGANIZATION_ID,
+        RECORDS.RULE_ID,
+        RECORDS.SCORE,
+        RECORDS.SCORE_SOURCE,
+        RECORDS.VALUE,
+        RECORDS.SCORE_TYPE,
+        RECORDS.AMPUTATED,
+        RECORDS.STATE
+        RECORDS.IS_VALID
+        FROM
+        APPRAISAL_EMPLOYEE_RECORD RECORDS
+        WHERE  RECORDS.AMPUTATED=0  and RECORDS.state=1
+        and TO_CHAR (RECORDS.RECORD_DATE_TIME,'yyyy-mm') = #{date,jdbcType=VARCHAR}
+        ORDER BY RECORDS.LAST_UPDATE_DATE_TIME DESC
+    </select>
+
+    <select id="getByState"  resultMap="BaseResultMap">
+        SELECT APPRAISAL_EMPLOYEE_RECORD.* FROM APPRAISAL_EMPLOYEE_RECORD where  APPRAISAL_EMPLOYEE_RECORD.id not in (
+	SELECT RESOURCE_ID FROM APPROVAL_ASSOCIATION_NEW where APPROVAL_TYPE = 17
+	)  and state = 0 and AMPUTATED = 0  order by CREATED_DATE_TIME desc
+    </select>
+
+</mapper>

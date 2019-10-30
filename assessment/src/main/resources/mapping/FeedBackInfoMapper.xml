@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.FeedBackInfoMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.model.FeedBackInfo">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="APPRAISE_STATE" jdbcType="DECIMAL" property="appraiseState" />
+    <result column="APPRAISE_TIME" jdbcType="VARCHAR" property="appraiseTime" />
+    <result column="COMPLETE_RATE" jdbcType="DECIMAL" property="completeRate" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DEADLINE" jdbcType="VARCHAR" property="deadline" />
+    <result column="EMPLOYEES_NAME" jdbcType="VARCHAR" property="employeesName" />
+    <result column="EMPLOYEES_NO" jdbcType="VARCHAR" property="employeesNo" />
+    <result column="FEEDBACK_TIME" jdbcType="TIMESTAMP" property="feedbackTime" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MATTERS" jdbcType="VARCHAR" property="matters" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="PERSON_NAME" jdbcType="VARCHAR" property="personName" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="SATISFACTION" jdbcType="DECIMAL" property="satisfaction" />
+    <result column="SEND_STATE" jdbcType="DECIMAL" property="sendState" />
+    <result column="WINDOW_NO" jdbcType="VARCHAR" property="windowNo" />
+    <result column="SUGGEST_ID" jdbcType="DECIMAL" property="suggestId" />
+    <result column="ONE_DETAIL" jdbcType="VARCHAR" property="oneDetail" />
+    <result column="TWO_DETAIL" jdbcType="VARCHAR" property="twoDetail" />
+    <result column="RESOURCE_ID" jdbcType="DECIMAL" property="resourceId" />
+    <result column="sizeVal" jdbcType="DECIMAL" property="sizeVal" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, APPRAISE_STATE, APPRAISE_TIME, COMPLETE_RATE, CREATED_DATE_TIME, CREATED_USER_ID,
+    CREATED_USER_NAME, DEADLINE, EMPLOYEES_NAME, EMPLOYEES_NO, FEEDBACK_TIME, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MATTERS, ORGANIZATION_ID, ORGANIZATION_NAME,
+    PERSON_NAME, PHONE, SATISFACTION, SEND_STATE, WINDOW_NO, SUGGEST_ID, ONE_DETAIL,
+    TWO_DETAIL, RESOURCE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from FEEDBACK_INFO
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from FEEDBACK_INFO
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.FeedBackInfo">
+    insert into FEEDBACK_INFO (ID, AMPUTATED, APPRAISE_STATE,
+      APPRAISE_TIME, COMPLETE_RATE, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DEADLINE,
+      EMPLOYEES_NAME, EMPLOYEES_NO, FEEDBACK_TIME,
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, MATTERS, ORGANIZATION_ID,
+      ORGANIZATION_NAME, PERSON_NAME, PHONE,
+      SATISFACTION, SEND_STATE, WINDOW_NO,
+      SUGGEST_ID, ONE_DETAIL, TWO_DETAIL,
+      RESOURCE_ID)
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{appraiseState,jdbcType=DECIMAL},
+      #{appraiseTime,jdbcType=VARCHAR}, #{completeRate,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{deadline,jdbcType=VARCHAR},
+      #{employeesName,jdbcType=VARCHAR}, #{employeesNo,jdbcType=VARCHAR}, #{feedbackTime,jdbcType=TIMESTAMP},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{matters,jdbcType=VARCHAR}, #{organizationId,jdbcType=DECIMAL},
+      #{organizationName,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{satisfaction,jdbcType=DECIMAL}, #{sendState,jdbcType=DECIMAL}, #{windowNo,jdbcType=VARCHAR},
+      #{suggestId,jdbcType=DECIMAL}, #{oneDetail,jdbcType=VARCHAR}, #{twoDetail,jdbcType=VARCHAR},
+      #{resourceId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.FeedBackInfo">
+    insert into FEEDBACK_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="appraiseState != null">
+        APPRAISE_STATE,
+      </if>
+      <if test="appraiseTime != null">
+        APPRAISE_TIME,
+      </if>
+      <if test="completeRate != null">
+        COMPLETE_RATE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="deadline != null">
+        DEADLINE,
+      </if>
+      <if test="employeesName != null">
+        EMPLOYEES_NAME,
+      </if>
+      <if test="employeesNo != null">
+        EMPLOYEES_NO,
+      </if>
+      <if test="feedbackTime != null">
+        FEEDBACK_TIME,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="matters != null">
+        MATTERS,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME,
+      </if>
+      <if test="personName != null">
+        PERSON_NAME,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="satisfaction != null">
+        SATISFACTION,
+      </if>
+      <if test="sendState != null">
+        SEND_STATE,
+      </if>
+      <if test="windowNo != null">
+        WINDOW_NO,
+      </if>
+      <if test="suggestId != null">
+        SUGGEST_ID,
+      </if>
+      <if test="oneDetail != null">
+        ONE_DETAIL,
+      </if>
+      <if test="twoDetail != null">
+        TWO_DETAIL,
+      </if>
+      <if test="resourceId != null">
+        RESOURCE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="appraiseState != null">
+        #{appraiseState,jdbcType=DECIMAL},
+      </if>
+      <if test="appraiseTime != null">
+        #{appraiseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="completeRate != null">
+        #{completeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesName != null">
+        #{employeesName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesNo != null">
+        #{employeesNo,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackTime != null">
+        #{feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="matters != null">
+        #{matters,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationName != null">
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="satisfaction != null">
+        #{satisfaction,jdbcType=DECIMAL},
+      </if>
+      <if test="sendState != null">
+        #{sendState,jdbcType=DECIMAL},
+      </if>
+      <if test="windowNo != null">
+        #{windowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestId != null">
+        #{suggestId,jdbcType=DECIMAL},
+      </if>
+      <if test="oneDetail != null">
+        #{oneDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="twoDetail != null">
+        #{twoDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null">
+        #{resourceId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.FeedBackInfo">
+    update FEEDBACK_INFO
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="appraiseState != null">
+        APPRAISE_STATE = #{appraiseState,jdbcType=DECIMAL},
+      </if>
+      <if test="appraiseTime != null">
+        APPRAISE_TIME = #{appraiseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="completeRate != null">
+        COMPLETE_RATE = #{completeRate,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null">
+        DEADLINE = #{deadline,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesName != null">
+        EMPLOYEES_NAME = #{employeesName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesNo != null">
+        EMPLOYEES_NO = #{employeesNo,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackTime != null">
+        FEEDBACK_TIME = #{feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="matters != null">
+        MATTERS = #{matters,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="satisfaction != null">
+        SATISFACTION = #{satisfaction,jdbcType=DECIMAL},
+      </if>
+      <if test="sendState != null">
+        SEND_STATE = #{sendState,jdbcType=DECIMAL},
+      </if>
+      <if test="windowNo != null">
+        WINDOW_NO = #{windowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestId != null">
+        SUGGEST_ID = #{suggestId,jdbcType=DECIMAL},
+      </if>
+      <if test="oneDetail != null">
+        ONE_DETAIL = #{oneDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="twoDetail != null">
+        TWO_DETAIL = #{twoDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null">
+        RESOURCE_ID = #{resourceId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.FeedBackInfo">
+    update FEEDBACK_INFO
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      APPRAISE_STATE = #{appraiseState,jdbcType=DECIMAL},
+      APPRAISE_TIME = #{appraiseTime,jdbcType=VARCHAR},
+      COMPLETE_RATE = #{completeRate,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DEADLINE = #{deadline,jdbcType=VARCHAR},
+      EMPLOYEES_NAME = #{employeesName,jdbcType=VARCHAR},
+      EMPLOYEES_NO = #{employeesNo,jdbcType=VARCHAR},
+      FEEDBACK_TIME = #{feedbackTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MATTERS = #{matters,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      PERSON_NAME = #{personName,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      SATISFACTION = #{satisfaction,jdbcType=DECIMAL},
+      SEND_STATE = #{sendState,jdbcType=DECIMAL},
+      WINDOW_NO = #{windowNo,jdbcType=VARCHAR},
+      SUGGEST_ID = #{suggestId,jdbcType=DECIMAL},
+      ONE_DETAIL = #{oneDetail,jdbcType=VARCHAR},
+      TWO_DETAIL = #{twoDetail,jdbcType=VARCHAR},
+      RESOURCE_ID = #{resourceId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="findByDate" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT ORGANIZATION_ID,"COUNT"(1) sizeVal FROM FEEDBACK_INFO where TO_CHAR (#{time},'YYYY-MM') = TO_CHAR (FEEDBACK_INFO.FEEDBACK_TIME,'YYYY-MM') AND ORGANIZATION_ID IS NOT null GROUP BY ORGANIZATION_ID
+  </select>
+</mapper>

@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.LeaveApplicationMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.domian.output.LeaveApplicationOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="END_TIME_KEY" jdbcType="DECIMAL" property="endTimeKey"/>
+    <result column="START_TIME_KEY" jdbcType="DECIMAL" property="startTimeKey"/>
+    <result column="DURATION" jdbcType="DECIMAL" property="duration"/>
+    <result column="APPLICATION_TYPE" jdbcType="DECIMAL" property="applicationType" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="EMPLOYEES_ID" jdbcType="DECIMAL" property="employeesId" />
+    <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="END_TIME" jdbcType="VARCHAR" property="endTime" />
+    <result column="IS_COLLECTION" jdbcType="DECIMAL" property="isCollection" />
+    <result column="IS_CYCLE" jdbcType="DECIMAL" property="isCycle" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="ORDER_NUMBER" jdbcType="DECIMAL" property="orderNumber" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="EMPLOYEES_NAME" jdbcType="VARCHAR" property="employeesName"/>
+    <result column="START_DATE" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="REPORT_START_DATE" jdbcType="TIMESTAMP" property="reportStartDate"/>
+    <result column="REPORT_END_DATE" jdbcType="TIMESTAMP" property="reportEndDate"/>
+    <result column="START_TIME" jdbcType="VARCHAR" property="startTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="APPLICATION_TYPE_NAME" jdbcType="VARCHAR" property="applicationTypeName" />
+    <result column="IS_COLLECTION_NAME" jdbcType="VARCHAR" property="collectionName"/>
+    <result column="IS_CYCLE_NAME" jdbcType="VARCHAR" property="cycleName"/>
+    <result column="REPLACE_PERSON" jdbcType="VARCHAR" property="replacePerson"/>
+    <result column="VERIFICATION_TIME_ONE" jdbcType="TIMESTAMP" property="verificationTimeOne" />
+    <result column="VERIFICATION_TIME_TWO" jdbcType="TIMESTAMP" property="verificationTimeTwo" />
+    <result column="SOURCE" jdbcType="DECIMAL" property="source" />
+    <result column="IS_SYNC" jdbcType="DECIMAL" property="isSync" />
+    <result column="LEAVE_WE_CHAT_ID" jdbcType="DECIMAL" property="leaveWeChatId" />
+  </resultMap>
+  <resultMap id="AttendancePunchMap" type="com.attendance.domian.output.AttendancePunch">
+    <result column="employeeId" property="employeeId" />
+    <result column="latestWorkingTime"  property="latestWorkingTime" />
+    <result column="firstOffWorkTime"  property="firstOffWorkTime" />
+  </resultMap>
+
+  <resultMap id="verficationMap" type="com.attendance.domian.output.VerificationOutput">
+    <result column="leaveApplicationId" property="leaveApplicationId" />
+    <result column="applicationType"  property="applicationType" />
+    <result column="applicationTypeName"  property="applicationTypeName" />
+    <result column="startTime"  property="startTime" />
+    <result column="endTime"  property="endTime" />
+    <result column="verificationTimeOne"  property="verificationTimeOne" />
+    <result column="verificationTimeTwo"  property="verificationTimeTwo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, APPLICATION_TYPE, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+    EMPLOYEES_ID, END_DATE, END_TIME, IS_COLLECTION, IS_CYCLE, AMPUTATED, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, ORDER_NUMBER, ORGANIZATION_ID, START_DATE,
+    START_TIME, STATUS, DURATION,REPORT_START_DATE,REPORT_END_DATE,VERIFICATION_TIME_ONE,VERIFICATION_TIME_TWO,
+    SOURCE,IS_SYNC,LEAVE_WE_CHAT_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
+  select
+      L.ID,
+      L.ORGANIZATION_ID,
+      L.EMPLOYEES_ID,
+      L.LAST_UPDATE_DATE_TIME,
+      O.NAME  ORGANIZATION_NAME,
+      E.NAME  EMPLOYEES_NAME,
+      L.APPLICATION_TYPE ,
+      L.DESCRIPTION ,
+      L.END_DATE ,
+      L.END_TIME ,
+      L.START_DATE ,
+      L.START_TIME ,
+      L.STATUS,
+      L.IS_CYCLE,
+      L.IS_COLLECTION,
+      L.DURATION,
+      L.START_TIME_KEY,
+      L.END_TIME_KEY,
+      L.CREATED_USER_NAME,
+      L.REPLACE_PERSON,
+      L.REPORT_START_DATE,
+      L.REPORT_END_DATE
+    from LEAVE_APPLICATION  L
+    left join ORGANIZATION  O on L.ORGANIZATION_ID = O.ID and O.AMPUTATED=0
+    left join EMPLOYEES   E on L.EMPLOYEES_ID = E.ID and E.AMPUTATED=0
+    where L.ID = #{id,jdbcType=DECIMAL} and L.AMPUTATED = 0
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from LEAVE_APPLICATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.attendance.model.LeaveApplication">
+    insert into LEAVE_APPLICATION (ID, APPLICATION_TYPE, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+      EMPLOYEES_ID, END_DATE, END_TIME,
+      IS_COLLECTION, IS_CYCLE, AMPUTATED,
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, ORDER_NUMBER, ORGANIZATION_ID,
+      START_DATE, START_TIME, STATUS
+      )
+    values (#{id,jdbcType=DECIMAL}, #{applicationType,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{employeesId,jdbcType=DECIMAL}, #{endDate,jdbcType=TIMESTAMP}, #{endTime,jdbcType=VARCHAR},
+      #{isCollection,jdbcType=DECIMAL}, #{isCycle,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{orderNumber,jdbcType=DECIMAL}, #{organizationId,jdbcType=DECIMAL},
+      #{startDate,jdbcType=TIMESTAMP}, #{startTime,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.LeaveApplication">
+    insert into LEAVE_APPLICATION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="applicationType != null">
+        APPLICATION_TYPE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="employeesId != null">
+        EMPLOYEES_ID,
+      </if>
+      <if test="endDate != null">
+        END_DATE,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="isCollection != null">
+        IS_COLLECTION,
+      </if>
+      <if test="isCycle != null">
+        IS_CYCLE,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="orderNumber != null">
+        ORDER_NUMBER,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="startDate != null">
+        START_DATE,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="applicationType != null">
+        #{applicationType,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesId != null">
+        #{employeesId,jdbcType=DECIMAL},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isCollection != null">
+        #{isCollection,jdbcType=DECIMAL},
+      </if>
+      <if test="isCycle != null">
+        #{isCycle,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.LeaveApplication">
+    update LEAVE_APPLICATION
+    <set>
+      <if test="applicationType != null">
+        APPLICATION_TYPE = #{applicationType,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesId != null">
+        EMPLOYEES_ID = #{employeesId,jdbcType=DECIMAL},
+      </if>
+      <if test="endDate != null">
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isCollection != null">
+        IS_COLLECTION = #{isCollection,jdbcType=DECIMAL},
+      </if>
+      <if test="isCycle != null">
+        IS_CYCLE = #{isCycle,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null">
+        ORDER_NUMBER = #{orderNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="startDate != null">
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.LeaveApplication">
+    update LEAVE_APPLICATION
+    set APPLICATION_TYPE = #{applicationType,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      EMPLOYEES_ID = #{employeesId,jdbcType=DECIMAL},
+      END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=VARCHAR},
+      IS_COLLECTION = #{isCollection,jdbcType=DECIMAL},
+      IS_CYCLE = #{isCycle,jdbcType=DECIMAL},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      ORDER_NUMBER = #{orderNumber,jdbcType=DECIMAL},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      START_TIME = #{startTime,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+      L.ID,
+      O.NAME  ORGANIZATION_NAME,
+      E.NAME  EMPLOYEES_NAME,
+      L.APPLICATION_TYPE ,
+      L.DESCRIPTION ,
+      L.END_DATE ,
+      L.END_TIME ,
+      L.START_DATE ,
+      L.START_TIME ,
+      L.STATUS,
+      L.IS_CYCLE,
+      L.IS_COLLECTION,
+      L.DURATION,
+      L.START_TIME_KEY,
+      L.END_TIME_KEY,
+      L.CREATED_USER_NAME,
+      L.LAST_UPDATE_DATE_TIME,
+      L.CREATED_DATE_TIME
+    from LEAVE_APPLICATION  L
+    left join ORGANIZATION  O on L.ORGANIZATION_ID = O.ID and O.AMPUTATED=0
+    left join EMPLOYEES   E on L.EMPLOYEES_ID = E.ID and E.AMPUTATED=0
+    where 1=1
+    <if test="orgId!=null or employeeId!=null">
+    AND (EXISTS (
+    SELECT
+    ROLE_ORGAN.ORGAN_ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    o.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND o.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    <if test="employeeId!=null">
+      or (L.CREATED_USER_ID = #{userId,jdbcType=DECIMAL} or L.EMPLOYEES_ID = #{employeesId,jdbcType=DECIMAL})
+    </if>
+    )
+    </if>
+    <trim prefix="and" suffixOverrides="and">
+        <if test="organizationName!=null and organizationName !='' ">
+           O.NAME like '%'||#{organizationName,jdbcType=VARCHAR}||'%' and
+        </if>
+        <if test="employeesName!=null and employeesName !='' ">
+          E.NAME like '%'||#{employeesName,jdbcType=VARCHAR}||'%' and
+        </if>
+        <if test="startDate!=null and startDate!=''">
+           L.START_DATE &gt;= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd') and
+        </if>
+        <if test="endDate!=null and endDate!=''">
+           L.END_DATE  &lt;= to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd') and
+        </if>
+        <if test="status!=null">
+         L.STATUS = #{status,jdbcType=DECIMAL} and
+      </if>
+        <if test="isCollection!=null">
+           L.IS_COLLECTION=#{isCollection,jdbcType=DECIMAL} and
+        </if>
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%'and
+      </if>
+      <if test="applicationType!=null and  applicationType!=''">
+        APPLICATION_TYPE = #{applicationType,jdbcType=DECIMAL} and
+      </if>
+         L.AMPUTATED = 0
+    </trim>
+    ORDER BY L.LAST_UPDATE_DATE_TIME DESC
+
+  </select>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    L.ID,
+    O.NAME  ORGANIZATION_NAME,
+    E.NAME  EMPLOYEES_NAME,
+    L.APPLICATION_TYPE ,
+    L.DESCRIPTION ,
+    L.END_DATE ,
+    L.END_TIME ,
+    L.START_DATE ,
+    L.START_TIME ,
+    L.STATUS,
+    L.IS_CYCLE,
+    L.IS_COLLECTION,
+    L.DURATION,
+    L.START_TIME_KEY,
+    L.END_TIME_KEY,
+    L.CREATED_USER_NAME,
+    L.LAST_UPDATE_DATE_TIME,
+    L.CREATED_DATE_TIME
+    from LEAVE_APPLICATION  L
+    left join ORGANIZATION  O on L.ORGANIZATION_ID = O.ID and O.AMPUTATED=0
+    left join EMPLOYEES   E on L.EMPLOYEES_ID = E.ID and E.AMPUTATED=0
+    where 1=1
+    <if test="orgId!=null or employeeId!=null">
+      AND (EXISTS (
+      SELECT
+      o.ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      o.id = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+        UNION ALL
+        SELECT
+        organ.ID
+        FROM
+        ORGANIZATION organ
+        WHERE
+        (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+        AND o.id = organ.id
+        AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeId!=null">
+        or (L.CREATED_USER_ID = #{userId,jdbcType=DECIMAL} or L.EMPLOYEES_ID = #{employeesId,jdbcType=DECIMAL})
+      </if>
+      )
+    </if>
+    <trim prefix="and" suffixOverrides="and">
+      <if test="organizationName!=null and organizationName !='' ">
+        O.NAME like '%'||#{organizationName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="employeesName!=null and employeesName !='' ">
+        E.NAME like '%'||#{employeesName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="startDate!=null and startDate!=''">
+        L.START_DATE &gt;= to_date(#{startDate,jdbcType=VARCHAR},'yyyy-MM-dd') and
+      </if>
+      <if test="endDate!=null and endDate!=''">
+        L.END_DATE  &lt;= to_date(#{endDate,jdbcType=VARCHAR},'yyyy-MM-dd') and
+      </if>
+      <if test="status!=null">
+        L.STATUS = #{status,jdbcType=DECIMAL} and
+      </if>
+      <if test="isCollection!=null">
+        L.IS_COLLECTION=#{isCollection,jdbcType=DECIMAL} and
+      </if>
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%'and
+      </if>
+      <if test="applicationType!=null and  applicationType!=''">
+        APPLICATION_TYPE = #{applicationType,jdbcType=DECIMAL} and
+      </if>
+      L.AMPUTATED = 0
+    </trim>
+    ORDER BY L.LAST_UPDATE_DATE_TIME DESC
+
+  </select>
+
+  <select id="selectStatusById" parameterType="int" resultType="int">
+    select STATUS
+    from LEAVE_APPLICATION L
+    where ID=#{id,jdbcType=DECIMAL}
+    ORDER BY L.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectListByStatus" resultType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from LEAVE_APPLICATION L
+    where STATUS = #{status,jdbcType=DECIMAL}
+    ORDER BY L.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectIsCollectionByIdAndStatus" parameterType="map" resultType="int">
+    select IS_COLLECTION
+    from LEAVE_APPLICATION L
+    where ID=#{id}
+    and STATUS = #{status}
+    ORDER BY L.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="findLeaveDetailByEmployeeIdAndDate" parameterType="com.common.model.PageData"  resultMap="verficationMap">
+    SELECT
+    la.ID as LeaveId,
+    la.APPLICATION_TYPE as applicationType,
+    la.REPORT_START_DATE as startTime,
+    la.REPORT_END_DATE as endTime,
+    v.ID,
+    v.AMPUTATED,
+    v.VERIFICATION_TIME_ONE as verificationTimeOne,
+    v.VERIFICATION_TIME_TWO as verificationTimeTwo
+    FROM LEAVE_APPLICATION la
+    left join VERIFICATION v
+    on v.LEAVE_APPLICATION_ID = la.ID
+    WHERE la.STATUS = 1
+    and  la.AMPUTATED = 0
+    AND la.EMPLOYEES_ID =  #{employeeId}
+    AND TO_DATE (TO_CHAR (la.START_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')&lt;=TO_DATE (#{date},'yyyy-mm-dd')
+    AND TO_DATE (TO_CHAR (la.END_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')>=TO_DATE (#{date},'yyyy-mm-dd')
+    ORDER BY la.START_DATE
+  </select>
+
+  <select id="getLeaveDetailByEmployeeNoAndDate" parameterType="com.common.model.PageData"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM LEAVE_APPLICATION la
+    WHERE la.STATUS = 1
+    and  la.AMPUTATED = 0
+    AND la.EMPLOYEES_ID =  #{employeeId}
+    AND ((TO_DATE (TO_CHAR (la.END_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')&lt;=TO_DATE (#{end},'yyyy-mm-dd') and TO_DATE (TO_CHAR (la.END_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')>=TO_DATE (#{begin},'yyyy-mm-dd') )or
+    (TO_DATE (TO_CHAR (la.START_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')&lt;=TO_DATE (#{end},'yyyy-mm-dd') and TO_DATE (TO_CHAR (la.START_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')>=TO_DATE (#{begin},'yyyy-mm-dd') )or
+    (TO_DATE (TO_CHAR (la.END_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')&lt;=TO_DATE (#{end},'yyyy-mm-dd') and TO_DATE (TO_CHAR (la.START_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')>=TO_DATE (#{begin},'yyyy-mm-dd') ) or
+    (TO_DATE (TO_CHAR (la.START_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')&lt;=TO_DATE (#{begin},'yyyy-mm-dd') and TO_DATE (TO_CHAR (la.END_DATE,'YYYY-MM-DD'),'yyyy-mm-dd')>=TO_DATE (#{end},'yyyy-mm-dd') ))
+    ORDER BY la.START_DATE
+  </select>
+
+  <select id="selectIdAndIsCollectionByIdAndStatus" parameterType="map" resultMap="BaseResultMap">
+    select
+      L.ID,
+      O.NAME  ORGANIZATION_NAME,
+      E.NAME  EMPLOYEES_NAME,
+      L.APPLICATION_TYPE ,
+      L.DESCRIPTION ,
+      L.END_DATE ,
+      L.END_TIME ,
+      L.START_DATE ,
+      L.START_TIME ,
+      L.STATUS,
+      L.IS_CYCLE,
+      L.IS_COLLECTION,
+      L.DURATION,
+      L.START_TIME_KEY,
+      L.END_TIME_KEY
+    from LEAVE_APPLICATION  L
+    left join ORGANIZATION  O on L.ORGANIZATION_ID = O.ID and O.AMPUTATED=0
+    left join EMPLOYEES   E on L.EMPLOYEES_ID = E.ID and E.AMPUTATED=0
+    where L.ID = #{id,jdbcType=DECIMAL} and L.AMPUTATED = 0 and L.IS_COLLECTION = #{isCollection} and L.STATUS = #{status}
+  </select>
+
+  <select id="latestWorkingTime"  resultMap="AttendancePunchMap" parameterType="com.common.model.PageData">
+    SELECT "MAX"(result.latestWorkingTime) latestWorkingTime,result.employeeId FROM(
+    SELECT
+    LEAVE_APPLICATION.EMPLOYEES_ID employeeId,
+    TO_DATE("CONCAT"(TO_CHAR(LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') latestWorkingTime
+    FROM
+    LEAVE_APPLICATION
+    WHERE
+    LEAVE_APPLICATION.AMPUTATED = 0
+    AND LEAVE_APPLICATION.STATUS = 1
+    AND LEAVE_APPLICATION.IS_CYCLE = 1
+    AND
+    TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD') = #{days} AND LEAVE_APPLICATION.START_DATE &lt;TO_DATE (#{days},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss')&lt;
+          TO_DATE (#{workOutTime},'yyyy-mm-dd hh24:mi:ss')
+    UNION ALL
+    SELECT
+    LEAVE_APPLICATION.EMPLOYEES_ID employeeId,
+    TO_DATE("CONCAT"(TO_CHAR(LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') latestWorkingTime
+    FROM
+    LEAVE_APPLICATION
+    WHERE
+    LEAVE_APPLICATION.AMPUTATED = 0
+    AND LEAVE_APPLICATION.STATUS = 1
+    AND LEAVE_APPLICATION.IS_CYCLE = 1
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') &lt;= TO_DATE (#{workTime},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') &gt;= TO_DATE (#{workTime},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') &lt;TO_DATE (#{workOutTime},'yyyy-mm-dd hh24:mi:ss')
+    AND TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD') = #{days}
+    AND TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD') = #{days}
+    UNION ALL
+    SELECT
+    LEAVE_APPLICATION.EMPLOYEES_ID employeeId,
+    TO_DATE("CONCAT"(TO_CHAR(LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') latestWorkingTime
+    FROM
+    LEAVE_APPLICATION
+    WHERE
+    LEAVE_APPLICATION.AMPUTATED = 0
+    AND LEAVE_APPLICATION.STATUS = 1
+    AND LEAVE_APPLICATION.IS_CYCLE = 3
+    AND
+    TO_DATE (TO_CHAR(LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD'),'yyyy-mm-dd hh24:mi:ss')&lt;=TO_DATE (#{days},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD'),'yyyy-mm-dd hh24:mi:ss')&gt;=TO_DATE (#{days},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') &lt;= TO_DATE (#{workTime},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') &gt;= TO_DATE (#{workTime},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') &lt;TO_DATE (#{workOutTime},'yyyy-mm-dd hh24:mi:ss')
+    ) result
+    GROUP BY result.employeeId
+  </select>
+
+  <select id="firstOffWorkTime"  resultMap="AttendancePunchMap" parameterType="com.common.model.PageData">
+    SELECT "MIN"(result.firstOffWorkTime) firstOffWorkTime,result.employeeId FROM(
+    SELECT
+    LEAVE_APPLICATION.EMPLOYEES_ID employeeId,
+    TO_DATE("CONCAT"(TO_CHAR(LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') firstOffWorkTime
+    FROM
+    LEAVE_APPLICATION
+    WHERE
+    LEAVE_APPLICATION.AMPUTATED = 0
+    AND LEAVE_APPLICATION.STATUS = 1
+    AND LEAVE_APPLICATION.IS_CYCLE = 1
+    AND
+    TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD') = #{days} AND LEAVE_APPLICATION.END_DATE >TO_DATE (#{days},'yyyy-mm-dd hh24:mi:ss')+1
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss')>
+    TO_DATE (#{workTime},'yyyy-mm-dd hh24:mi:ss')
+    UNION ALL
+    SELECT
+    LEAVE_APPLICATION.EMPLOYEES_ID employeeId,
+    TO_DATE("CONCAT"(TO_CHAR(LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') firstOffWorkTime
+    FROM
+    LEAVE_APPLICATION
+    WHERE
+    LEAVE_APPLICATION.AMPUTATED = 0
+    AND LEAVE_APPLICATION.STATUS = 1
+    AND LEAVE_APPLICATION.IS_CYCLE = 1
+    AND TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD') = #{days}
+    AND TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD') = #{days}
+    AND
+    TO_DATE (#{workTime},'yyyy-mm-dd hh24:mi:ss') &lt;
+          TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') &lt;=
+    TO_DATE (#{workOutTime},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE (#{workOutTime},'yyyy-mm-dd hh24:mi:ss') &lt;=
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss')
+    UNION ALL
+    SELECT
+    LEAVE_APPLICATION.EMPLOYEES_ID employeeId,
+    TO_DATE("CONCAT"(TO_CHAR(LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') firstOffWorkTime
+    FROM
+    LEAVE_APPLICATION
+    WHERE
+    LEAVE_APPLICATION.AMPUTATED = 0
+    AND LEAVE_APPLICATION.STATUS = 1
+    AND LEAVE_APPLICATION.IS_CYCLE = 3
+    AND
+    TO_DATE (TO_CHAR(LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD'),'yyyy-mm-dd hh24:mi:ss')&lt;=TO_DATE (#{days},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD'),'yyyy-mm-dd hh24:mi:ss')>=TO_DATE (#{days},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE (#{workTime},'yyyy-mm-dd hh24:mi:ss') &lt;
+          TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') &lt;=
+    TO_DATE (#{workOutTime},'yyyy-mm-dd hh24:mi:ss')
+    AND
+    TO_DATE (#{workOutTime},'yyyy-mm-dd hh24:mi:ss') &lt;=
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss')
+    ) result
+    GROUP BY result.employeeId
+  </select>
+
+  <select id="absence" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT EMPLOYEES_ID,TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') END_DATE,
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') START_DATE FROM LEAVE_APPLICATION WHERE 	LEAVE_APPLICATION.AMPUTATED = 0
+    AND LEAVE_APPLICATION.APPLICATION_TYPE IN (4, 7, 8,9)
+   and LEAVE_APPLICATION.STATUS = 1
+    and LEAVE_APPLICATION.START_DATE&lt;=TO_DATE (#{days},'yyyy-mm-dd') and LEAVE_APPLICATION.END_DATE>=TO_DATE (#{days},'yyyy-mm-dd')
+  </select>
+
+  <select id="temporaryAbsence" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT EMPLOYEES_ID,TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.END_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.END_TIME),'yyyy-mm-dd hh24:mi:ss') END_DATE,
+    TO_DATE ("CONCAT" (TO_CHAR (LEAVE_APPLICATION.START_DATE,'YYYY-MM-DD')||' ',LEAVE_APPLICATION.START_TIME),'yyyy-mm-dd hh24:mi:ss') START_DATE FROM LEAVE_APPLICATION WHERE 	LEAVE_APPLICATION.AMPUTATED = 0
+    AND LEAVE_APPLICATION.APPLICATION_TYPE=10
+   and LEAVE_APPLICATION.STATUS = 1
+    and LEAVE_APPLICATION.START_DATE&lt;=TO_DATE (#{days},'yyyy-mm-dd') and LEAVE_APPLICATION.END_DATE>=TO_DATE (#{days},'yyyy-mm-dd')
+  </select>
+
+  <select id="findByEmployeeId" parameterType="com.common.model.PageData"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM LEAVE_APPLICATION
+    WHERE LEAVE_APPLICATION.STATUS = 1
+    and  AMPUTATED = 0
+    AND LEAVE_APPLICATION.EMPLOYEES_ID =  #{employeeId,jdbcType=DECIMAL}
+    AND LEAVE_APPLICATION.REPORT_START_DATE &lt;=TO_DATE (#{workTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')
+    AND LEAVE_APPLICATION.REPORT_END_DATE &gt;=TO_DATE (#{workOutTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')
+    ORDER BY LEAVE_APPLICATION.REPORT_START_DATE
+  </select>
+
+
+
+  <select id="findTodayRecord" parameterType="com.common.model.PageData"  resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM LEAVE_APPLICATION
+    WHERE LEAVE_APPLICATION.STATUS = 1
+    and  AMPUTATED = 0
+    AND LEAVE_APPLICATION.EMPLOYEES_ID =  #{employeeId,jdbcType=DECIMAL}
+    AND (to_char(LEAVE_APPLICATION.REPORT_START_DATE,'yyyy-mm-dd')=#{date,jdbcType=VARCHAR}
+    or to_char(LEAVE_APPLICATION.REPORT_END_DATE,'yyyy-mm-dd')=#{date,jdbcType=VARCHAR})
+    ORDER BY LEAVE_APPLICATION.START_DATE
+  </select>
+
+  <select id="selectCountByEmpAndDate" parameterType="map" resultType="int">
+    SELECT
+	COUNT (1)
+FROM
+	LEAVE_APPLICATION la
+WHERE
+	LA.EMPLOYEES_ID = #{empId,jdbcType=DECIMAL}
+AND LA.START_DATE = #{startDate,jdbcType=TIMESTAMP}
+AND LA.END_DATE = #{endDate,jdbcType=TIMESTAMP}
+AND LA.START_TIME = #{startTime}
+AND la.END_TIME = #{endTime}
+AND la.AMPUTATED = 0
+AND LA.STATUS IN
+<foreach collection="statusList" open="(" item="item" close=")" index="index" separator=",">
+  #{item}
+</foreach>
+  </select>
+
+  <select id="selectAllToday" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from LEAVE_APPLICATION la
+    where la.AMPUTATED = 0
+    and la.STATUS = 1
+    AND la.REPORT_START_DATE &lt;=TO_DATE (#{workTime},'yyyy-mm-dd hh24:mi:ss')
+    AND la.REPORT_END_DATE &gt;=TO_DATE (#{workOutTime},'yyyy-mm-dd hh24:mi:ss')
+    ORDER BY LEAVE_APPLICATION.START_DATE
+  </select>
+
+  <select id="addLeaveWechat" resultMap="BaseResultMap">
+    select
+    AMPUTATED,
+    APPLICATION_TYPE,
+    CREATED_DATE_TIME,
+    CREATED_USER_ID,
+    CREATED_USER_NAME,
+    DESCRIPTION,
+    DURATION,
+    EMPLOYEES_ID,
+    END_DATE,
+    END_TIME,
+    END_TIME_KEY,
+    IS_COLLECTION,
+    IS_CYCLE,
+    LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID,
+    LAST_UPDATE_USER_NAME,
+    ORDER_NUMBER,
+    ORGANIZATION_ID,
+    START_DATE,
+    START_TIME,
+    START_TIME_KEY,
+    STATUS,
+    REPORT_END_DATE,
+    REPORT_START_DATE,
+    REPLACE_PERSON,
+    VERIFICATION_TIME_ONE,
+    VERIFICATION_TIME_TWO,
+    SOURCE,
+    IS_SYNC,
+    LEAVE_WE_CHAT_ID
+    from
+    LEAVE_APPLICATION@fyplatform
+    WHERE source =1 and IS_SYNC = 0
+  </select>
+
+
+  <update id="updateApprovalResult" parameterType="map">
+    UPDATE LEAVE_APPLICATION@fyplatform  set STATUS = #{status},IS_SYNC = 1 where LEAVE_WE_CHAT_ID = #{leaveWeChatId}
+  </update>
+
+  <update id="updateIsSync" parameterType="int">
+    UPDATE LEAVE_APPLICATION@fyplatform  set IS_SYNC = 1 where LEAVE_WE_CHAT_ID = #{leaveWeChatId}
+  </update>
+
+
+
+</mapper>

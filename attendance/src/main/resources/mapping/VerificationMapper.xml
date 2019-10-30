@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.VerificationMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.model.Verification">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LEAVE_APPLICATION_ID" jdbcType="DECIMAL" property="leaveApplicationId" />
+    <result column="VERIFICATION_TIME_ONE" jdbcType="TIMESTAMP" property="verificationTimeOne" />
+    <result column="VERIFICATION_TIME_TWO" jdbcType="TIMESTAMP" property="verificationTimeTwo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, LAST_UPDATE_DATE_TIME, 
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, LEAVE_APPLICATION_ID, VERIFICATION_TIME_ONE, 
+    VERIFICATION_TIME_TWO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from VERIFICATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from VERIFICATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+
+  <delete id="deleteByDate" parameterType="com.common.model.PageData">
+   DELETE FROM "FYPLATFORM"."VERIFICATION" v
+where to_char(v.VERIFICATION_TIME_ONE,'yyyy-MM-dd') = #{days,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.attendance.model.Verification">
+    insert into VERIFICATION (ID, AMPUTATED, CREATED_DATE_TIME, 
+      CREATED_USER_ID, CREATED_USER_NAME, LAST_UPDATE_DATE_TIME, 
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, LEAVE_APPLICATION_ID, 
+      VERIFICATION_TIME_ONE, VERIFICATION_TIME_TWO
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, 
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{leaveApplicationId,jdbcType=DECIMAL}, 
+      #{verificationTimeOne,jdbcType=TIMESTAMP}, #{verificationTimeTwo,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.Verification">
+    insert into VERIFICATION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="leaveApplicationId != null">
+        LEAVE_APPLICATION_ID,
+      </if>
+      <if test="verificationTimeOne != null">
+        VERIFICATION_TIME_ONE,
+      </if>
+      <if test="verificationTimeTwo != null">
+        VERIFICATION_TIME_TWO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveApplicationId != null">
+        #{leaveApplicationId,jdbcType=DECIMAL},
+      </if>
+      <if test="verificationTimeOne != null">
+        #{verificationTimeOne,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verificationTimeTwo != null">
+        #{verificationTimeTwo,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.Verification">
+    update VERIFICATION
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveApplicationId != null">
+        LEAVE_APPLICATION_ID = #{leaveApplicationId,jdbcType=DECIMAL},
+      </if>
+      <if test="verificationTimeOne != null">
+        VERIFICATION_TIME_ONE = #{verificationTimeOne,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verificationTimeTwo != null">
+        VERIFICATION_TIME_TWO = #{verificationTimeTwo,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.Verification">
+    update VERIFICATION
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      LEAVE_APPLICATION_ID = #{leaveApplicationId,jdbcType=DECIMAL},
+      VERIFICATION_TIME_ONE = #{verificationTimeOne,jdbcType=TIMESTAMP},
+      VERIFICATION_TIME_TWO = #{verificationTimeTwo,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

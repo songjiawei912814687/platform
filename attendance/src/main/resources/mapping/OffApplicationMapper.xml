@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.attendance.mapper.mybatis.OffApplicationMapper">
+  <resultMap id="BaseResultMap" type="com.attendance.domian.output.OffApplicationOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="OVER_TIME_ID" jdbcType="DECIMAL" property="overTimeId"/>
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="EMPLOYEES_ID" jdbcType="DECIMAL" property="employeesId" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="ODER_NUMBER" jdbcType="DECIMAL" property="oderNumber" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="OVER_TIME_DATE" jdbcType="TIMESTAMP" property="overTimeDate" />
+    <result column="REST_TIME" jdbcType="TIMESTAMP" property="restTime" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="EMPLOYEES_NAME" jdbcType="VARCHAR" property="employeesName"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION, EMPLOYEES_ID,
+    AMPUTATED, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, ODER_NUMBER,
+    ORGANIZATION_ID, OVER_TIME_DATE, REST_TIME, STATUS,OVER_TIME_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    OA.ID,
+    OA.ORGANIZATION_ID,
+    OA.EMPLOYEES_ID,
+    OA.LAST_UPDATE_DATE_TIME,
+    O.NAME as  ORGANIZATION_NAME,
+    E.NAME as EMPLOYEES_NAME,
+    OA.OVER_TIME_DATE,
+    OA.REST_TIME,
+    OA.STATUS,
+    OA.DESCRIPTION,
+    OA.OVER_TIME_ID
+    from OFF_APPLICATION OA
+    left join ORGANIZATION O on O.ID = OA.ORGANIZATION_ID and O.AMPUTATED=0
+    left join EMPLOYEES  E on E.ID = OA.EMPLOYEES_ID  and E.AMPUTATED=0
+    where OA.ID = #{id,jdbcType=DECIMAL} and OA.AMPUTATED = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from OFF_APPLICATION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.attendance.model.OffApplication">
+    insert into OFF_APPLICATION (ID, CREATED_DATE_TIME, CREATED_USER_ID,
+      CREATED_USER_NAME, DESCRIPTION, EMPLOYEES_ID,
+      AMPUTATED, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, ODER_NUMBER, ORGANIZATION_ID,
+      OVER_TIME_DATE, REST_TIME, STATUS
+      )
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL},
+      #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{employeesId,jdbcType=DECIMAL},
+      #{amputated,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{oderNumber,jdbcType=DECIMAL}, #{organizationId,jdbcType=DECIMAL},
+      #{overTimeDate,jdbcType=TIMESTAMP}, #{restTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.attendance.model.OffApplication">
+    insert into OFF_APPLICATION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="employeesId != null">
+        EMPLOYEES_ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="oderNumber != null">
+        ODER_NUMBER,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="overTimeDate != null">
+        OVER_TIME_DATE,
+      </if>
+      <if test="restTime != null">
+        REST_TIME,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesId != null">
+        #{employeesId,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="oderNumber != null">
+        #{oderNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="overTimeDate != null">
+        #{overTimeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="restTime != null">
+        #{restTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.attendance.model.OffApplication">
+    update OFF_APPLICATION
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesId != null">
+        EMPLOYEES_ID = #{employeesId,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="oderNumber != null">
+        ODER_NUMBER = #{oderNumber,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="overTimeDate != null">
+        OVER_TIME_DATE = #{overTimeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="restTime != null">
+        REST_TIME = #{restTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.attendance.model.OffApplication">
+    update OFF_APPLICATION
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      EMPLOYEES_ID = #{employeesId,jdbcType=DECIMAL},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      ODER_NUMBER = #{oderNumber,jdbcType=DECIMAL},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      OVER_TIME_DATE = #{overTimeDate,jdbcType=TIMESTAMP},
+      REST_TIME = #{restTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+<select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    O.NAME  ORGANIZATION_NAME,
+    E.NAME  EMPLOYEES_NAME,
+    OA.OVER_TIME_DATE,
+    OA.REST_TIME,
+    OA.STATUS,
+    OA.ID,
+    OA.OVER_TIME_ID,
+    OA.DESCRIPTION,
+    OA.CREATED_DATE_TIME
+    from OFF_APPLICATION OA
+    left join ORGANIZATION O on O.ID = OA.ORGANIZATION_ID and O.AMPUTATED=0
+    left join EMPLOYEES  E on E.ID = OA.EMPLOYEES_ID
+  where OA.AMPUTATED=0
+  <if test="orgId!=null or employeeId!=null">
+  AND (EXISTS (
+  SELECT
+  O.ID
+  FROM
+  USER_ROLE
+  INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+  WHERE
+  O.id = ROLE_ORGAN.ORGAN_ID
+  AND USER_ROLE.USER_ID = #{userId}
+  <if test="orgId!=null">
+    UNION ALL
+    SELECT
+    organ.ID
+    FROM
+    ORGANIZATION organ
+    WHERE
+    (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+    AND O.id = organ.id
+    AND organ.AMPUTATED = 0
+  </if>
+  )
+  <if test="employeeId!=null">
+   or (OA.CREATED_USER_ID = #{userId,jdbcType=DECIMAL} or OA.EMPLOYEES_ID = #{employeesId,jdbcType=DECIMAL})
+  </if>
+  )
+  </if>
+    <trim prefix="and" suffixOverrides="and">
+      <if test="organizationName!=null and organizationName !='' ">
+        O.NAME like '%'||#{organizationName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="employeesName!=null and employeesName!='' ">
+        E.NAME like '%'||#{employeesName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%'and
+      </if>
+    </trim>
+    ORDER BY OA.LAST_UPDATE_DATE_TIME DESC
+</select>
+
+<select id="selectOffTime" parameterType="map" resultMap="BaseResultMap">
+    select
+    O.NAME  ORGANIZATION_NAME,
+    E.NAME  EMPLOYEES_NAME,
+    OA.OVER_TIME_DATE,
+    OA.REST_TIME,
+    OA.STATUS,
+    OA.ID,
+    OA.ORGANIZATION_ID,
+    OA.EMPLOYEES_ID,
+    OA.OVER_TIME_ID,
+    OA.CREATED_DATE_TIME
+    from OFF_APPLICATION OA
+    left join ORGANIZATION O on O.ID = OA.ORGANIZATION_ID and O.AMPUTATED=0
+    left join EMPLOYEES  E on E.ID = OA.EMPLOYEES_ID  and E.AMPUTATED=0
+     where
+    O.ID = #{organizationId}
+    and
+    E.ID = #{employeesId}
+    and OA.STATUS = 1
+    and to_char(OA.REST_TIME,'yyyy-MM') = #{reportDate,jdbcType=VARCHAR}
+</select>
+
+
+  <select id="selectStatusById" parameterType="int" resultType="int">
+    select STATUS
+    from OFF_APPLICATION OA
+    where ID=#{id,jdbcType=DECIMAL}
+    ORDER BY OA.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+  <select id="selectRestCountByEmployeesName" parameterType="String" resultType="int">
+    select nvl(count(1),0)
+    from OFF_APPLICATION OA
+    left join EMPLOYEES  E on E.ID = OA.EMPLOYEES_ID  and E.AMPUTATED=0
+    where E.NAME = #{name,jdbcType=VARCHAR}
+    and OA.STATUS = 1
+    and OA.REST_TIME
+    BETWEEN
+	(SELECT last_day(add_months(SYSDATE, -2)) + 1  FROM dual)
+	and
+	(SELECT last_day(add_months(SYSDATE, -1)) FROM dual)
+  </select>
+
+  <select id="selectRestCount" resultType="com.attendance.domian.output.EmployeesCount" parameterType="com.common.model.PageData">
+    select nvl(count(1),0) as count,
+    OA.EMPLOYEES_ID
+    from OFF_APPLICATION OA
+    left join EMPLOYEES  E on E.ID = OA.EMPLOYEES_ID  and E.AMPUTATED=0
+    left join ORGANIZATION  O on O.ID = OA.ORGANIZATION_ID and O.AMPUTATED=0
+    where  OA.STATUS = 1
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="organizationName!=null and organizationName !=''">
+        O.NAME  like '%'||#{organizationName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="employeesName!=null and employeesName!=''">
+        E.NAME  like '%'||#{employeesName,jdbcType=VARCHAR}||'%'and
+      </if>
+      <if test="reportDate!=null and reportDate!=null">
+        to_char(OA.REST_TIME,'yyyy-MM') = #{reportDate,jdbcType=VARCHAR} and
+      </if>
+      <if test="employeesId!=null and employeesId!=null">
+        OA.EMPLOYEES_ID = #{employeesId,jdbcType=DECIMAL} and
+      </if>
+      <if test="organizationId!=null and organizationId!=null">
+        OA.ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL} and
+      </if>
+    </trim>
+    group by OA.EMPLOYEES_ID
+    ORDER BY OA.EMPLOYEES_ID DESC
+  </select>
+
+
+  <select id="selectAllByToday" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from OFF_APPLICATION oa
+    where oa.AMPUTATED = 0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="days!=null">
+        to_char(OA.REST_TIME,'yyyy-MM-dd') = #{days} and
+      </if>
+      oa.STATUS = 1 and
+    </trim>
+
+  </select>
+
+</mapper>

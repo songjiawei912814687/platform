@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feedback.mapper.mybatis.SuggestionsMapper">
+  <resultMap id="BaseResultMap" type="com.feedback.domain.output.SuggesstionsOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="CONTENT"  jdbcType="VARCHAR" property="content"/>
+    <result column="DATE_RESOURCE" jdbcType="DECIMAL" property="dateResource" />
+    <result column="DEAL_RESULT" jdbcType="VARCHAR" property="dealResult" />
+    <result column="DEAL_STATE" jdbcType="DECIMAL" property="dealState" />
+    <result column="FEEDBACK_ID" jdbcType="DECIMAL" property="feedbackId"/>
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="OUT_DATE_TIME" jdbcType="TIMESTAMP" property="outDateTime" />
+    <result column="OUT_OF_DATE" jdbcType="DECIMAL" property="outOfDate" />
+    <result column="DEAL_TIME" jdbcType="TIMESTAMP" property="dealTime" />
+    <result column="PUBLISH" jdbcType="DECIMAL" property="publish" />
+    <result column="PUBLISH_DATE_TIME" jdbcType="DECIMAL" property="publishDateTime" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId"/>
+    <result column="REPLY_USER_ID" jdbcType="DECIMAL" property="replyUserId" />
+    <result column="REPLY_TYPE" jdbcType="DECIMAL" property="replyType"/>
+    <result column="SUGGESTION_NAME" jdbcType="VARCHAR" property="suggestionName" />
+    <result column="SUGGESTION_PHONE_NUMBER" jdbcType="VARCHAR" property="suggestionPhoneNumber" />
+    <result column="WINDOW_ID" jdbcType="DECIMAL" property="windowId" />
+    <result column="WINDOW_NAME" jdbcType="VARCHAR" property="windowName" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="phoneNumber" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="UPPER_ORGANIZATION_ID" jdbcType="DECIMAL" property="upperOrganizationId" />
+    <result column="UPPER_ORGANIZATION_NAME" jdbcType="VARCHAR" property="upperOrganizationName" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NAME" jdbcType="VARCHAR" property="employeeName" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="IS_PHONE_CALL" jdbcType="DECIMAL" property="isPhoneCall"/>
+    <result column="IS_USE" jdbcType="DECIMAL" property="isUse"/>
+    <result column="OUT_TIMES" jdbcType="DECIMAL" property="outTimes"/>
+
+
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DATE_RESOURCE,
+    DEAL_RESULT, DEAL_STATE, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+    ORGANIZATION_ID, ORGANIZATION_NAME, OUT_DATE_TIME, OUT_OF_DATE,PARENT_ID, PUBLISH, REPLY_USER_ID,
+    SUGGESTION_NAME, SUGGESTION_PHONE_NUMBER, WINDOW_ID, WINDOW_NAME,DEAL_TIME,UPPER_ORGANIZATION_ID,UPPER_ORGANIZATION_NAME,
+    EMPLOYEE_ID,EMPLOYEE_NAME,EMPLOYEE_NO,FEEDBACK_ID,CONTENT,REPLY_TYPE,IS_PHONE_CALL,IS_USE,PUBLISH_DATE_TIME,OUT_TIMES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    s.*,
+    e.ID as EMPLOYEE_ID,
+    fi.SATISFACTION as satisfactionName,
+    fi.COMPLETE_RATE as completeRateName
+    from SUGGESTIONS s
+    left join EMPLOYEES e on  s.EMPLOYEE_NO = e.EMPLOYEE_NO and e.AMPUTATED = 0 and e.WORKING_STATE = 1
+    left join FEEDBACK_INFO fi on s.FEEDBACK_ID = fi.ID
+    where S.ID = #{id,jdbcType=DECIMAL} and s.AMPUTATED = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from SUGGESTIONS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.feedback.model.Suggestions">
+    insert into SUGGESTIONS (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DATE_RESOURCE,
+      DEAL_RESULT, DEAL_STATE, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, ORGANIZATION_ID,
+      ORGANIZATION_NAME, OUT_DATE_TIME, OUT_OF_DATE,
+      PUBLISH, REPLY_USER_ID, SUGGESTION_NAME,
+      SUGGESTION_PHONE_NUMBER, WINDOW_ID, WINDOW_NAME,DEAL_TIME,UPPER_ORGANIZATION_ID,UPPER_ORGANIZATION_NAME,
+    EMPLOYEE_ID,EMPLOYEE_NAME,EMPLOYEE_NO,FEEDBACK_ID
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{dateResource,jdbcType=DECIMAL},
+      #{dealResult,jdbcType=VARCHAR}, #{dealState,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{organizationId,jdbcType=DECIMAL},
+      #{organizationName,jdbcType=VARCHAR}, #{outDateTime,jdbcType=TIMESTAMP}, #{outOfDate,jdbcType=DECIMAL},
+      #{publish,jdbcType=DECIMAL}, #{replyUserId,jdbcType=DECIMAL}, #{suggestionName,jdbcType=VARCHAR},
+      #{suggestionPhoneNumber,jdbcType=VARCHAR}, #{windowId,jdbcType=DECIMAL}, #{windowName,jdbcType=VARCHAR}
+      , #{dealTime,jdbcType=TIMESTAMP}, #{upperOrganizationId,jdbcType=DECIMAL},
+      #{upperOrganizationName,jdbcType=VARCHAR}, #{employeeId,jdbcType=DECIMAL},
+      #{employeeName,jdbcType=VARCHAR},#{employeeNo,jdbcType=VARCHAR},#{feedbackId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.feedback.model.Suggestions">
+    insert into SUGGESTIONS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="dateResource != null">
+        DATE_RESOURCE,
+      </if>
+      <if test="dealResult != null">
+        DEAL_RESULT,
+      </if>
+      <if test="dealState != null">
+        DEAL_STATE,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME,
+      </if>
+      <if test="outDateTime != null">
+        OUT_DATE_TIME,
+      </if>
+      <if test="outOfDate != null">
+        OUT_OF_DATE,
+      </if>
+      <if test="publish != null">
+        PUBLISH,
+      </if>
+      <if test="replyUserId != null">
+        REPLY_USER_ID,
+      </if>
+      <if test="suggestionName != null">
+        SUGGESTION_NAME,
+      </if>
+      <if test="suggestionPhoneNumber != null">
+        SUGGESTION_PHONE_NUMBER,
+      </if>
+      <if test="windowId != null">
+        WINDOW_ID,
+      </if>
+      <if test="windowName != null">
+        WINDOW_NAME,
+      </if>
+      <if test="dealTime != null">
+        DEAL_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="dateResource != null">
+        #{dateResource,jdbcType=DECIMAL},
+      </if>
+      <if test="dealResult != null">
+        #{dealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="dealState != null">
+        #{dealState,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationName != null">
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="outDateTime != null">
+        #{outDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outOfDate != null">
+        #{outOfDate,jdbcType=DECIMAL},
+      </if>
+      <if test="publish != null">
+        #{publish,jdbcType=DECIMAL},
+      </if>
+      <if test="replyUserId != null">
+        #{replyUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="suggestionName != null">
+        #{suggestionName,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestionPhoneNumber != null">
+        #{suggestionPhoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="windowId != null">
+        #{windowId,jdbcType=DECIMAL},
+      </if>
+      <if test="windowName != null">
+        #{windowName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealTime != null">
+        #{dealTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.feedback.model.Suggestions">
+    update SUGGESTIONS
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="dateResource != null">
+        DATE_RESOURCE = #{dateResource,jdbcType=DECIMAL},
+      </if>
+      <if test="dealResult != null">
+        DEAL_RESULT = #{dealResult,jdbcType=VARCHAR},
+      </if>
+      <if test="dealState != null">
+        DEAL_STATE = #{dealState,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="outDateTime != null">
+        OUT_DATE_TIME = #{outDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outOfDate != null">
+        OUT_OF_DATE = #{outOfDate,jdbcType=DECIMAL},
+      </if>
+      <if test="publish != null">
+        PUBLISH = #{publish,jdbcType=DECIMAL},
+      </if>
+      <if test="replyUserId != null">
+        REPLY_USER_ID = #{replyUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="suggestionName != null">
+        SUGGESTION_NAME = #{suggestionName,jdbcType=VARCHAR},
+      </if>
+      <if test="suggestionPhoneNumber != null">
+        SUGGESTION_PHONE_NUMBER = #{suggestionPhoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="windowId != null">
+        WINDOW_ID = #{windowId,jdbcType=DECIMAL},
+      </if>
+      <if test="windowName != null">
+        WINDOW_NAME = #{windowName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealTime != null">
+        DEAL_TIME = #{dealTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.feedback.model.Suggestions">
+    update SUGGESTIONS
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DATE_RESOURCE = #{dateResource,jdbcType=DECIMAL},
+      DEAL_RESULT = #{dealResult,jdbcType=VARCHAR},
+      DEAL_STATE = #{dealState,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      OUT_DATE_TIME = #{outDateTime,jdbcType=TIMESTAMP},
+      DEAL_TIME = #{dealTime,jdbcType=TIMESTAMP},
+      OUT_OF_DATE = #{outOfDate,jdbcType=DECIMAL},
+      PUBLISH = #{publish,jdbcType=DECIMAL},
+      REPLY_USER_ID = #{replyUserId,jdbcType=DECIMAL},
+      SUGGESTION_NAME = #{suggestionName,jdbcType=VARCHAR},
+      SUGGESTION_PHONE_NUMBER = #{suggestionPhoneNumber,jdbcType=VARCHAR},
+      WINDOW_ID = #{windowId,jdbcType=DECIMAL},
+      WINDOW_NAME = #{windowName,jdbcType=VARCHAR},
+      UPPER_ORGANIZATION_ID = #{upperOrganizationId,jdbcType=DECIMAL},
+      UPPER_ORGANIZATION_NAME = #{upperOrganizationName,jdbcType=VARCHAR},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      FEEDBACK_ID = #{feedbackId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByMainInfo" parameterType="com.feedback.model.Suggestions" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SUGGESTIONS
+    where SUGGESTIONS.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="suggestionName!=null and suggestionName !='' ">SUGGESTION_NAME = #{suggestionName,jdbcType=VARCHAR} and</if>
+      <if test="suggestionPhoneNumber!=null  and suggestionPhoneNumber !=''">SUGGESTION_PHONE_NUMBER = #{suggestionPhoneNumber,jdbcType=VARCHAR} and</if>
+      <if test="dealState!=null and dealState !='' ">SUGGESTIONS.DEAL_STATE = #{dealState} and </if>
+      <if test="windowName!=null and windowName !='' ">WINDOW_NAME = #{windowName,jdbcType=DECIMAL} and </if>
+      <if test="organizationName!=null and organizationName !='' ">ORGANIZATION_NAME = #{organizationName,jdbcType=DECIMAL} and</if>
+      <if test="employeeName!=null and employeeName !='' ">EMPLOYEE_NAME = #{employeeName,jdbcType=DECIMAL} and</if>
+    </trim>
+    and DATE_RESOURCE in(3,4,5) and PUBLISH != 2
+  </select>
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT
+    s.ID,
+    s.AMPUTATED,
+    s.CREATED_DATE_TIME,
+    s.CREATED_USER_ID,
+    s.CREATED_USER_NAME,
+    s.DATE_RESOURCE,
+    s.DEAL_RESULT,
+    s.DEAL_STATE,
+    s.LAST_UPDATE_DATE_TIME,
+    s.LAST_UPDATE_USER_ID,
+    s.LAST_UPDATE_USER_NAME,
+    s.ORGANIZATION_ID,
+    s.ORGANIZATION_NAME,
+    s.OUT_DATE_TIME,
+    s.OUT_OF_DATE,
+    s.PUBLISH,
+    s.PUBLISH_DATE_TIME,
+    s.OUT_TIMES,
+    s.REPLY_USER_ID,
+    s.SUGGESTION_NAME,
+    s.SUGGESTION_PHONE_NUMBER,
+    s.WINDOW_ID,
+    s.WINDOW_NAME,
+    s.DEAL_TIME,
+    s.UPPER_ORGANIZATION_ID,
+    s.UPPER_ORGANIZATION_NAME,
+    s.CONTENT,
+    s.EMPLOYEE_ID,
+    s.EMPLOYEE_NAME,
+    s.EMPLOYEE_NO,
+    s.IS_PHONE_CALL,
+    S.IS_USE
+    FROM SUGGESTIONS  s
+    left join ORGANIZATION ORGANIZATION on s.ORGANIZATION_ID = ORGANIZATION.id
+    left join EMPLOYEES EMPLOYEES on s.REPLY_USER_ID  = EMPLOYEES.id and EMPLOYEES.AMPUTATED=0
+    WHERE  s.AMPUTATED=0
+    <if test="orgId!=null or employeeNo!=null">
+      AND (EXISTS (
+      SELECT
+      ORGANIZATION.ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      ORGANIZATION.id = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+        UNION ALL
+        SELECT
+        organ.ID
+        FROM
+        ORGANIZATION organ
+        WHERE
+        (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+        AND ORGANIZATION.id = organ.id
+        AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeNo!=null">
+        or s.EMPLOYEE_NO = #{employeeNo}
+      </if>
+      )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="dateResource!=null and dateResource !='' ">
+        s.DATE_RESOURCE = #{dateResource} and
+      </if>
+      <if test="departmentId!=null  and departmentId !=''">
+        CONCAT(ORGANIZATION.path,',') LIKE '%'||#{departmentId}||',%' and
+      </if>
+      <if test="isUse!=null and isUse!=''">
+        s.IS_USE = #{publish} and
+      </if>
+      <if test="publish!=null and publish!=''">
+        s.PUBLISH = #{publish} and
+      </if>
+      <if test="dealState!=null and dealState !='' ">
+        s.DEAL_STATE = #{dealState} and
+      </if>
+      <if test="isPhoneCall!=null and isPhoneCall!=''">
+        s.IS_PHONE_CALL = #{isPhoneCall} and
+      </if>
+      <if test="outOfDate!=null and outOfDate !='' ">s.OUT_OF_DATE = #{outOfDate} and </if>
+
+      <if test="startTime!=null and startTime!=''">
+        s.CREATED_DATE_TIME>=to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+      <if test="endTime!=null and endTime!=''">
+        s.CREATED_DATE_TIME &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss') and
+      </if>
+
+      <if test="name!=null and name!=''">
+        s.SUGGESTION_NAME  LIKE '%'||#{name}||'%' and
+      </if>
+
+      <if test="phone!=null and phone!=''">
+        s.SUGGESTION_PHONE_NUMBER  LIKE '%'||#{phone}||'%' and
+      </if>
+
+      <if test="jobNumber!=null and jobNumber!=''">
+        s.EMPLOYEE_NO  LIKE '%'||#{jobNumber}||'%' and
+      </if>
+    </trim>
+    order by s.CREATED_DATE_TIME desc
+  </select>
+
+  <select id="selectOutOfDatePageList" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT
+    SUGGESTIONS.ID,
+    SUGGESTIONS.AMPUTATED,
+    SUGGESTIONS.CREATED_DATE_TIME,
+    SUGGESTIONS.CREATED_USER_ID,
+    SUGGESTIONS.CREATED_USER_NAME,
+    SUGGESTIONS.DATE_RESOURCE,
+    SUGGESTIONS.DEAL_RESULT,
+    SUGGESTIONS.DEAL_STATE,
+    SUGGESTIONS.LAST_UPDATE_DATE_TIME,
+    SUGGESTIONS.LAST_UPDATE_USER_ID,
+    SUGGESTIONS.LAST_UPDATE_USER_NAME,
+    SUGGESTIONS.ORGANIZATION_ID,
+    SUGGESTIONS.ORGANIZATION_NAME,
+    SUGGESTIONS.OUT_DATE_TIME,
+    SUGGESTIONS.OUT_OF_DATE,
+    SUGGESTIONS.PUBLISH,
+    SUGGESTIONS.REPLY_USER_ID,
+    SUGGESTIONS.SUGGESTION_NAME,
+    SUGGESTIONS.SUGGESTION_PHONE_NUMBER,
+    SUGGESTIONS.WINDOW_ID,
+    SUGGESTIONS.WINDOW_NAME,
+    SUGGESTIONS.DEAL_TIME,
+    SUGGESTIONS.UPPER_ORGANIZATION_ID,
+    SUGGESTIONS.UPPER_ORGANIZATION_NAME,
+    SUGGESTIONS.EMPLOYEE_ID,
+    SUGGESTIONS.EMPLOYEE_NAME,
+    SUGGESTIONS.EMPLOYEE_NO,
+    EMPLOYEES.name userName
+    FROM
+    SUGGESTIONS SUGGESTIONS INNER join ORGANIZATION ORGANIZATION ON SUGGESTIONS.ORGANIZATION_ID = ORGANIZATION.id and  ORGANIZATION.AMPUTATED=0
+    LEFT JOIN EMPLOYEES EMPLOYEES on SUGGESTIONS.REPLY_USER_ID  = EMPLOYEES.id and EMPLOYEES.AMPUTATED=0
+    WHERE
+    SUGGESTIONS.AMPUTATED =0
+    <if test="orgId!=null or employeeNo!=null">
+      AND (EXISTS (
+      SELECT
+      ORGANIZATION.ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      ORGANIZATION.id = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+        UNION ALL
+        SELECT
+        organ.ID
+        FROM
+        ORGANIZATION organ
+        WHERE
+        (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+        AND ORGANIZATION.id = organ.id
+        AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeNo!=null">
+        or SUGGESTIONS.EMPLOYEE_NO = #{employeeNo}
+      </if>
+      )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="suggestionPhoneNumber!=null and suggestionPhoneNumber !='' ">SUGGESTIONS.SUGGESTION_PHONE_NUMBER  LIKE '%'||#{suggestionPhoneNumber}||'%' and</if>
+      <if test="suggestionName!=null and suggestionName !='' ">SUGGESTIONS.SUGGESTION_NAME LIKE '%'||#{suggestionName}||'%' and</if>
+      <if test="userName!=null and userName !='' ">EMPLOYEES.name  LIKE '%'||#{userName}||'%' and</if>
+      <if test="departmentId!=null  and departmentId !=''">CONCAT(ORGANIZATION.path,',') LIKE '%'||#{departmentId}||',%' and </if>
+      <if test="dealState!=null and dealState !='' ">SUGGESTIONS.DEAL_STATE = #{dealState} and </if>
+      <if test="feedBackTimeBegin!=null and feedBackTimeBegin !='' ">SUGGESTIONS.CREATED_DATE_TIME >= TO_DATE (#{feedBackTimeBegin},'yyyy-mm-dd hh24:mi:ss')  and </if>
+      <if test="feedBackTimeEnd!=null and feedBackTimeEnd !='' ">SUGGESTIONS.CREATED_DATE_TIME &lt;= TO_DATE (#{feedBackTimeEnd},'yyyy-mm-dd hh24:mi:ss')  and </if>
+      <if test="outOfDate!=null and outOfDate !='' ">SUGGESTIONS.OUT_OF_DATE = #{outOfDate} and </if>
+    </trim>
+  </select>
+
+  <select id="selectAllOutOfDatePageList" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT
+    SUGGESTIONS.ID,
+    SUGGESTIONS.AMPUTATED,
+    SUGGESTIONS.CREATED_DATE_TIME,
+    SUGGESTIONS.CREATED_USER_ID,
+    SUGGESTIONS.CREATED_USER_NAME,
+    SUGGESTIONS.DATE_RESOURCE,
+    SUGGESTIONS.DEAL_RESULT,
+    SUGGESTIONS.DEAL_STATE,
+    SUGGESTIONS.LAST_UPDATE_DATE_TIME,
+    SUGGESTIONS.LAST_UPDATE_USER_ID,
+    SUGGESTIONS.LAST_UPDATE_USER_NAME,
+    SUGGESTIONS.ORGANIZATION_ID,
+    SUGGESTIONS.ORGANIZATION_NAME,
+    SUGGESTIONS.OUT_DATE_TIME,
+    SUGGESTIONS.OUT_OF_DATE,
+    SUGGESTIONS.PUBLISH,
+    SUGGESTIONS.REPLY_USER_ID,
+    SUGGESTIONS.SUGGESTION_NAME,
+    SUGGESTIONS.SUGGESTION_PHONE_NUMBER,
+    SUGGESTIONS.WINDOW_ID,
+    SUGGESTIONS.WINDOW_NAME,
+    SUGGESTIONS.DEAL_TIME,
+    SUGGESTIONS.UPPER_ORGANIZATION_ID,
+    SUGGESTIONS.UPPER_ORGANIZATION_NAME,
+    SUGGESTIONS.EMPLOYEE_ID,
+    SUGGESTIONS.EMPLOYEE_NAME,
+    SUGGESTIONS.EMPLOYEE_NO,
+    EMPLOYEES.name userName
+    FROM
+    SUGGESTIONS INNER join ORGANIZATION ON SUGGESTIONS.ORGANIZATION_ID = ORGANIZATION.id
+    LEFT JOIN EMPLOYEES on ORGANIZATION.DEPARTMENTAL_MANAGER = EMPLOYEES.id
+    WHERE
+    SUGGESTIONS.AMPUTATED =0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="suggestionPhoneNumber!=null and suggestionPhoneNumber !='' ">SUGGESTIONS.SUGGESTION_PHONE_NUMBER  LIKE '%'||#{suggestionPhoneNumber}||'%' and</if>
+      <if test="suggestionName!=null and suggestionName !='' ">SUGGESTIONS.SUGGESTION_NAME LIKE '%'||#{suggestionName}||'%' and</if>
+      <if test="userName!=null and userName !='' ">EMPLOYEES.name  LIKE '%'||#{userName}||'%' and</if>
+      <if test="departmentId!=null  and departmentId !=''">CONCAT(ORGANIZATION.path,',') LIKE '%'||#{departmentId}||',%' and </if>
+      <if test="dealState!=null and dealState !='' ">SUGGESTIONS.DEAL_STATE = #{dealState} and </if>
+      <if test="feedBackTimeBegin!=null and feedBackTimeBegin !='' ">SUGGESTIONS.CREATED_DATE_TIME >= TO_DATE (#{feedBackTimeBegin},'yyyy-mm-dd hh24:mi:ss')  and </if>
+      <if test="feedBackTimeEnd!=null and feedBackTimeEnd !='' ">SUGGESTIONS.CREATED_DATE_TIME &lt;= TO_DATE (#{feedBackTimeEnd},'yyyy-mm-dd hh24:mi:ss')  and </if>
+      <if test="outOfDate!=null and outOfDate !='' ">SUGGESTIONS.OUT_OF_DATE = #{outOfDate} and </if>
+      <if test="userId!=null and userId !='' ">(SUGGESTIONS.CREATED_USER_ID = #{userId} or SUGGESTIONS.LAST_UPDATE_USER_ID = #{userId} or SUGGESTIONS.REPLY_USER_ID = #{userId}) and </if>
+    </trim>
+  </select>
+
+  <select id="getPhoneNumber" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   SELECT EM.NAME as userName,
+   EM.PHONE_NUMBER as phoneNumber,
+   EM.ID as repId
+  FROM EMPLOYEES EM
+  LEFT JOIN USERS U ON EM.ID=U.EMPLOYEE_ID
+  LEFT JOIN USER_ROLE UR ON U.ID=UR.USER_ID
+  LEFT JOIN ROLE R ON UR.ROLE_ID=R.ID
+  WHERE EM.AMPUTATED=0
+  AND EM.ORGANIZATION_ID=#{orgaId,jdbcType=DECIMAL}
+  AND R.NAME LIKE '首席代表'
+  </select>
+
+  <select id="getOutSuggesstionDetail" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    SUGGESTIONS.ID,
+    SUGGESTIONS.AMPUTATED,
+    SUGGESTIONS.CREATED_DATE_TIME,
+    SUGGESTIONS.CREATED_USER_ID,
+    SUGGESTIONS.CREATED_USER_NAME,
+    SUGGESTIONS.DATE_RESOURCE,
+    SUGGESTIONS.DEAL_RESULT,
+    SUGGESTIONS.DEAL_STATE,
+    SUGGESTIONS.LAST_UPDATE_DATE_TIME,
+    SUGGESTIONS.LAST_UPDATE_USER_ID,
+    SUGGESTIONS.LAST_UPDATE_USER_NAME,
+    SUGGESTIONS.ORGANIZATION_ID,
+    SUGGESTIONS.ORGANIZATION_NAME,
+    SUGGESTIONS.OUT_DATE_TIME,
+    SUGGESTIONS.OUT_OF_DATE,
+    SUGGESTIONS.PUBLISH,
+    SUGGESTIONS.REPLY_USER_ID,
+    SUGGESTIONS.SUGGESTION_NAME,
+    SUGGESTIONS.SUGGESTION_PHONE_NUMBER,
+    SUGGESTIONS.WINDOW_ID,
+    SUGGESTIONS.WINDOW_NAME,
+    SUGGESTIONS.DEAL_TIME,
+    SUGGESTIONS.UPPER_ORGANIZATION_ID,
+    SUGGESTIONS.UPPER_ORGANIZATION_NAME,
+    SUGGESTIONS.EMPLOYEE_ID,
+    SUGGESTIONS.EMPLOYEE_NAME,
+    SUGGESTIONS.EMPLOYEE_NO,
+	EMPLOYEES.name userName,
+	EMPLOYEES.id REPLY_USER_ID,
+	EMPLOYEES.PHONE_NUMBER phoneNumber
+    FROM
+	ORGANIZATION INNER join SUGGESTIONS ON SUGGESTIONS.ORGANIZATION_ID = ORGANIZATION.id INNER JOIN EMPLOYEES ON EMPLOYEES.id = ORGANIZATION.DEPARTMENTAL_MANAGER
+	where SUGGESTIONS.id =  #{id,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectByPhoneAndPersonName" parameterType="map" resultMap="BaseResultMap">
+    select s.*,ROWNUM
+    from
+    (select
+    <include refid="Base_Column_List"/>
+    from SUGGESTIONS
+    where SUGGESTION_PHONE_NUMBER = #{phone,jdbcType=VARCHAR}
+    and REPLY_TYPE = #{replyType,jdbcType=VARCHAR}
+    and DATE_RESOURCE = #{resourceType,jdbcType=DECIMAL}
+    and REPLY_TYPE = 0 ORDER BY LAST_UPDATE_DATE_TIME desc) s where rownum =1
+  </select>
+
+  <select id="selectByFeedbackId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from SUGGESTIONS
+    where FEEDBACK_ID = #{feedbackId,jdbcType=DECIMAL}
+  </select>
+
+
+  <select id="selectSyncData" resultMap="BaseResultMap">
+    select
+    AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DATE_RESOURCE,
+    DEAL_RESULT, DEAL_STATE,DEAL_TIME,EMPLOYEE_ID,EMPLOYEE_NAME,EMPLOYEE_NO, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+    LAST_UPDATE_USER_NAME,ORGANIZATION_ID, ORGANIZATION_NAME, OUT_DATE_TIME, OUT_OF_DATE,PARENT_ID, PUBLISH, REPLY_USER_ID,
+    SUGGESTION_NAME, SUGGESTION_PHONE_NUMBER, WINDOW_ID, WINDOW_NAME,DEAL_TIME,UPPER_ORGANIZATION_ID,UPPER_ORGANIZATION_NAME,
+    FEEDBACK_ID,CONTENT,REPLY_TYPE FROM SUGGESTIONS@fyplatform
+    where to_char(CREATED_DATE_TIME,'yyyy-MM-dd') = to_char(SYSDATE,'yyyy-MM-dd')
+    and DATE_RESOURCE = 3 and AMPUTATED=0
+  </select>
+</mapper>

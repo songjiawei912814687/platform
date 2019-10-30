@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.HchenStatisticalMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.HchenStatisticalOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
+    <result column="COUNT" jdbcType="DECIMAL" property="count"/>
+    <result column="DEPARTMENT" jdbcType="VARCHAR" property="department" />
+    <result column="MONTH_COUNT" jdbcType="DECIMAL" property="monthCount" />
+    <result column="STATISTICAL_DATE_TIME" jdbcType="TIMESTAMP" property="statisticalDateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEPARTMENT, MONTH_COUNT, STATISTICAL_DATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HCHEN_STATISTICAL
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from HCHEN_STATISTICAL
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.HchenStatistical">
+    insert into HCHEN_STATISTICAL (ID, DEPARTMENT, MONTH_COUNT, 
+      STATISTICAL_DATE_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{department,jdbcType=VARCHAR}, #{monthCount,jdbcType=DECIMAL}, 
+      #{statisticalDateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.HchenStatistical">
+    insert into HCHEN_STATISTICAL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="department != null">
+        DEPARTMENT,
+      </if>
+      <if test="monthCount != null">
+        MONTH_COUNT,
+      </if>
+      <if test="statisticalDateTime != null">
+        STATISTICAL_DATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="monthCount != null">
+        #{monthCount,jdbcType=DECIMAL},
+      </if>
+      <if test="statisticalDateTime != null">
+        #{statisticalDateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.HchenStatistical">
+    update HCHEN_STATISTICAL
+    <set>
+      <if test="department != null">
+        DEPARTMENT = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="monthCount != null">
+        MONTH_COUNT = #{monthCount,jdbcType=DECIMAL},
+      </if>
+      <if test="statisticalDateTime != null">
+        STATISTICAL_DATE_TIME = #{statisticalDateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.HchenStatistical">
+    update HCHEN_STATISTICAL
+    set DEPARTMENT = #{department,jdbcType=VARCHAR},
+      MONTH_COUNT = #{monthCount,jdbcType=DECIMAL},
+      STATISTICAL_DATE_TIME = #{statisticalDateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectCountListByReportDate" parameterType="map" resultMap="BaseResultMap">
+    select sum(MONTH_COUNT) as count ,
+    H.DEPARTMENT,
+    O.ID as ORGANIZATION_ID
+    from
+    HCHEN_STATISTICAL H
+    LEFT join ORGANIZATION O
+    on o.NAME = H.DEPARTMENT
+    where to_char(H.STATISTICAL_DATE_TIME,'yyyy') = #{year,jdbcType=DECIMAL}
+    and to_char(H.STATISTICAL_DATE_TIME,'MM') = #{month,jdbcType=DECIMAL}
+    group by H.DEPARTMENT,O.ID
+  </select>
+
+
+  <select id="selectByName" parameterType="string" resultMap="BaseResultMap">
+    select
+    H.ID,
+    O.ID as ORGANIZATION_ID,
+    H.DEPARTMENT
+    from HCHEN_STATISTICAL H
+    LEFT join ORGANIZATION O
+    on o.NAME = H.DEPARTMENT
+    where H.DEPARTMENT = #{hcName}
+  </select>
+</mapper>

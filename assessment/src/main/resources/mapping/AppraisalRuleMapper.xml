@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalRuleMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.AppraisalRuleOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="APPRAISAL_ID" jdbcType="DECIMAL" property="appraisalId" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="CUMULATIVE_LIMIT" jdbcType="DECIMAL" property="cumulativeLimit" />
+    <result column="DEFAULT_SCORE" jdbcType="DECIMAL" property="defaultScore" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="SCORE" jdbcType="DECIMAL" property="score" />
+    <result column="SCORE_SOURCE" jdbcType="DECIMAL" property="scoreSource" />
+    <result column="SCORE_TYPE" jdbcType="DECIMAL" property="scoreType" />
+    <result column="DATA_TYPE" jdbcType="DECIMAL" property="dataType" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="templateIndexId" jdbcType="DECIMAL" property="templateIndexId" />
+    <result column="templateRuleId" jdbcType="DECIMAL" property="templateRuleId" />
+    <result column="indexName" jdbcType="VARCHAR" property="indexName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, APPRAISAL_ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+    CUMULATIVE_LIMIT, DEFAULT_SCORE, DESCRIPTION, DISPLAY_ORDER, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME, SCORE, SCORE_SOURCE, SCORE_TYPE,DATA_TYPE,
+    STATE
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT APPRAISAL_RULE.*,APPRAISAL_INDEX."NAME" indexName FROM APPRAISAL_RULE
+    LEFT JOIN APPRAISAL_INDEX ON APPRAISAL_INDEX."ID" = APPRAISAL_RULE.APPRAISAL_ID
+    where APPRAISAL_RULE.ID = #{id,jdbcType=DECIMAL}
+  </select>
+
+  <select id="findRuleByIndexId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT APPRAISAL_RULE.* FROM APPRAISAL_RULE INNER JOIN APPRAISAL_INDEX ON APPRAISAL_RULE.APPRAISAL_ID = APPRAISAL_INDEX."ID"
+    where APPRAISAL_RULE.APPRAISAL_ID = #{indexId,jdbcType=DECIMAL} and APPRAISAL_RULE.state=0
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from APPRAISAL_RULE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AppraisalRule">
+    insert into APPRAISAL_RULE (ID, AMPUTATED, APPRAISAL_ID,
+      CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+      CUMULATIVE_LIMIT, DEFAULT_SCORE, DESCRIPTION,
+      DISPLAY_ORDER, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, NAME, SCORE,
+      SCORE_SOURCE, SCORE_TYPE,DATA_TYPE, STATE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{appraisalId,jdbcType=DECIMAL},
+      #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR},
+      #{cumulativeLimit,jdbcType=DECIMAL}, #{defaultScore,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR},
+      #{displayOrder,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{score,jdbcType=DECIMAL},
+      #{scoreSource,jdbcType=DECIMAL}, #{scoreType,jdbcType=DECIMAL},#{dataType,jdbcType=DECIMAL}, #{state,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AppraisalRule">
+    insert into APPRAISAL_RULE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="appraisalId != null">
+        APPRAISAL_ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="cumulativeLimit != null">
+        CUMULATIVE_LIMIT,
+      </if>
+      <if test="defaultScore != null">
+        DEFAULT_SCORE,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="score != null">
+        SCORE,
+      </if>
+      <if test="scoreSource != null">
+        SCORE_SOURCE,
+      </if>
+      <if test="scoreType != null">
+        SCORE_TYPE,
+      </if>
+      <if test="dataType != null">
+        DATA_TYPE,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="appraisalId != null">
+        #{appraisalId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="cumulativeLimit != null">
+        #{cumulativeLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultScore != null">
+        #{defaultScore,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreSource != null">
+        #{scoreSource,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreType != null">
+        #{scoreType,jdbcType=DECIMAL},
+      </if>
+      <if test="dataType != null">
+        #{dataType,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AppraisalRule">
+    update APPRAISAL_RULE
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="appraisalId != null">
+        APPRAISAL_ID = #{appraisalId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="cumulativeLimit != null">
+        CUMULATIVE_LIMIT = #{cumulativeLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultScore != null">
+        DEFAULT_SCORE = #{defaultScore,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        SCORE = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreSource != null">
+        SCORE_SOURCE = #{scoreSource,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreType != null">
+        SCORE_TYPE = #{scoreType,jdbcType=DECIMAL},
+      </if>
+      <if test="dataType != null">
+        DATA_TYPE = #{dataType,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AppraisalRule">
+    update APPRAISAL_RULE
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      APPRAISAL_ID = #{appraisalId,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      CUMULATIVE_LIMIT = #{cumulativeLimit,jdbcType=DECIMAL},
+      DEFAULT_SCORE = #{defaultScore,jdbcType=DECIMAL},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=DECIMAL},
+      SCORE_SOURCE = #{scoreSource,jdbcType=DECIMAL},
+      SCORE_TYPE = #{scoreType,jdbcType=DECIMAL},
+      DATA_TYPE = #{dataType,jdbcType=DECIMAL},
+      STATE = #{state,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="findByNameNotId" parameterType="com.assessment.model.AppraisalRule" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_RULE
+    where ID != #{id,jdbcType=DECIMAL} and  NAME = #{name,jdbcType=VARCHAR} and AMPUTATED=0
+  </select>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    APPRAISAL_RULE.ID, APPRAISAL_RULE.AMPUTATED, APPRAISAL_RULE.APPRAISAL_ID, APPRAISAL_RULE.CREATED_DATE_TIME, APPRAISAL_RULE.CREATED_USER_ID,
+    APPRAISAL_RULE.CREATED_USER_NAME,
+    APPRAISAL_RULE.CUMULATIVE_LIMIT, APPRAISAL_RULE.DEFAULT_SCORE, APPRAISAL_RULE.DESCRIPTION, APPRAISAL_RULE.DISPLAY_ORDER, APPRAISAL_RULE.LAST_UPDATE_DATE_TIME,
+    APPRAISAL_RULE.LAST_UPDATE_USER_ID, APPRAISAL_RULE.LAST_UPDATE_USER_NAME, APPRAISAL_RULE.NAME, APPRAISAL_RULE.SCORE, APPRAISAL_RULE.SCORE_SOURCE, APPRAISAL_RULE.SCORE_TYPE,DATA_TYPE,
+    APPRAISAL_RULE.STATE,APPRAISAL_INDEX."NAME" indexName
+    FROM
+    APPRAISAL_RULE
+    LEFT JOIN APPRAISAL_INDEX ON APPRAISAL_RULE.APPRAISAL_ID = APPRAISAL_INDEX."ID"
+    WHERE  APPRAISAL_RULE.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">APPRAISAL_RULE.NAME like '%'||#{name}||'%'and </if>
+      <if test="appraisalId!=null  and appraisalId !=''">APPRAISAL_RULE.APPRAISAL_ID = #{appraisalId} and </if>
+      <if test="description!=null and description !='' ">APPRAISAL_RULE.DESCRIPTION like '%'||#{description}||'%'and</if>
+      <if test="state!=null and state !=''">APPRAISAL_RULE.STATE = #{state} and </if>
+      <if test="scoreType!=null and scoreType !=''">APPRAISAL_RULE.SCORE_TYPE = #{scoreType} and </if>
+    </trim>
+    ORDER BY APPRAISAL_INDEX.DISPLAY_ORDER ,APPRAISAL_RULE.DISPLAY_ORDER
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    APPRAISAL_RULE.ID,
+    APPRAISAL_RULE.AMPUTATED,
+    APPRAISAL_RULE.APPRAISAL_ID,
+    APPRAISAL_RULE.CREATED_DATE_TIME,
+    APPRAISAL_RULE.CREATED_USER_ID,
+    APPRAISAL_RULE.CREATED_USER_NAME,
+    APPRAISAL_RULE.CUMULATIVE_LIMIT,
+    APPRAISAL_RULE.DEFAULT_SCORE,
+    APPRAISAL_RULE.DESCRIPTION,
+    APPRAISAL_RULE.DISPLAY_ORDER,
+    APPRAISAL_RULE.LAST_UPDATE_DATE_TIME,
+    APPRAISAL_RULE.LAST_UPDATE_USER_ID,
+    APPRAISAL_RULE.LAST_UPDATE_USER_NAME,
+    APPRAISAL_RULE.NAME,
+    APPRAISAL_RULE.SCORE,
+    APPRAISAL_RULE.SCORE_SOURCE,
+    APPRAISAL_RULE.SCORE_TYPE,DATA_TYPE,
+    APPRAISAL_RULE.STATE,
+    APPRAISAL_INDEX."NAME" indexName
+    FROM
+    APPRAISAL_RULE
+    LEFT JOIN APPRAISAL_INDEX ON APPRAISAL_RULE.APPRAISAL_ID = APPRAISAL_INDEX."ID"
+    WHERE  APPRAISAL_RULE.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">
+        APPRAISAL_RULE.NAME like '%'||#{name}||'%'and
+      </if>
+      <if test="appraisalId!=null">
+        APPRAISAL_RULE.APPRAISAL_ID = #{appraisalId} and
+      </if>
+      <if test="description!=null and description !='' ">
+        APPRAISAL_RULE.DESCRIPTION like '%'||#{description}||'%'and
+      </if>
+      <if test="state!=null">
+        APPRAISAL_RULE.STATE = #{state} and
+      </if>
+      <if test="scoreType!=null">
+        APPRAISAL_RULE.SCORE_TYPE = #{scoreType} and
+      </if>
+    </trim>
+    ORDER BY APPRAISAL_INDEX.TYPE ,APPRAISAL_RULE.APPRAISAL_ID,APPRAISAL_RULE.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectRuleRelationIndex" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+	APPRAISAL_INDEX."ID" APPRAISAL_ID,
+	APPRAISAL_INDEX."NAME" indexName,
+	APPRAISAL_RULE."ID" ID,
+	APPRAISAL_RULE."NAME" name,
+    APPRAISAL_TEMPLATE_INDEX."ID" templateIndexId,
+    APPRAISAL_TEMPLATE_RULE."ID" templateRuleId
+    FROM
+    APPRAISAL_INDEX
+    LEFT JOIN APPRAISAL_RULE ON APPRAISAL_INDEX."ID" = APPRAISAL_RULE.APPRAISAL_ID
+    LEFT JOIN APPRAISAL_TEMPLATE_INDEX ON APPRAISAL_INDEX."ID" = APPRAISAL_TEMPLATE_INDEX.INDEX_ID
+    AND APPRAISAL_TEMPLATE_INDEX.TEMPLATE_ID = #{emplatetId}
+    LEFT JOIN APPRAISAL_TEMPLATE_RULE ON APPRAISAL_TEMPLATE_RULE.RULE_ID = APPRAISAL_RULE."ID"
+    AND APPRAISAL_TEMPLATE_RULE.TEMPLATE_ID = #{emplatetId}
+    WHERE APPRAISAL_RULE.AMPUTATED = 0 and APPRAISAL_INDEX.AMPUTATED = 0 and APPRAISAL_RULE.STATE = 0 and APPRAISAL_INDEX.STATE = 0 and  APPRAISAL_INDEX."TYPE" = #{indexType} AND APPRAISAL_INDEX.AMPUTATED = 0 order by APPRAISAL_INDEX.DISPLAY_ORDER,APPRAISAL_ID,APPRAISAL_RULE.DISPLAY_ORDER
+  </select>
+
+  <select id="selectByIndexId" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM APPRAISAL_RULE
+    WHERE APPRAISAL_RULE.AMPUTATED = 0 AND APPRAISAL_RULE.APPRAISAL_ID = #{indexId,jdbcType=DECIMAL}
+  </select>
+
+</mapper>

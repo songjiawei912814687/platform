@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalComplaintMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.AppraisalComplaintOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="TYPE_NAME" jdbcType="VARCHAR" property="typeName"/>
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="APPROVAL_DATE_TIME" jdbcType="TIMESTAMP" property="approvalDateTime" />
+    <result column="APPROVAL_STATE" jdbcType="DECIMAL" property="approvalState" />
+    <result column="APPROVAL_USER_ID" jdbcType="DECIMAL" property="approvalUserId" />
+    <result column="APPROVAL_USER_NAME" jdbcType="VARCHAR" property="approvalUserName" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DATUM_VALUE" jdbcType="DECIMAL" property="datumValue" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MONTH" jdbcType="DECIMAL" property="month" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="PLAN_ID" jdbcType="DECIMAL" property="planId" />
+    <result column="SCORE" jdbcType="DECIMAL" property="score" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="TEMPLATE_ID" jdbcType="DECIMAL" property="templateId" />
+    <result column="TEMPLATE_TYPE" jdbcType="DECIMAL" property="templateType" />
+    <result column="YEAR" jdbcType="DECIMAL" property="year" />
+    <result column="organizationName" jdbcType="VARCHAR" property="organizationName" />
+    <result column="inspectionpersonnelName" jdbcType="VARCHAR" property="inspectionpersonnelName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, APPROVAL_DATE_TIME, APPROVAL_STATE, APPROVAL_USER_ID, APPROVAL_USER_NAME,
+    CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DATUM_VALUE, DESCRIPTION,
+    DISPLAY_ORDER, EMPLOYEE_ID, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+    MONTH, NAME, ORGANIZATION_ID, PLAN_ID, SCORE, STATE, TEMPLATE_ID, TEMPLATE_TYPE,
+    YEAR
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    APPRAISAL_COMPLAINT.*,
+    ORGANIZATION."NAME" organizationName,
+    EMPLOYEES."NAME" inspectionpersonnelName
+    from APPRAISAL_COMPLAINT
+    LEFT JOIN "ORGANIZATION" ON ORGANIZATION."ID" = APPRAISAL_COMPLAINT.ORGANIZATION_ID
+    LEFT JOIN EMPLOYEES ON EMPLOYEES."ID" = APPRAISAL_COMPLAINT.EMPLOYEE_ID
+    where APPRAISAL_COMPLAINT.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from APPRAISAL_COMPLAINT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AppraisalComplaint">
+    insert into APPRAISAL_COMPLAINT (ID, AMPUTATED, APPROVAL_DATE_TIME,
+      APPROVAL_STATE, APPROVAL_USER_ID, APPROVAL_USER_NAME,
+      CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+      DATUM_VALUE, DESCRIPTION, DISPLAY_ORDER,
+      EMPLOYEE_ID, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, MONTH, NAME,
+      ORGANIZATION_ID, PLAN_ID, SCORE,
+      STATE, TEMPLATE_ID, TEMPLATE_TYPE,
+      YEAR)
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{approvalDateTime,jdbcType=TIMESTAMP},
+      #{approvalState,jdbcType=DECIMAL}, #{approvalUserId,jdbcType=DECIMAL}, #{approvalUserName,jdbcType=VARCHAR},
+      #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR},
+      #{datumValue,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR}, #{displayOrder,jdbcType=DECIMAL},
+      #{employeeId,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{month,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR},
+      #{organizationId,jdbcType=DECIMAL}, #{planId,jdbcType=DECIMAL}, #{score,jdbcType=DECIMAL},
+      #{state,jdbcType=DECIMAL}, #{templateId,jdbcType=DECIMAL}, #{templateType,jdbcType=DECIMAL},
+      #{year,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AppraisalComplaint">
+    insert into APPRAISAL_COMPLAINT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="approvalDateTime != null">
+        APPROVAL_DATE_TIME,
+      </if>
+      <if test="approvalState != null">
+        APPROVAL_STATE,
+      </if>
+      <if test="approvalUserId != null">
+        APPROVAL_USER_ID,
+      </if>
+      <if test="approvalUserName != null">
+        APPROVAL_USER_NAME,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="datumValue != null">
+        DATUM_VALUE,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="month != null">
+        MONTH,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="planId != null">
+        PLAN_ID,
+      </if>
+      <if test="score != null">
+        SCORE,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID,
+      </if>
+      <if test="templateType != null">
+        TEMPLATE_TYPE,
+      </if>
+      <if test="year != null">
+        YEAR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="approvalDateTime != null">
+        #{approvalDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalState != null">
+        #{approvalState,jdbcType=DECIMAL},
+      </if>
+      <if test="approvalUserId != null">
+        #{approvalUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="approvalUserName != null">
+        #{approvalUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="datumValue != null">
+        #{datumValue,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=DECIMAL},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateType != null">
+        #{templateType,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AppraisalComplaint">
+    update APPRAISAL_COMPLAINT
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="approvalDateTime != null">
+        APPROVAL_DATE_TIME = #{approvalDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalState != null">
+        APPROVAL_STATE = #{approvalState,jdbcType=DECIMAL},
+      </if>
+      <if test="approvalUserId != null">
+        APPROVAL_USER_ID = #{approvalUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="approvalUserName != null">
+        APPROVAL_USER_NAME = #{approvalUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="datumValue != null">
+        DATUM_VALUE = #{datumValue,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null">
+        MONTH = #{month,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="planId != null">
+        PLAN_ID = #{planId,jdbcType=DECIMAL},
+      </if>
+      <if test="score != null">
+        SCORE = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="templateType != null">
+        TEMPLATE_TYPE = #{templateType,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null">
+        YEAR = #{year,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AppraisalComplaint">
+    update APPRAISAL_COMPLAINT
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      APPROVAL_DATE_TIME = #{approvalDateTime,jdbcType=TIMESTAMP},
+      APPROVAL_STATE = #{approvalState,jdbcType=DECIMAL},
+      APPROVAL_USER_ID = #{approvalUserId,jdbcType=DECIMAL},
+      APPROVAL_USER_NAME = #{approvalUserName,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DATUM_VALUE = #{datumValue,jdbcType=DECIMAL},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MONTH = #{month,jdbcType=DECIMAL},
+      NAME = #{name,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      PLAN_ID = #{planId,jdbcType=DECIMAL},
+      SCORE = #{score,jdbcType=DECIMAL},
+      STATE = #{state,jdbcType=DECIMAL},
+      TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      TEMPLATE_TYPE = #{templateType,jdbcType=DECIMAL},
+      YEAR = #{year,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+SELECT
+	ac. YEAR,
+	ac. MONTH,
+	ac. NAME,
+	ac.TEMPLATE_TYPE,
+	ac.ORGANIZATION_ID,
+	ac.EMPLOYEE_ID,
+	ac.CREATED_DATE_TIME,
+	ac.DESCRIPTION,
+	ac.STATE,
+	ORGANIZATION."NAME" AS organizationName,
+	EMPLOYEES."NAME" AS inspectionpersonnelName
+FROM
+	APPRAISAL_COMPLAINT ac
+LEFT JOIN "ORGANIZATION" ON ORGANIZATION ."ID" = ac.ORGANIZATION_ID
+LEFT JOIN EMPLOYEES ON EMPLOYEES."ID" = ac.EMPLOYEE_ID
+WHERE
+	ac.AMPUTATED = 0
+
+  </select>
+
+
+
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+SELECT
+	ac. YEAR,
+	ac. MONTH,
+	ac. NAME,
+	ac.TEMPLATE_TYPE,
+	ac.ORGANIZATION_ID,
+	ac.EMPLOYEE_ID,
+	ac.CREATED_DATE_TIME,
+	ac.DESCRIPTION,
+	ac.STATE,
+    organization.NAME AS organizationName,
+	EMPLOYEES."NAME" AS inspectionpersonnelName
+FROM
+	APPRAISAL_COMPLAINT ac
+LEFT JOIN ORGANIZATION organization ON organization .ID = ac.ORGANIZATION_ID
+LEFT JOIN EMPLOYEES ON EMPLOYEES."ID" = ac.EMPLOYEE_ID
+WHERE
+	ac.AMPUTATED = 0
+    <if test="orgId!=null or employeeId!=null">
+    AND (EXISTS (
+    SELECT
+    organization.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    organization.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND organization.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    <if test="employeeId!=null">
+      or ac.EMPLOYEE_ID = #{employeeId}
+    </if>
+    )
+    </if>
+  </select>
+
+  <select id="selectAssessmentRepresentation" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT
+    AC.ID,
+    AC.YEAR,
+    AC.MONTH,
+    AC.NAME,
+    AC.TEMPLATE_TYPE,
+    AC.ORGANIZATION_ID,
+    AC.EMPLOYEE_ID,
+    AC.CREATED_DATE_TIME,
+    AC.DESCRIPTION,
+    AC.STATE,
+    organization.name  organizationName,
+    e.name inspectionpersonnelName
+    from APPRAISAL_COMPLAINT AC
+    LEFT JOIN ORGANIZATION  organization ON organization.id = AC.ORGANIZATION_ID
+    LEFT JOIN EMPLOYEES e ON e.id = AC.EMPLOYEE_ID
+    where   AC.AMPUTATED=0
+    <if test="orgId!=null or employeeId!=null">
+    AND (EXISTS (
+    SELECT
+    organization.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    organization.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND organization.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    <if test="employeeId!=null">
+      or AC.EMPLOYEE_ID = #{employeeId}
+    </if>
+    )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year != ''">AC."YEAR" = #{year}and </if>
+      <if test="month!=null and month != ''">AC."MONTH" = #{month} and</if>
+      <if test="organizationId!=null and organizationId != ''">concat(organization.path,',') like '%,'||#{organizationId}||',%'and</if>
+      <if test="state!=null and state != ''">AC.STATE = #{state} and</if>
+    </trim>
+  </select>
+  <select id="selectByPlanIdAndState" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_COMPLAINT
+    where PLAN_ID = #{planId,jdbcType=DECIMAL}
+    and  STATE = #{state,jdbcType=DECIMAL}
+    and  AMPUTATED = 0
+  </select>
+
+</mapper>

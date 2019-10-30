@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalPlanItemMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.AppraisalPlanItemOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CUMULATIVE_LIMIT" jdbcType="DECIMAL" property="cumulativeLimit" />
+    <result column="DATUM_VALUE" jdbcType="DECIMAL" property="datumValue" />
+    <result column="DEFAULT_SCORE" jdbcType="DECIMAL" property="defaultScore" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="INDEX_ID" jdbcType="DECIMAL" property="indexId" />
+    <result column="INDEX_NAME" jdbcType="VARCHAR" property="indexName" />
+    <result column="INDEX_SCORE" jdbcType="DECIMAL" property="indexScore" />
+    <result column="MAX_BONUS" jdbcType="DECIMAL" property="maxBonus" />
+    <result column="OBJECT_TYPE" jdbcType="DECIMAL" property="objectType" />
+    <result column="PLAN_ID" jdbcType="DECIMAL" property="planId" />
+    <result column="QUANTITY" jdbcType="DECIMAL" property="quantity" />
+    <result column="RATING_DESCRIPTION" jdbcType="VARCHAR" property="ratingDescription" />
+    <result column="RULE_ID" jdbcType="DECIMAL" property="ruleId" />
+    <result column="RULE_NAME" jdbcType="VARCHAR" property="ruleName" />
+    <result column="RULE_SCORE" jdbcType="DECIMAL" property="ruleScore" />
+    <result column="SCORE" jdbcType="DECIMAL" property="score" />
+    <result column="SCORE_SOURCE" jdbcType="DECIMAL" property="scoreSource" />
+    <result column="SCORE_TYPE" jdbcType="DECIMAL" property="scoreType" />
+    <result column="DATA_TYPE" jdbcType="DECIMAL" property="dataType" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="organizationName" jdbcType="VARCHAR" property="organizationName" />
+    <result column="FINAL_SCORE" jdbcType="DECIMAL" property="finalScore" />
+  </resultMap>
+
+  <resultMap id="BaseResultMap1" type="com.assessment.model.AppraisalPlanItem">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CUMULATIVE_LIMIT" jdbcType="DECIMAL" property="cumulativeLimit" />
+    <result column="DATUM_VALUE" jdbcType="DECIMAL" property="datumValue" />
+    <result column="DEFAULT_SCORE" jdbcType="DECIMAL" property="defaultScore" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="INDEX_ID" jdbcType="DECIMAL" property="indexId" />
+    <result column="INDEX_NAME" jdbcType="VARCHAR" property="indexName" />
+    <result column="INDEX_SCORE" jdbcType="DECIMAL" property="indexScore" />
+    <result column="MAX_BONUS" jdbcType="DECIMAL" property="maxBonus" />
+    <result column="OBJECT_TYPE" jdbcType="DECIMAL" property="objectType" />
+    <result column="PLAN_ID" jdbcType="DECIMAL" property="planId" />
+    <result column="QUANTITY" jdbcType="DECIMAL" property="quantity" />
+    <result column="RATING_DESCRIPTION" jdbcType="VARCHAR" property="ratingDescription" />
+    <result column="RULE_ID" jdbcType="DECIMAL" property="ruleId" />
+    <result column="RULE_NAME" jdbcType="VARCHAR" property="ruleName" />
+    <result column="RULE_SCORE" jdbcType="DECIMAL" property="ruleScore" />
+    <result column="SCORE" jdbcType="DECIMAL" property="score" />
+    <result column="SCORE_SOURCE" jdbcType="DECIMAL" property="scoreSource" />
+    <result column="SCORE_TYPE" jdbcType="DECIMAL" property="scoreType" />
+    <result column="DATA_TYPE" jdbcType="DECIMAL" property="dataType" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="FINAL_SCORE" jdbcType="DECIMAL" property="finalScore" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CUMULATIVE_LIMIT, DATUM_VALUE, DEFAULT_SCORE, DESCRIPTION, INDEX_ID, INDEX_NAME,
+    INDEX_SCORE, MAX_BONUS, OBJECT_TYPE, PLAN_ID, QUANTITY, RATING_DESCRIPTION, RULE_ID,
+    RULE_NAME, RULE_SCORE, SCORE, SCORE_SOURCE, SCORE_TYPE, DATA_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_PLAN_ITEM
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from APPRAISAL_PLAN_ITEM
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AppraisalPlanItem">
+    insert into APPRAISAL_PLAN_ITEM (ID, CUMULATIVE_LIMIT, DATUM_VALUE,
+      DEFAULT_SCORE, DESCRIPTION, INDEX_ID,
+      INDEX_NAME, INDEX_SCORE, MAX_BONUS,
+      OBJECT_TYPE, PLAN_ID, QUANTITY,
+      RATING_DESCRIPTION, RULE_ID, RULE_NAME,
+      RULE_SCORE, SCORE, SCORE_SOURCE,
+      SCORE_TYPE, DATA_TYPE)
+    values (#{id,jdbcType=DECIMAL}, #{cumulativeLimit,jdbcType=DECIMAL}, #{datumValue,jdbcType=DECIMAL},
+      #{defaultScore,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR}, #{indexId,jdbcType=DECIMAL},
+      #{indexName,jdbcType=VARCHAR}, #{indexScore,jdbcType=DECIMAL}, #{maxBonus,jdbcType=DECIMAL},
+      #{objectType,jdbcType=DECIMAL}, #{planId,jdbcType=DECIMAL}, #{quantity,jdbcType=DECIMAL},
+      #{ratingDescription,jdbcType=VARCHAR}, #{ruleId,jdbcType=DECIMAL}, #{ruleName,jdbcType=VARCHAR},
+      #{ruleScore,jdbcType=DECIMAL}, #{score,jdbcType=DECIMAL}, #{scoreSource,jdbcType=DECIMAL},
+      #{scoreType,jdbcType=DECIMAL},
+      #{dataType,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AppraisalPlanItem">
+    insert into APPRAISAL_PLAN_ITEM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cumulativeLimit != null">
+        CUMULATIVE_LIMIT,
+      </if>
+      <if test="datumValue != null">
+        DATUM_VALUE,
+      </if>
+      <if test="defaultScore != null">
+        DEFAULT_SCORE,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="indexId != null">
+        INDEX_ID,
+      </if>
+      <if test="indexName != null">
+        INDEX_NAME,
+      </if>
+      <if test="indexScore != null">
+        INDEX_SCORE,
+      </if>
+      <if test="maxBonus != null">
+        MAX_BONUS,
+      </if>
+      <if test="objectType != null">
+        OBJECT_TYPE,
+      </if>
+      <if test="planId != null">
+        PLAN_ID,
+      </if>
+      <if test="quantity != null">
+        QUANTITY,
+      </if>
+      <if test="ratingDescription != null">
+        RATING_DESCRIPTION,
+      </if>
+      <if test="ruleId != null">
+        RULE_ID,
+      </if>
+      <if test="ruleName != null">
+        RULE_NAME,
+      </if>
+      <if test="ruleScore != null">
+        RULE_SCORE,
+      </if>
+      <if test="score != null">
+        SCORE,
+      </if>
+      <if test="scoreSource != null">
+        SCORE_SOURCE,
+      </if>
+      <if test="scoreType != null">
+        SCORE_TYPE,
+      </if>
+      <if test="dataType != null">
+        DATA_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="cumulativeLimit != null">
+        #{cumulativeLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="datumValue != null">
+        #{datumValue,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultScore != null">
+        #{defaultScore,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="indexId != null">
+        #{indexId,jdbcType=DECIMAL},
+      </if>
+      <if test="indexName != null">
+        #{indexName,jdbcType=VARCHAR},
+      </if>
+      <if test="indexScore != null">
+        #{indexScore,jdbcType=DECIMAL},
+      </if>
+      <if test="maxBonus != null">
+        #{maxBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="objectType != null">
+        #{objectType,jdbcType=DECIMAL},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="ratingDescription != null">
+        #{ratingDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleId != null">
+        #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleName != null">
+        #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleScore != null">
+        #{ruleScore,jdbcType=DECIMAL},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreSource != null">
+        #{scoreSource,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreType != null">
+        #{scoreType,jdbcType=DECIMAL},
+      </if>
+      <if test="dataType != null">
+        #{dataType,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.model.AppraisalPlanItem">
+    update APPRAISAL_PLAN_ITEM
+    <set>
+      <if test="cumulativeLimit != null">
+        CUMULATIVE_LIMIT = #{cumulativeLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="datumValue != null">
+        DATUM_VALUE = #{datumValue,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultScore != null">
+        DEFAULT_SCORE = #{defaultScore,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="indexId != null">
+        INDEX_ID = #{indexId,jdbcType=DECIMAL},
+      </if>
+      <if test="indexName != null">
+        INDEX_NAME = #{indexName,jdbcType=VARCHAR},
+      </if>
+      <if test="indexScore != null">
+        INDEX_SCORE = #{indexScore,jdbcType=DECIMAL},
+      </if>
+      <if test="maxBonus != null">
+        MAX_BONUS = #{maxBonus,jdbcType=DECIMAL},
+      </if>
+      <if test="objectType != null">
+        OBJECT_TYPE = #{objectType,jdbcType=DECIMAL},
+      </if>
+      <if test="planId != null">
+        PLAN_ID = #{planId,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null">
+        QUANTITY = #{quantity,jdbcType=DECIMAL},
+      </if>
+      <if test="ratingDescription != null">
+        RATING_DESCRIPTION = #{ratingDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleId != null">
+        RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleName != null">
+        RULE_NAME = #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleScore != null">
+        RULE_SCORE = #{ruleScore,jdbcType=DECIMAL},
+      </if>
+      <if test="score != null">
+        SCORE = #{score,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreSource != null">
+        SCORE_SOURCE = #{scoreSource,jdbcType=DECIMAL},
+      </if>
+      <if test="scoreType != null">
+        SCORE_TYPE = #{scoreType,jdbcType=DECIMAL},
+      </if>
+      <if test="dataType != null">
+        DATA_TYPE = #{dataType,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AppraisalPlanItem">
+    update APPRAISAL_PLAN_ITEM
+    set CUMULATIVE_LIMIT = #{cumulativeLimit,jdbcType=DECIMAL},
+      DATUM_VALUE = #{datumValue,jdbcType=DECIMAL},
+      DEFAULT_SCORE = #{defaultScore,jdbcType=DECIMAL},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      INDEX_ID = #{indexId,jdbcType=DECIMAL},
+      INDEX_NAME = #{indexName,jdbcType=VARCHAR},
+      INDEX_SCORE = #{indexScore,jdbcType=DECIMAL},
+      MAX_BONUS = #{maxBonus,jdbcType=DECIMAL},
+      OBJECT_TYPE = #{objectType,jdbcType=DECIMAL},
+      PLAN_ID = #{planId,jdbcType=DECIMAL},
+      QUANTITY = #{quantity,jdbcType=DECIMAL},
+      RATING_DESCRIPTION = #{ratingDescription,jdbcType=VARCHAR},
+      RULE_ID = #{ruleId,jdbcType=DECIMAL},
+      RULE_NAME = #{ruleName,jdbcType=VARCHAR},
+      RULE_SCORE = #{ruleScore,jdbcType=DECIMAL},
+      SCORE = #{score,jdbcType=DECIMAL},
+      SCORE_SOURCE = #{scoreSource,jdbcType=DECIMAL},
+      SCORE_TYPE = #{scoreType,jdbcType=DECIMAL},
+      DATA_TYPE = #{dataType,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByPlanId" resultMap="BaseResultMap">
+      SELECT
+	item.Id,
+	item.plan_Id,
+	item.DATUM_VALUE,
+	item.DESCRIPTION,
+	item.MAX_BONUS,
+	item.OBJECT_TYPE,
+	item.index_Id,
+	item.index_Name,
+	item.index_Score,
+	item.rule_Id,
+	item.rule_Name,
+	item.score_Type,
+	item.data_Type,
+	item.score_Source,
+	item.cumulative_Limit,
+	item.quantity,
+	item.score,
+	item.rule_Score,
+	item.default_Score,
+	item.rating_Description
+    FROM
+	appraisal_plan_item item
+	where 	item.plan_Id=#{planId,jdbcType=DECIMAL} order by item.Id
+   </select>
+
+  <update id="updateByIndexIdAndPlanId" parameterType="com.common.model.PageData">
+      UPDATE  APPRAISAL_PLAN_ITEM set INDEX_SCORE=#{indexScore,jdbcType=DECIMAL} where INDEX_ID=#{indexId,jdbcType=DECIMAL} and  PLAN_ID=#{planId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="findByIndexIdAndPlanId" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_PLAN_ITEM
+    where PLAN_ID = #{planId,jdbcType=DECIMAL} and  INDEX_ID = #{indexId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData" >
+    SELECT
+    item.Id,
+    item.plan_Id,
+    item.DATUM_VALUE,
+    item.DESCRIPTION,
+    item.MAX_BONUS,
+    item.OBJECT_TYPE,
+    item.index_Id,
+    item.index_Name,
+    item.index_Score,
+    item.rule_Id,
+    item.rule_Name,
+    item.score_Type,
+    item.data_Type,
+    item.score_Source,
+    item.cumulative_Limit,
+    item.quantity,
+    item.score,
+    item.rule_Score,
+    item.default_Score,
+    item.rating_Description
+    FROM
+    appraisal_plan_item item
+  </select>
+
+  <select id="getPlanItemInfoAndOrgByDate" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+      SELECT
+	item.Id,
+	item.plan_Id,
+	item.DATUM_VALUE,
+	item.DESCRIPTION,
+	item.MAX_BONUS,
+	item.OBJECT_TYPE,
+	item.index_Id,
+	item.index_Name,
+	item.index_Score,
+	item.rule_Id,
+	item.rule_Name,
+	item.score_Type,
+	item.data_Type,
+	item.score_Source,
+	item.cumulative_Limit,
+	item.quantity,
+	item.score,
+	item.rule_Score,
+	item.default_Score,
+	item.rating_Description,
+    APPRAISAL_PLAN.ORGANIZATION_ID ORGANIZATION_ID,
+    APPRAISAL_PLAN.FINAL_SCORE
+    FROM
+	appraisal_plan_item item
+	RIGHT  JOIN APPRAISAL_PLAN ON item.PLAN_ID = APPRAISAL_PLAN."ID"
+	where 	APPRAISAL_PLAN.AMPUTATED = 0 AND APPRAISAL_PLAN.OBJECT_TYPE = #{objectType}
+	AND APPRAISAL_PLAN."YEAR" = #{year} AND APPRAISAL_PLAN."MONTH" = #{month}
+	<if test="templateId!=null">
+      AND APPRAISAL_PLAN.TEMPLATE_ID =  #{templateId}
+    </if>
+	order by item.plan_Id,item.index_Id
+   </select>
+
+
+  <select id="getPersonQuantity" resultType="java.lang.Integer"  >
+    SELECT
+	*
+    FROM
+        (
+    SELECT
+        DEPARTMENT_NUMBERS.PERSON_NUM
+    FROM
+        APPRAISAL_PLAN_ITEM
+        INNER JOIN APPRAISAL_PLAN ON APPRAISAL_PLAN_ITEM.PLAN_ID = APPRAISAL_PLAN.id
+        LEFT JOIN DEPARTMENT_NUMBERS ON DEPARTMENT_NUMBERS.DEPART_ID = APPRAISAL_PLAN.ORGANIZATION_ID
+        where  APPRAISAL_PLAN_ITEM.id = #{id}
+    ORDER BY
+        DEPARTMENT_NUMBERS.CREATED_DATE_TIME DESC
+
+        )
+    WHERE
+        rownum =1
+  </select>
+
+  <select id="getSumQualitityByPlanItemId" resultType="java.lang.Integer" parameterType="com.common.model.PageData" >
+    SELECT
+	sum( QUANTITY )
+    FROM
+        APPRAISAL_PLAN_ITEM
+    WHERE
+        APPRAISAL_PLAN_ITEM.PLAN_ID IN ( SELECT PLAN_ID FROM APPRAISAL_PLAN_ITEM WHERE APPRAISAL_PLAN_ITEM.id = #{itemId} )
+        AND APPRAISAL_PLAN_ITEM.INDEX_ID = #{indexId}
+  </select>
+
+  <select id="getAllJointRateByItemId" resultMap="BaseResultMap1" parameterType="com.common.model.PageData" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+        APPRAISAL_PLAN_ITEM
+    WHERE
+        APPRAISAL_PLAN_ITEM.PLAN_ID IN ( SELECT PLAN_ID FROM APPRAISAL_PLAN_ITEM WHERE APPRAISAL_PLAN_ITEM.id =  #{itemId} )
+        AND APPRAISAL_PLAN_ITEM.INDEX_ID = #{indexId}
+  </select>
+
+
+  <select id="getOthersRule" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from APPRAISAL_PLAN_ITEM
+    where ID != #{itemId} and PLAN_ID = #{planId} and INDEX_ID = #{indexId}
+  </select>
+
+  <select id="selectByYearAndMonthAndIndexId" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT ORGANIZATION.name organizationName,APPRAISAL_PLAN_ITEM.RULE_NAME, APPRAISAL_PLAN_ITEM.QUANTITY FROM APPRAISAL_PLAN left join APPRAISAL_PLAN_ITEM on APPRAISAL_PLAN_ITEM.PLAN_ID = APPRAISAL_PLAN.id
+    left join ORGANIZATION on ORGANIZATION.ID =  APPRAISAL_PLAN.ORGANIZATION_ID
+    where
+    APPRAISAL_PLAN.YEAR = #{year} and APPRAISAL_PLAN.MONTH = #{month}  and APPRAISAL_PLAN.AMPUTATED = 0 and APPRAISAL_PLAN.OBJECT_TYPE = 0
+    and APPRAISAL_PLAN_ITEM.INDEX_ID = #{indexId} and APPRAISAL_PLAN_ITEM.SCORE_TYPE = 0
+    order by ORGANIZATION.ID
+  </select>
+</mapper>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assistdecision.mapper.mybatis.FeedbackInfoMapper">
+  <resultMap id="BaseResultMap" type="com.assistdecision.domain.output.FeedbackInfoOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="APPRAISE_STATE" jdbcType="DECIMAL" property="appraiseState"/>
+    <result column="APPRAISE_TIME" jdbcType="VARCHAR" property="appraiseTime"/>
+    <result column="COMPLETE_RATE" jdbcType="DECIMAL" property="completeRate" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="EMPLOYEES_NAME" jdbcType="VARCHAR" property="employeesName"/>
+    <result column="EMPLOYEES_NO" jdbcType="VARCHAR" property="employeesNo"/>
+    <result column="FEEDBACK_TIME" jdbcType="TIMESTAMP" property="feedbackTime" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MATTERS" jdbcType="VARCHAR" property="matters" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="ONE_DETAIL" jdbcType="VARCHAR" property="oneDetail"/>
+    <result column="TWO_DETAIL" jdbcType="VARCHAR" property="twoDetail"/>
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="SATISFACTION" jdbcType="DECIMAL" property="satisfaction"/>
+    <result column="WINDOW_NO" jdbcType="VARCHAR" property="windowNo" />
+    <result column="SEND_STATE" jdbcType="DECIMAL" property="sendState"/>
+    <result column="DEADLINE" jdbcType="VARCHAR" property="deadline"/>
+    <result column="PERSON_NAME" jdbcType="VARCHAR" property="personName"/>
+    <result column="SUGGEST_ID" jdbcType="DECIMAL" property="suggestId"/>
+    <result column="APPRAISE_CONTENT" jdbcType="VARCHAR" property="appraiseContent"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+      ID, AMPUTATED,APPRAISE_TIME, APPRAISE_STATE,COMPLETE_RATE,
+      CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,DEADLINE,
+      EMPLOYEES_NAME,EMPLOYEES_NO, FEEDBACK_TIME, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MATTERS,ORGANIZATION_ID,
+      ORGANIZATION_NAME,ONE_DETAIL, TWO_DETAIL,PHONE, SATISFACTION,PERSON_NAME,
+      WINDOW_NO,SUGGEST_ID,SEND_STATE,APPRAISE_CONTENT
+  </sql>
+
+  <select id="selectBusiness" resultMap="BaseResultMap">
+    select
+    t.*
+    from
+   ( SELECT
+	TRUNC (
+		(
+			COUNT (1) / (
+				SELECT
+					COUNT (1)
+				FROM
+					FEEDBACK_INFO
+			)
+		) * 100,
+		2
+	) AS POINT,
+	FI.ORGANIZATION_NAME
+FROM
+	FEEDBACK_INFO fi
+GROUP BY
+	FI.ORGANIZATION_NAME
+ORDER BY
+	POINT DESC)t where rownum &lt;11
+  </select>
+
+  <select id="selectWindowDo" resultType="string" resultMap="BaseResultMap">
+    select count(1) as doCount
+  from FEEDBACK_INFO
+  where to_char(FEEDBACK_TIME,'yyyy-MM')
+  BETWEEN #{date,jdbcType=VARCHAR}
+  and #{date,jdbcType=VARCHAR}
+  </select>
+
+    <select id="selectHotDo"  resultType="string" resultMap="BaseResultMap">
+        SELECT *
+        FROM
+        (SELECT count(fi.MATTERS) as doCount ,fi.MATTERS,to_char(FEEDBACK_TIME,'yyyy-MM')
+        as hotTime from FEEDBACK_INFO fi
+        where to_char(FEEDBACK_TIME,'yyyy-MM') BETWEEN #{date,jdbcType=VARCHAR}
+        and #{date,jdbcType=VARCHAR}
+        GROUP BY MATTERS,to_char(FEEDBACK_TIME,'yyyy-MM')
+        ORDER BY count(MATTERS) desc)s
+        where ROWNUM &lt;6
+    </select>
+
+    <select id="selectAllCount" resultMap="BaseResultMap">
+        select t.* FROM
+        (select count(1) as doCount,f.ORGANIZATION_NAME,f.ORGANIZATION_ID from FEEDBACK_INFO f
+        where f.APPRAISE_STATE = 1 and f.ORGANIZATION_ID is not NULL
+        GROUP BY f.ORGANIZATION_NAME,f.ORGANIZATION_ID ORDER BY count(1) desc ) t where ROWNUM &lt;6
+    </select>
+
+    <select id="selectSatisByOrgaId" parameterType="int" resultType="int">
+        select count(1) from FEEDBACK_INFO fi
+ where FI.SATISFACTION = 0
+ and FI.APPRAISE_STATE = 1
+and  ORGANIZATION_ID = #{orgaId,jdbcType=DECIMAL}
+    </select>
+
+
+<select id="selectSatisByPageData" parameterType="com.common.model.PageData" resultType="int">
+      select count(1) from FEEDBACK_INFO fi
+ where FI.SATISFACTION = 0
+ and FI.APPRAISE_STATE = 1
+and  ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+ and fi.APPRAISE_TIME > = #{startTime,jdbcType = VARCHAR}
+        and fi.APPRAISE_TIME &lt;= #{endTime,jdbcType = VARCHAR}
+</select>
+
+    <select id="selectUnSatisByPageData"  parameterType="com.common.model.PageData" resultType="int">
+              select count(1) from FEEDBACK_INFO fi
+ where FI.SATISFACTION = 1
+ and FI.APPRAISE_STATE = 1
+and  ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+ and fi.APPRAISE_TIME > = #{startTime,jdbcType = VARCHAR}
+        and fi.APPRAISE_TIME &lt;= #{endTime,jdbcType = VARCHAR}
+    </select>
+
+    <select id="selectCompAndsatisByOrgaId" parameterType="map" resultType="int">
+SELECT
+	COUNT (1)
+FROM
+	"FYPLATFORM"."FEEDBACK_INFO" fi
+WHERE
+ FI.FEEDBACK_TIME BETWEEN
+  (SELECT trunc(sysdate,'MM') FROM dual)
+ AND (SELECT (sysdate) FROM dual)
+AND ORGANIZATION_ID = #{orgId,jdbcType=DECIMAL}
+AND FI.MATTERS  = #{matters,jdbcType=VARCHAR}
+and fi.APPRAISE_CONTENT = #{content,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectCompByOrgaId" parameterType="integer" resultType="integer">
+              select count(1) from FEEDBACK_INFO fi
+ where FI.COMPLETE_RATE = 1
+ and FI.APPRAISE_STATE = 1
+and  ORGANIZATION_ID = #{orgaId,jdbcType=DECIMAL}
+    </select>
+
+    <select id="selectAllCountAndDept" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+        SELECT
+        COUNT (1) AS doCount,
+        f.ORGANIZATION_NAME,
+        f.ORGANIZATION_ID
+        FROM
+        FEEDBACK_INFO f
+        WHERE
+        f.APPRAISE_STATE = 1
+        AND f.ORGANIZATION_ID IS NOT NULL
+        and f.APPRAISE_TIME > = #{startTime,jdbcType = VARCHAR}
+        and f.APPRAISE_TIME &lt;= #{endTime,jdbcType = VARCHAR}
+        GROUP BY
+        f.ORGANIZATION_NAME,
+        f.ORGANIZATION_ID
+        ORDER BY
+        COUNT (1) DESC
+    </select>
+
+    <select id="selectAllMaters" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+      SELECT
+        DISTINCT FI.MATTERS,
+        fi.ORGANIZATION_ID,
+        sum( case FI.APPRAISE_CONTENT when '2' then 1 else 0 end) as two,
+        sum( case FI.APPRAISE_CONTENT when '3' then 1 ELSE 0 end) as three,
+        sum( case FI.APPRAISE_CONTENT when '4' then 1 ELSE 0 end) as four
+        FROM
+        FEEDBACK_INFO fi
+        WHERE
+        FI.FEEDBACK_TIME BETWEEN (
+        SELECT
+        TRUNC (SYSDATE, 'MM') FROM dual)
+        AND (SELECT(SYSDATE) FROM dual)
+        and FI.ORGANIZATION_ID is not null
+        AND FI.APPRAISE_STATE = 1
+  <trim prefix="and" suffixOverrides="and">
+    <if test="orgId!=null and orgId!=''">
+        fi.ORGANIZATION_ID = #{orgId,jdbcType=DECIMAL} and
+    </if>
+       FI.MATTERS in  (select DISTINCT s.MATTERS from STATION_PEOPLE s LEFT JOIN "ORGANIZATION" o
+      on o.ORGANIZATION_NO = s.DEPT_CODE
+      where 1 = 1
+      <trim prefix="and" suffixOverrides="and">
+          <if test="orgId!=null and orgId!=''">
+              o.ID = #{orgId,jdbcType=DECIMAL}
+          </if>
+      </trim>
+      )
+  </trim>
+        GROUP BY  FI.MATTERS,fi.ORGANIZATION_ID
+    </select>
+
+</mapper>

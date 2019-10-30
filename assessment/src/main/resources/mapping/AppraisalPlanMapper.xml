@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.assessment.mapper.mybatis.AppraisalPlanMapper">
+  <resultMap id="BaseResultMap" type="com.assessment.domian.output.AppraisalPlanOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DATUM_VALUE" jdbcType="DECIMAL" property="datumValue" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MONTH" jdbcType="DECIMAL" property="month" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="OBJECT_TYPE" jdbcType="DECIMAL" property="objectType" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="TEMPLATE_ID" jdbcType="DECIMAL" property="templateId" />
+    <result column="TYPE" jdbcType="DECIMAL" property="type" />
+    <result column="YEAR" jdbcType="DECIMAL" property="year" />
+    <result column="APPROVA_DATE_TIME" jdbcType="TIMESTAMP" property="approvaDateTime" />
+    <result column="APPROVA_USER_ID" jdbcType="DECIMAL" property="approvaUserId" />
+    <result column="APPROVA_USER_NAME" jdbcType="VARCHAR" property="approvaUserName" />
+    <result column="FINAL_SCORE" jdbcType="DECIMAL" property="finalScore" />
+    <result column="IS_STAR" jdbcType="DECIMAL" property="isStar" />
+    <result column="APPROVA_USER_NAME" jdbcType="VARCHAR" property="approvaUserName" />
+    <result column="employeeName" jdbcType="VARCHAR" property="employeeName" />
+    <result column="organizationName" jdbcType="VARCHAR" property="organizationName" />
+    <result column="office" jdbcType="VARCHAR" property="office" />
+    <result column="windowName" jdbcType="VARCHAR" property="windowName" />
+    <result column="window_state" jdbcType="DECIMAL" property="windowState" />
+    <result column="BANK_CARD_NUMBER" jdbcType="DECIMAL" property="bankCardNumber" />
+    <result column="IS_ENABLED" jdbcType="DECIMAL" property="isEnabled" />
+    <result column="ABSENCE_DAYS" jdbcType="DECIMAL" property="absenceDays" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DATUM_VALUE,
+    DESCRIPTION, DISPLAY_ORDER, EMPLOYEE_ID, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+    LAST_UPDATE_USER_NAME,MONTH, NAME, OBJECT_TYPE, ORGANIZATION_ID, STATE,
+    TEMPLATE_ID, TYPE, YEAR, APPROVA_DATE_TIME, APPROVA_USER_ID, APPROVA_USER_NAME, FINAL_SCORE,IS_STAR
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    APPRAISAL_PLAN.ID, APPRAISAL_PLAN.AMPUTATED, APPRAISAL_PLAN.CREATED_DATE_TIME, APPRAISAL_PLAN.CREATED_USER_ID, APPRAISAL_PLAN.CREATED_USER_NAME, APPRAISAL_PLAN.DATUM_VALUE,
+    APPRAISAL_PLAN.DESCRIPTION, APPRAISAL_PLAN.DISPLAY_ORDER, APPRAISAL_PLAN.EMPLOYEE_ID, APPRAISAL_PLAN.LAST_UPDATE_DATE_TIME, APPRAISAL_PLAN.LAST_UPDATE_USER_ID,
+    APPRAISAL_PLAN.LAST_UPDATE_USER_NAME,APPRAISAL_PLAN.MONTH, APPRAISAL_PLAN.NAME, APPRAISAL_PLAN.OBJECT_TYPE, APPRAISAL_PLAN.ORGANIZATION_ID, APPRAISAL_PLAN.STATE,
+    APPRAISAL_PLAN.TEMPLATE_ID, APPRAISAL_PLAN.TYPE, APPRAISAL_PLAN.YEAR, APPRAISAL_PLAN.APPROVA_DATE_TIME, APPRAISAL_PLAN.APPROVA_USER_ID, APPRAISAL_PLAN.APPROVA_USER_NAME, APPRAISAL_PLAN.FINAL_SCORE,APPRAISAL_PLAN.IS_STAR,
+    ORGANIZATION.name organizationName
+    from APPRAISAL_PLAN left  join ORGANIZATION on APPRAISAL_PLAN.ORGANIZATION_ID = ORGANIZATION.id
+    where APPRAISAL_PLAN.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from APPRAISAL_PLAN
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.assessment.model.AppraisalPlan">
+    insert into APPRAISAL_PLAN (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DATUM_VALUE,
+      DESCRIPTION, DISPLAY_ORDER, EMPLOYEE_ID,
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME,MONTH,
+      NAME, OBJECT_TYPE, ORGANIZATION_ID,
+      STATE, TEMPLATE_ID, TYPE,
+      YEAR, APPROVA_DATE_TIME, APPROVA_USER_ID,
+      APPROVA_USER_NAME, FINAL_SCORE)
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{datumValue,jdbcType=DECIMAL},
+      #{description,jdbcType=VARCHAR}, #{displayOrder,jdbcType=DECIMAL}, #{employeeId,jdbcType=DECIMAL},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR},#{month,jdbcType=DECIMAL},
+      #{name,jdbcType=VARCHAR}, #{objectType,jdbcType=DECIMAL}, #{organizationId,jdbcType=DECIMAL},
+      #{state,jdbcType=DECIMAL}, #{templateId,jdbcType=DECIMAL}, #{type,jdbcType=DECIMAL},
+      #{year,jdbcType=DECIMAL}, #{approvaDateTime,jdbcType=TIMESTAMP}, #{approvaUserId,jdbcType=DECIMAL},
+      #{approvaUserName,jdbcType=VARCHAR}, #{finalScore,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assessment.model.AppraisalPlan">
+    insert into APPRAISAL_PLAN
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="datumValue != null">
+        DATUM_VALUE,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="month != null">
+        MONTH,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="objectType != null">
+        OBJECT_TYPE,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="year != null">
+        YEAR,
+      </if>
+      <if test="approvaDateTime != null">
+        APPROVA_DATE_TIME,
+      </if>
+      <if test="approvaUserId != null">
+        APPROVA_USER_ID,
+      </if>
+      <if test="approvaUserName != null">
+        APPROVA_USER_NAME,
+      </if>
+      <if test="finalScore != null">
+        FINAL_SCORE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="datumValue != null">
+        #{datumValue,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="objectType != null">
+        #{objectType,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=DECIMAL},
+      </if>
+      <if test="approvaDateTime != null">
+        #{approvaDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvaUserId != null">
+        #{approvaUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="approvaUserName != null">
+        #{approvaUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="finalScore != null">
+        #{finalScore,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assessment.domian.output.AppraisalPlanOutput">
+    update APPRAISAL_PLAN
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="datumValue != null">
+        DATUM_VALUE = #{datumValue,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null">
+        MONTH = #{month,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="objectType != null">
+        OBJECT_TYPE = #{objectType,jdbcType=DECIMAL},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="templateId != null">
+        TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null">
+        YEAR = #{year,jdbcType=DECIMAL},
+      </if>
+      <if test="approvaDateTime != null">
+        APPROVA_DATE_TIME = #{approvaDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvaUserId != null">
+        APPROVA_USER_ID = #{approvaUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="approvaUserName != null">
+        APPROVA_USER_NAME = #{approvaUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="finalScore != null">
+        FINAL_SCORE = #{finalScore,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assessment.model.AppraisalPlan">
+    update APPRAISAL_PLAN
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DATUM_VALUE = #{datumValue,jdbcType=DECIMAL},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MONTH = #{month,jdbcType=DECIMAL},
+      NAME = #{name,jdbcType=VARCHAR},
+      OBJECT_TYPE = #{objectType,jdbcType=DECIMAL},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      STATE = #{state,jdbcType=DECIMAL},
+      TEMPLATE_ID = #{templateId,jdbcType=DECIMAL},
+      TYPE = #{type,jdbcType=DECIMAL},
+      YEAR = #{year,jdbcType=DECIMAL},
+      APPROVA_DATE_TIME = #{approvaDateTime,jdbcType=TIMESTAMP},
+      APPROVA_USER_ID = #{approvaUserId,jdbcType=DECIMAL},
+      APPROVA_USER_NAME = #{approvaUserName,jdbcType=VARCHAR},
+      FINAL_SCORE = #{finalScore,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <update id="deleteByTypeAndTemplateIdAndYear" parameterType="com.assessment.model.AppraisalPlan">
+    update APPRAISAL_PLAN
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL}
+    where TEMPLATE_ID = #{templateId,jdbcType=DECIMAL} and TYPE = #{type,jdbcType=DECIMAL} and  YEAR = #{year,jdbcType=DECIMAL}
+  </update>
+
+  <update id="deleteByTypeAndTemplateIdAndYearAndMonth" parameterType="com.assessment.model.AppraisalPlan">
+    update APPRAISAL_PLAN
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL}
+    where TEMPLATE_ID = #{templateId,jdbcType=DECIMAL} and TYPE = #{type,jdbcType=DECIMAL} and  YEAR = #{year,jdbcType=DECIMAL}
+    and  MONTH = #{month,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="selectEmployeesPlan" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+        SELECT
+	plan.id,
+	plan.AMPUTATED,
+	plan.CREATED_DATE_TIME,
+	plan.CREATED_USER_ID,
+	plan.CREATED_USER_NAME,
+	plan.DATUM_VALUE,
+	plan.DESCRIPTION,
+	plan.DISPLAY_ORDER,
+	plan.EMPLOYEE_ID,
+	plan.LAST_UPDATE_DATE_TIME,
+	plan.LAST_UPDATE_USER_ID,
+	plan.LAST_UPDATE_USER_NAME,
+	plan.MONTH,
+	plan.NAME,
+	plan.OBJECT_TYPE,
+	plan.ORGANIZATION_ID,
+	plan.STATE,
+	plan.TEMPLATE_ID,
+	plan.TYPE,
+	plan.YEAR,
+	plan.APPROVA_DATE_TIME,
+	plan.APPROVA_USER_ID,
+	plan.APPROVA_USER_NAME,
+	plan.FINAL_SCORE,
+    plan.IS_STAR,
+    plan.IS_ENABLED,
+    plan.ABSENCE_DAYS,
+	employees.name as employeeName,
+    organization.name as organizationName,
+    employees.office,
+    window.name as windowName,
+    employees.window_state,
+    employees.EMPLOYEE_NO
+FROM
+	appraisal_plan  plan
+	left join EMPLOYEES employees on employees.id=plan.EMPLOYEE_ID
+	left join ORGANIZATION organization on organization.id=EMPLOYEES.ORGANIZATION_id
+    left join WINDOW window on window.id=employees.WINDOW_ID
+WHERE
+	plan.object_type =1 and plan.AMPUTATED=0
+    <if test="orgId!=null or employeeId!=null">
+    AND (EXISTS (
+    SELECT
+    organization.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    organization.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND organization.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    <if test="employeeId!=null">
+      or plan.EMPLOYEE_ID = #{employeeId}
+    </if>
+    )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year !=''"> plan.YEAR = #{year,jdbcType=DECIMAL} and </if>
+      <if test="month!=null and month !=''"> plan.MONTH = #{month,jdbcType=DECIMAL}and </if>
+      <if test="name !=null and name !=''"> employees.NAME  like '%'||#{name}||'%'and </if>
+      <if test="path !=null and path !=''"> CONCAT(organization.path,',') like '%'||#{path}||'%'and </if>
+    </trim>
+    ORDER BY organization.NAME, employees.EMPLOYEE_NO DESC
+  </select>
+
+<!--导出 员工考核报表-->
+  <select id="selectEmployeesPlanExport" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    plan.id,
+    plan.AMPUTATED,
+    plan.CREATED_DATE_TIME,
+    plan.CREATED_USER_ID,
+    plan.CREATED_USER_NAME,
+    plan.DATUM_VALUE,
+    plan.DESCRIPTION,
+    plan.DISPLAY_ORDER,
+    plan.EMPLOYEE_ID,
+    plan.LAST_UPDATE_DATE_TIME,
+    plan.LAST_UPDATE_USER_ID,
+    plan.LAST_UPDATE_USER_NAME,
+    plan.MONTH,
+    plan.NAME,
+    plan.OBJECT_TYPE,
+    plan.ORGANIZATION_ID,
+    plan.STATE,
+    plan.TEMPLATE_ID,
+    plan.TYPE,
+    plan.YEAR,
+    plan.APPROVA_DATE_TIME,
+    plan.APPROVA_USER_ID,
+    plan.APPROVA_USER_NAME,
+    plan.FINAL_SCORE,
+    plan.IS_STAR,
+    plan.IS_ENABLED,
+    plan.ABSENCE_DAYS,
+    employees.name as employeeName,
+    organization.name as organizationName,
+    employees.office,
+    window.name as windowName,
+    employees.EMPLOYEE_NO,
+    employees.window_state
+    FROM
+    appraisal_plan  plan
+    left join EMPLOYEES employees on employees.id=plan.EMPLOYEE_ID
+    left join ORGANIZATION organization on organization.id=EMPLOYEES.ORGANIZATION_id
+    left join WINDOW window on window.id=employees.WINDOW_ID
+    WHERE
+    plan.object_type =1 and plan.AMPUTATED=0
+    <if test="orgId!=null or employeeId!=null">
+    AND (EXISTS (
+    SELECT
+    organization.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    organization.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND organization.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    <if test="employeeId!=null">
+      or plan.EMPLOYEE_ID = #{employeeId}
+    </if>
+    )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year !=''"> plan.YEAR = #{year,jdbcType=DECIMAL} and </if>
+      <if test="month!=null and month !=''"> plan.MONTH = #{month,jdbcType=DECIMAL}and </if>
+      <if test="name !=null and name !=''"> employees.NAME  like '%'||#{name}||'%'and </if>
+      <if test="path !=null and path !=''"> CONCAT(organization.path,',') like '%'||#{path}||'%'and </if>
+    </trim>
+    ORDER BY organization.NAME,employees.EMPLOYEE_NO DESC
+  </select>
+
+  <select id="returnPageInfo" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    *
+    FROM
+    appraisal_plan  plan
+    WHERE id&lt;0
+  </select>
+
+  <select id="selectDeparmentPlan" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    plan.id,
+    plan.AMPUTATED,
+    plan.CREATED_DATE_TIME,
+    plan.CREATED_USER_ID,
+    plan.CREATED_USER_NAME,
+    plan.DATUM_VALUE,
+    plan.DESCRIPTION,
+    plan.DISPLAY_ORDER,
+    plan.EMPLOYEE_ID,
+    plan.LAST_UPDATE_DATE_TIME,
+    plan.LAST_UPDATE_USER_ID,
+    plan.LAST_UPDATE_USER_NAME,
+    plan.MONTH,
+    plan.NAME,
+    plan.OBJECT_TYPE,
+    plan.ORGANIZATION_ID,
+    plan.STATE,
+    plan.TEMPLATE_ID,
+    plan.TYPE,
+    plan.YEAR,
+    plan.APPROVA_DATE_TIME,
+    plan.APPROVA_USER_ID,
+    plan.APPROVA_USER_NAME,
+    plan.FINAL_SCORE,
+    organization.name as organizationName
+    FROM
+    appraisal_plan  plan
+    left join ORGANIZATION organization on organization.id=plan.ORGANIZATION_ID
+    WHERE
+    plan.object_type =0 and plan.AMPUTATED=0
+    <if test="orgId!=null or employeeId!=null">
+    AND EXISTS (
+    SELECT
+    organization.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    organization.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND organization.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year !=''">
+        plan.YEAR = #{year,jdbcType=DECIMAL} and
+      </if>
+      <if test="month!=null and month !=''">
+        plan.MONTH = #{month,jdbcType=DECIMAL}and
+      </if>
+      <if test="path !=null and path !=''">
+        CONCAT(organization.path,',') like '%'||#{path}||'%'and
+      </if>
+    </trim>
+    ORDER BY plan.FINAL_SCORE DESC,NLSSORT(organization.name, 'NLS_SORT=SCHINESE_PINYIN_M')
+  </select>
+  <!--查询员工的市民卡银行卡卡号、姓名、所属单位、所属窗口/后台,员工考核基准分和考核得分(用于计算考核奖)-->
+  <select id="selectEmployees" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    plan.id,
+    plan.DATUM_VALUE,
+    plan.FINAL_SCORE,
+    plan.YEAR,
+    plan.MONTH,
+    plan.EMPLOYEE_ID,
+    plan.ORGANIZATION_ID,
+    plan.IS_STAR,
+    plan.LAST_UPDATE_DATE_TIME,
+    employees.name as employeeName,
+    employees.BANK_CARD_NUMBER,
+    employees.office,
+    window.name as windowName,
+    window.WINDOW_No,
+    organization.name as organizationName,
+    employees.window_state
+    FROM
+    appraisal_plan  plan
+    left join EMPLOYEES employees on employees.id=plan.EMPLOYEE_ID
+    left join ORGANIZATION organization on organization.id=EMPLOYEES.ORGANIZATION_id
+    left join WINDOW window on window.id=employees.WINDOW_ID
+    WHERE
+    plan.object_type =1 and plan.AMPUTATED=0
+    <if test="orgId!=null or employeeId!=null">
+    and
+    (EXISTS (
+    SELECT
+    organization.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    organization.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId}
+    <if test="orgId!=null">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+      AND organization.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    <if test="employeeId!=null">
+      or plan.EMPLOYEE_ID = #{employeeId}
+    </if>
+    )
+    </if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year !=''"> plan.YEAR = #{year,jdbcType=DECIMAL} and </if>
+      <if test="month!=null and month !=''"> plan.MONTH = #{month,jdbcType=DECIMAL}and </if>
+      <if test="name !=null and name !=''"> organization.NAME  like '%'||#{name}||'%'and  </if>
+      <if test="path !=null and path !=''"> CONCAT(organization.path,',') like '%'||#{path}||'%'and </if>
+    </trim>
+    ORDER BY plan.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectInfoById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    APPRAISAL_PLAN.YEAR,APPRAISAL_PLAN.MONTH,APPRAISAL_PLAN.NAME,APPRAISAL_PLAN.TYPE,APPRAISAL_PLAN.FINAL_SCORE,"ORGANIZATION"."ID" ORGANIZATION_ID,APPRAISAL_PLAN.EMPLOYEE_ID,
+    EMPLOYEES."NAME" employeeName,"ORGANIZATION"."NAME" organizationName
+    FROM
+        APPRAISAL_PLAN
+    LEFT JOIN EMPLOYEES ON APPRAISAL_PLAN.EMPLOYEE_ID = EMPLOYEES."ID"
+    LEFT JOIN "ORGANIZATION" ON "ORGANIZATION". ID = EMPLOYEES.ORGANIZATION_ID
+    where APPRAISAL_PLAN.ID = #{planId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectPathById" parameterType="java.lang.Integer" resultType="String">
+    select path from ORGANIZATION where id= #{id,jdbcType=DECIMAL}
+  </select>
+
+
+  <select id="selectEmployeePlanByDate" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    plan.id,
+    plan.AMPUTATED,
+    plan.CREATED_DATE_TIME,
+    plan.CREATED_USER_ID,
+    plan.CREATED_USER_NAME,
+    plan.DATUM_VALUE,
+    plan.DESCRIPTION,
+    plan.DISPLAY_ORDER,
+    plan.EMPLOYEE_ID,
+    plan.LAST_UPDATE_DATE_TIME,
+    plan.LAST_UPDATE_USER_ID,
+    plan.LAST_UPDATE_USER_NAME,
+    plan.MONTH,
+    plan.NAME,
+    plan.OBJECT_TYPE,
+    plan.ORGANIZATION_ID,
+    plan.STATE,
+    plan.TEMPLATE_ID,
+    plan.TYPE,
+    plan.YEAR,
+    plan.APPROVA_DATE_TIME,
+    plan.APPROVA_USER_ID,
+    plan.APPROVA_USER_NAME,
+    plan.IS_ENABLED,
+    plan.FINAL_SCORE
+    FROM
+    appraisal_plan  plan
+    WHERE
+    plan.object_type =1 and plan.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year !=''"> plan.YEAR = #{year,jdbcType=DECIMAL} and </if>
+      <if test="month!=null and month !=''"> plan.MONTH = #{month,jdbcType=DECIMAL}and </if>
+    </trim>
+  </select>
+
+
+  <select id="selectEmployeePlanByYear" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    plan.id,
+    plan.AMPUTATED,
+    plan.CREATED_DATE_TIME,
+    plan.CREATED_USER_ID,
+    plan.CREATED_USER_NAME,
+    plan.DATUM_VALUE,
+    plan.DESCRIPTION,
+    plan.DISPLAY_ORDER,
+    plan.EMPLOYEE_ID,
+    plan.LAST_UPDATE_DATE_TIME,
+    plan.LAST_UPDATE_USER_ID,
+    plan.LAST_UPDATE_USER_NAME,
+    plan.MONTH,
+    plan.NAME,
+    plan.OBJECT_TYPE,
+    plan.ORGANIZATION_ID,
+    plan.STATE,
+    plan.TEMPLATE_ID,
+    plan.TYPE,
+    plan.YEAR,
+    plan.APPROVA_DATE_TIME,
+    plan.APPROVA_USER_ID,
+    plan.APPROVA_USER_NAME,
+    plan.FINAL_SCORE,
+    plan.IS_STAR,
+    plan.IS_ENABLED,
+    plan.ABSENCE_DAYS,
+    employees.name as employeeName,
+    employees.BANK_CARD_NUMBER,
+    organ.name as organizationName
+    FROM
+    appraisal_plan  plan
+    left join EMPLOYEES employees on employees.id=plan.EMPLOYEE_ID
+    left join ORGANIZATION organ on organ.id=EMPLOYEES.ORGANIZATION_id
+    WHERE
+    plan.object_type =1 and plan.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="year!=null and year !=''"> plan.YEAR = #{year,jdbcType=DECIMAL} and </if>
+    </trim>
+  </select>
+
+
+  <select id="findByItemId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+	APPRAISAL_PLAN.ID,
+	APPRAISAL_PLAN.OBJECT_TYPE,
+	APPRAISAL_PLAN.STATE
+    FROM
+    APPRAISAL_PLAN
+    LEFT JOIN APPRAISAL_PLAN_ITEM ON APPRAISAL_PLAN.id = APPRAISAL_PLAN_ITEM.PLAN_ID
+    WHERE APPRAISAL_PLAN_ITEM.id = #{id}
+  </select>
+</mapper>
+

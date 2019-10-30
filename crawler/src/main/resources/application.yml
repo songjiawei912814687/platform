@@ -1,0 +1,98 @@
+server:
+    port: 8762
+
+spring:
+    application:
+      name: crawler
+
+    jpa:
+      show-sql: true
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.Oracle10gDialect
+          enable_lazy_load_no_trans: true
+      open-in-view: true
+      database: oracle
+
+    jackson:
+      default-property-inclusion: non_null
+    aop:
+      auto: true
+
+    datasource:
+      name: dataSource
+#      url: jdbc:oracle:thin:@139.196.192.24:1521:fyplatform
+      url: jdbc:oracle:thin:@10.32.250.83:1521:fyplatform
+      username: fyplatform
+      password: 123456
+      # 使用druid数据源
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: oracle.jdbc.OracleDriver
+      filters: stat,wall,slf4j
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+
+
+  #redis配置
+    redis:
+      database: 0
+      host: 10.32.250.87
+      port: 6379
+      password:
+      jedis:
+        pool:
+          max-active: 8
+          max-wait: 1ms
+          max-idle: 8
+          min-idle: 0
+      timeout: 10000ms
+
+
+#mybatis 配置
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.crawler.model  # 注意：对应实体类的路径
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: oracle
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+#devtools:
+#  livereload:
+#    enabled: true #是否支持livereload
+#    port: 35729
+#  restart:
+#    enabled: true #是否支持热部署
+
+eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://10.32.250.85:8761/eureka/
+
+
+
+
+
+
+
+
+
+
+
+
+
