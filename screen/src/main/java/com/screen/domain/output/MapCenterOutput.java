@@ -1,0 +1,1 @@
+package com.screen.domain.output;import com.screen.model.MapCenter;/** * @author: XiGuoQing * @description: * @date: Created in 下午 2:11 2018/10/30 0030 * @modified by: */public class MapCenterOutput extends MapCenter {}

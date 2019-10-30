@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meeting.mapper.mybatis.RoleActionMapper">
+  <resultMap id="BaseResultMap" type="com.meeting.model.RoleAction">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ACTION_ID" jdbcType="DECIMAL" property="actionId" />
+    <result column="MENU_ID" jdbcType="DECIMAL" property="menuId" />
+    <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ACTION_ID, MENU_ID, ROLE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ROLE_ACTION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ROLE_ACTION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.meeting.model.RoleAction">
+    insert into ROLE_ACTION (ID, ACTION_ID, MENU_ID,
+      ROLE_ID)
+    values (#{id,jdbcType=DECIMAL}, #{actionId,jdbcType=DECIMAL}, #{menuId,jdbcType=DECIMAL},
+      #{roleId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.meeting.model.RoleAction">
+    insert into ROLE_ACTION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="actionId != null">
+        ACTION_ID,
+      </if>
+      <if test="menuId != null">
+        MENU_ID,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="actionId != null">
+        #{actionId,jdbcType=DECIMAL},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=DECIMAL},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.meeting.model.RoleAction">
+    update ROLE_ACTION
+    <set>
+      <if test="actionId != null">
+        ACTION_ID = #{actionId,jdbcType=DECIMAL},
+      </if>
+      <if test="menuId != null">
+        MENU_ID = #{menuId,jdbcType=DECIMAL},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.meeting.model.RoleAction">
+    update ROLE_ACTION
+    set ACTION_ID = #{actionId,jdbcType=DECIMAL},
+      MENU_ID = #{menuId,jdbcType=DECIMAL},
+      ROLE_ID = #{roleId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

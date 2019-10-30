@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.mapper.mybatis.AttendanceStatisticsMapper">
+
+  <resultMap id="AttendanceDailyDateBaseMap" type="com.message.domain.output.AttendanceDailyDate">
+    <result column="BE_LATE" jdbcType="VARCHAR" property="beLate" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NAME" jdbcType="VARCHAR" property="employeeName" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="LEAVE_EARLY" jdbcType="VARCHAR" property="leaveEarly" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="SIGN_IN_TIME" jdbcType="TIMESTAMP" property="signInTime" />
+    <result column="SIGN_OUT_TIME" jdbcType="TIMESTAMP" property="signOutTime" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+  </resultMap>
+
+  <select id="findAttendanceDailyDate" parameterType="com.common.model.PageData" resultMap="AttendanceDailyDateBaseMap">
+    select
+    ATTENDANCE_STATISTICS.* from  ATTENDANCE_STATISTICS
+    LEFT JOIN EMPLOYEES ON EMPLOYEES."ID" = ATTENDANCE_STATISTICS.EMPLOYEE_ID
+    LEFT JOIN ORGANIZATION ON EMPLOYEES.ORGANIZATION_ID = ORGANIZATION.ID
+    where
+    TO_CHAR (ATTENDANCE_STATISTICS.ATTENDANCE_DATE,'YYYY-MM-DD') = #{days}
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">ATTENDANCE_STATISTICS.EMPLOYEE_NAME like '%'||#{name}||'%' and </if>
+      <if test="no!=null and no != ''">ATTENDANCE_STATISTICS.EMPLOYEE_NO like '%'||#{no}||'%'and</if>
+      <if test="organizationId!=null and organizationId!=''">CONCAT(ORGANIZATION.PATH ,',') like '%'||#{organizationId}||',%'and</if>
+    </trim>
+  </select>
+
+  <select id="selectOrganizationByName" parameterType="string" resultType="int">
+    select id
+    from ORGANIZATION organization
+    where NAME = #{name,jdbcType=VARCHAR} and AMPUTATED = 0
+  </select>
+
+  <select id="selectByEmployeesId" parameterType="java.lang.Integer" resultType="com.message.domain.output.EmployeesOutput">
+    select ID as employeeId,name as employeeName,PHONE_NUMBER as tel
+    from EMPLOYEES
+    where id=#{employeesId,jdbcType=INTEGER}
+  </select>
+</mapper>

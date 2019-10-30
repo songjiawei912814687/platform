@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.TradingCenterMapper">
+  <resultMap id="BaseResultMap" type="com.api.domain.output.TradingCenterOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="ANNOUNCEMENT" jdbcType="VARCHAR" property="announcement" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, END_TIME, START_TIME, ANNOUNCEMENT, CREATED_DATE_TIME, PRICE, PROJECT_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRADING_CENTER
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from TRADING_CENTER
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.TradingCenter">
+    insert into TRADING_CENTER (ID, END_TIME, START_TIME, 
+      ANNOUNCEMENT, CREATED_DATE_TIME, PRICE, 
+      PROJECT_NAME)
+    values (#{id,jdbcType=DECIMAL}, #{endTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{announcement,jdbcType=VARCHAR}, #{createdDateTime,jdbcType=TIMESTAMP}, #{price,jdbcType=DECIMAL}, 
+      #{projectName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.TradingCenter">
+    insert into TRADING_CENTER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="announcement != null">
+        ANNOUNCEMENT,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="announcement != null">
+        #{announcement,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.TradingCenter">
+    update TRADING_CENTER
+    <set>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="announcement != null">
+        ANNOUNCEMENT = #{announcement,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.TradingCenter">
+    update TRADING_CENTER
+    set END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      ANNOUNCEMENT = #{announcement,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      PRICE = #{price,jdbcType=DECIMAL},
+      PROJECT_NAME = #{projectName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    ID, END_TIME, START_TIME, ANNOUNCEMENT, CREATED_DATE_TIME, PRICE, PROJECT_NAME
+    from TRADING_CENTER
+    order by CREATED_DATE_TIME desc
+  </select>
+</mapper>

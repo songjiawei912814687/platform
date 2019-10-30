@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.EmployeesMapper">
+  <resultMap id="BaseResultMap" type="com.api.domain.output.EmployeesOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ACTIVATION_ID" jdbcType="DECIMAL" property="activationId" />
+    <result column="ATTENDANCE_STATE" jdbcType="DECIMAL" property="attendanceState" />
+    <result column="BANK_CARD_NUMBER" jdbcType="VARCHAR" property="bankCardNumber" />
+    <result column="CITIZEN_CARDS" jdbcType="VARCHAR" property="citizenCards" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DATE_BIRTH" jdbcType="TIMESTAMP" property="dateBirth" />
+    <result column="DEPARTURE_DATE_TIME" jdbcType="TIMESTAMP" property="departureDateTime" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="ID_CARD" jdbcType="VARCHAR" property="idCard" />
+    <result column="INDUCTION_DATE_TIME" jdbcType="TIMESTAMP" property="inductionDateTime" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="JOBS_ID" jdbcType="DECIMAL" property="jobsId" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MARITAL_STATUS" jdbcType="DECIMAL" property="maritalStatus" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="NATIONAL" jdbcType="VARCHAR" property="national" />
+    <result column="OFFICE" jdbcType="VARCHAR" property="office" />
+    <result column="OFFICE_PHONE" jdbcType="VARCHAR" property="officePhone" />
+    <result column="PARTY_MEMBER_STATE" jdbcType="DECIMAL" property="partyMemberState" />
+    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="PLATE_NO" jdbcType="VARCHAR" property="plateNo" />
+    <result column="RECORD_OF_FORMAL_SCHOOLING" jdbcType="DECIMAL" property="recordOfFormalSchooling" />
+    <result column="SEX" jdbcType="DECIMAL" property="sex" />
+    <result column="USER_COMPILE" jdbcType="DECIMAL" property="userCompile" />
+    <result column="WORKING_STATE" jdbcType="DECIMAL" property="workingState" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="WINDOW_ID" jdbcType="DECIMAL" property="windowId" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="WINDOW_NAME" jdbcType="VARCHAR" property="windowName" />
+    <result column="RESERVE_CADRES_STATE" jdbcType="DECIMAL" property="reserveCadresState" />
+    <result column="WINDOW_STATE" jdbcType="DECIMAL" property="windowState" />
+    <result column="party_Branch" jdbcType="DECIMAL" property="partyBranch" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="join_Party_Date" jdbcType="TIMESTAMP" property="joinPartyDate" />
+      <result column="is_star" jdbcType="DECIMAL" property="isStar" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ACTIVATION_ID, ATTENDANCE_STATE, BANK_CARD_NUMBER, CITIZEN_CARDS, CREATED_DATE_TIME,
+    CREATED_USER_ID, CREATED_USER_NAME, DATE_BIRTH, DEPARTURE_DATE_TIME, EMAIL, EMPLOYEE_NO,
+    ICON, ID_CARD, INDUCTION_DATE_TIME, AMPUTATED, JOBS_ID, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+    LAST_UPDATE_USER_NAME, MARITAL_STATUS, NAME, NATIONAL, OFFICE, OFFICE_PHONE, PARTY_MEMBER_STATE,
+    PHONE_NUMBER, PLATE_NO, RECORD_OF_FORMAL_SCHOOLING, SEX, USER_COMPILE, WORKING_STATE,
+    ORGANIZATION_ID, WINDOW_ID,RESERVE_CADRES_STATE,WINDOW_STATE
+  </sql>
+    <select id="selectByWindowState" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+        SELECT
+        employees.ACTIVATION_ID,
+        employees.ATTENDANCE_STATE,
+        employees.BANK_CARD_NUMBER,
+        employees.CITIZEN_CARDS,
+        employees.CREATED_DATE_TIME,
+        employees.CREATED_USER_ID,
+        employees.CREATED_USER_NAME,
+        employees.DATE_BIRTH,
+        employees.DEPARTURE_DATE_TIME,
+        employees.EMAIL,
+        employees.EMPLOYEE_NO,
+        employees.ICON,
+        employees.ID,
+        employees.NAME,
+        employees.OFFICE_PHONE,
+        employees.ORGANIZATION_ID,
+        employees.PHONE_NUMBER,
+        employees.WINDOW_ID,
+        employees.WORKING_STATE,
+        employees.WINDOW_STATE,
+        plan.is_star
+        FROM
+        EMPLOYEES employees LEFT JOIN   appraisal_plan  plan
+        on plan.EMPLOYEE_ID=employees.id and plan.year=#{year,jdbcType=DECIMAL} and plan.MONTH = #{month,jdbcType=DECIMAL}
+        and plan.AMPUTATED=0
+        WHERE  employees.AMPUTATED=0 and employees.WINDOW_STATE=1
+        and employees.WORKING_STATE=1
+    </select>
+
+    <select id="selectByEmpNo" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from EMPLOYEES
+        where EMPLOYEE_NO = #{empNo,jdbcType=VARCHAR} and AMPUTATED=0
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="integer" resultMap="BaseResultMap">
+        select
+        e.ID,
+        e.EMPLOYEE_NO,
+        e.NAME,
+        e.OFFICE_PHONE,
+        e.ICON
+        from EMPLOYEES e
+        where ID = #{id,jdbcType=DECIMAL} and AMPUTATED=0
+    </select>
+
+    <select id="selectByIdList" parameterType="list" resultMap="BaseResultMap">
+        select
+        e.ID,
+        e.EMPLOYEE_NO,
+        e.NAME,
+        e.OFFICE_PHONE,
+        e.ICON
+        from EMPLOYEES e
+        where ID in
+        <foreach collection="idList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and e.AMPUTATED=0
+        and e.WORKING_STATE = 1
+    </select>
+
+
+    <select id="selectDepartManager" parameterType="integer" resultMap="BaseResultMap">
+          SELECT EM.NAME as userName,
+       EM.PHONE_NUMBER as phoneNumber,
+       EM.ID as repId
+      FROM EMPLOYEES EM
+      LEFT JOIN USERS U ON EM.ID=U.EMPLOYEE_ID
+      LEFT JOIN USER_ROLE UR ON U.ID=UR.USER_ID
+      LEFT JOIN ROLE R ON UR.ROLE_ID=R.ID
+      WHERE EM.AMPUTATED=0
+      AND EM.ORGANIZATION_ID=#{orgaId,jdbcType=DECIMAL}
+      AND R.NAME LIKE '首席代表'
+    </select>
+
+    <select id="selectByOrgId" parameterType="integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from EMPLOYEES
+        where ORGANIZATION_ID = #{orId,jdbcType=DECIMAL}
+    </select>
+
+</mapper>

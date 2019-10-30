@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.WindowEmployeesMapper">
+  <resultMap id="BaseResultMap" type="com.api.domain.output.WindowEmployeesOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="IS_STAR" jdbcType="DECIMAL" property="isStar" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="OFFICE_PHONE" jdbcType="VARCHAR" property="officePhone" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="SATISFACTION" jdbcType="VARCHAR" property="satisfaction" />
+    <result column="WINDOW_ID" jdbcType="DECIMAL" property="windowId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, EMPLOYEE_ID, EMPLOYEE_NO, ICON, IS_STAR, NAME, OFFICE_PHONE, ORGANIZATION_ID, 
+    PHONE_NUMBER, SATISFACTION, WINDOW_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from WINDOW_EMPLOYEES
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from WINDOW_EMPLOYEES
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.WindowEmployees">
+    insert into WINDOW_EMPLOYEES (ID, AMPUTATED, EMPLOYEE_ID, 
+      EMPLOYEE_NO, ICON, IS_STAR, 
+      NAME, OFFICE_PHONE, ORGANIZATION_ID, 
+      PHONE_NUMBER, SATISFACTION, WINDOW_ID
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{employeeId,jdbcType=DECIMAL}, 
+      #{employeeNo,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{isStar,jdbcType=DECIMAL}, 
+      #{name,jdbcType=VARCHAR}, #{officePhone,jdbcType=VARCHAR}, #{organizationId,jdbcType=DECIMAL}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{satisfaction,jdbcType=VARCHAR}, #{windowId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.WindowEmployees">
+    insert into WINDOW_EMPLOYEES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+      <if test="isStar != null">
+        IS_STAR,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="officePhone != null">
+        OFFICE_PHONE,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="phoneNumber != null">
+        PHONE_NUMBER,
+      </if>
+      <if test="satisfaction != null">
+        SATISFACTION,
+      </if>
+      <if test="windowId != null">
+        WINDOW_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeNo != null">
+        #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isStar != null">
+        #{isStar,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="officePhone != null">
+        #{officePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="satisfaction != null">
+        #{satisfaction,jdbcType=VARCHAR},
+      </if>
+      <if test="windowId != null">
+        #{windowId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.WindowEmployees">
+    update WINDOW_EMPLOYEES
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isStar != null">
+        IS_STAR = #{isStar,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="officePhone != null">
+        OFFICE_PHONE = #{officePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="phoneNumber != null">
+        PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="satisfaction != null">
+        SATISFACTION = #{satisfaction,jdbcType=VARCHAR},
+      </if>
+      <if test="windowId != null">
+        WINDOW_ID = #{windowId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.WindowEmployees">
+    update WINDOW_EMPLOYEES
+    set l = #{amputated,jdbcType=DECIMAL},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      ICON = #{icon,jdbcType=VARCHAR},
+      IS_STAR = #{isStar,jdbcType=DECIMAL},
+      NAME = #{name,jdbcType=VARCHAR},
+      OFFICE_PHONE = #{officePhone,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      SATISFACTION = #{satisfaction,jdbcType=VARCHAR},
+      WINDOW_ID = #{windowId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByEmployeeNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from WINDOW_EMPLOYEES
+    where  EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectOrganizationId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    we.NAME,
+    we.ID,
+    we.EMPLOYEE_NO,
+    we.ICON,
+    we.IS_STAR,
+    we.SATISFACTION,
+    we.ORGANIZATION_ID
+    from WINDOW_EMPLOYEES we
+    where  we.ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectOrganizationIdList" parameterType="list" resultMap="BaseResultMap">
+     select
+    we.NAME,
+    we.ID,
+    we.EMPLOYEE_NO,
+    we.ICON,
+    we.IS_STAR,
+    we.SATISFACTION,
+    we.ORGANIZATION_ID
+    from WINDOW_EMPLOYEES we
+    where  we.ORGANIZATION_ID in
+    <foreach collection="organizationIdList" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+
+  </select>
+
+  <delete id="delete">
+    delete from WINDOW_EMPLOYEES
+  </delete>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from WINDOW_EMPLOYEES
+  </select>
+</mapper>

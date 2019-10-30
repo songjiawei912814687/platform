@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.mapper.mybatis.SMSSendMapper">
+  <resultMap id="BaseResultMap" type="com.message.domain.output.SMSSendOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="IS_TIMING" jdbcType="DECIMAL" property="isTiming" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="RECEIVE_EMPLOYEE_NAME" jdbcType="VARCHAR" property="receiveEmployeeName" />
+    <result column="RECEIVE_TELEPHONE" jdbcType="VARCHAR" property="receiveTelephone" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="IS_REPLY" jdbcType="DECIMAL" property="isReply" />
+    <result column="TIMING_TIME" jdbcType="TIMESTAMP" property="timingTime" />
+    <result column="REPLY_LIMIT_DATE" jdbcType="TIMESTAMP" property="replyLimitDate" />
+    <result column="TYPE" jdbcType="DECIMAL" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+    DISPLAY_ORDER, IS_TIMING, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+   RECEIVE_EMPLOYEE_NAME, RECEIVE_TELEPHONE,
+    STATE, TIMING_TIME, TYPE,IS_REPLY,REPLY_LIMIT_DATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SMS_SEND
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from SMS_SEND
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.message.model.SMSSend">
+    insert into SMS_SEND (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+      DISPLAY_ORDER, IS_TIMING, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+      RECEIVE_EMPLOYEE_NAME, RECEIVE_TELEPHONE, STATE,
+      TIMING_TIME, TYPE,IS_REPLY,REPLY_LIMIT_DATE)
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{displayOrder,jdbcType=DECIMAL}, #{isTiming,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR},
+      #{receiveEmployeeName,jdbcType=VARCHAR}, #{receiveTelephone,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL},
+      #{timingTime,jdbcType=TIMESTAMP}, #{type,jdbcType=DECIMAL}, #{isReply,jdbcType=DECIMAL},
+      #{replyLimitDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.model.SMSSend">
+    insert into SMS_SEND
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="isTiming != null">
+        IS_TIMING,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="receiveEmployeeName != null">
+        RECEIVE_EMPLOYEE_NAME,
+      </if>
+      <if test="receiveTelephone != null">
+        RECEIVE_TELEPHONE,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="timingTime != null">
+        TIMING_TIME,
+      </if>
+      <if test="isReply != null">
+        IS_REPLY,
+      </if>
+      <if test="replyLimitDate != null">
+        REPLY_LIMIT_DATE,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="isTiming != null">
+        #{isTiming,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveEmployeeName != null">
+        #{receiveEmployeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTelephone != null">
+        #{receiveTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="timingTime != null">
+        #{timingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isReply != null">
+        #{isReply,jdbcType=DECIMAL},
+      </if>
+      <if test="replyLimitDate != null">
+        #{replyLimitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.model.SMSSend">
+    update SMS_SEND
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="isTiming != null">
+        IS_TIMING = #{isTiming,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveEmployeeName != null">
+        RECEIVE_EMPLOYEE_NAME = #{receiveEmployeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTelephone != null">
+        RECEIVE_TELEPHONE = #{receiveTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="timingTime != null">
+        TIMING_TIME = #{timingTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isReply != null">
+        IS_REPLY = #{isReply,jdbcType=DECIMAL},
+      </if>
+      <if test="replyLimitDate != null">
+        REPLY_LIMIT_DATE = #{replyLimitDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.model.SMSSend">
+    update SMS_SEND
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      IS_TIMING = #{isTiming,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      RECEIVE_EMPLOYEE_NAME = #{receiveEmployeeName,jdbcType=VARCHAR},
+      RECEIVE_TELEPHONE = #{receiveTelephone,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL},
+      TIMING_TIME = #{timingTime,jdbcType=TIMESTAMP},
+      IS_REPLY = #{isReply,jdbcType=DECIMAL},
+      REPLY_LIMIT_DATE = #{replyLimitDate,jdbcType=TIMESTAMP},
+      TYPE = #{type,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByNumber" parameterType="map" resultMap="BaseResultMap">
+    select s.ID,s.RECEIVE_EMPLOYEE_NAME,s.RECEIVE_TELEPHONE,s.TYPE,s.DESCRIPTION,ROWNUM
+    from
+    (select ID,RECEIVE_EMPLOYEE_NAME,RECEIVE_TELEPHONE,TYPE,TIMING_TIME,DESCRIPTION,ROWNUM
+    from SMS_SEND
+    where AMPUTATED=0
+    and RECEIVE_TELEPHONE = #{number,jdbcType=VARCHAR}
+    and CREATED_DATE_TIME &lt; to_date(#{sendTime,jdbcType=VARCHAR},'yyyy-MM-dd hh24:mi:ss')
+    and STATE = 1
+    order by CREATED_DATE_TIME desc)s where rownum=1
+  </select>
+
+
+  <select id="selectNotPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    select
+    <include refid="Base_Column_List"/>
+    from SMS_SEND
+    where state != 1
+    <trim prefix="and" suffixOverrides="and">
+      <if test="name != null and name != ''">
+        RECEIVE_EMPLOYEE_NAME like '%'||#{name,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="description != null and description != ''">
+        DESCRIPTION like '%'||#{description,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="isTiming != null and isTiming != ''">
+        IS_TIMING = #{isTiming,jdbcType=DECIMAL}  and
+      </if>
+      <if test="type != null and type!=''">
+        TYPE = #{type,jdbcType=DECIMAL}  and
+      </if>
+      <if test="sendTelephone!=null and sendTelephone!=''">
+        RECEIVE_TELEPHONE = #{sendTelephone,jdbcType=VARCHAR} and
+      </if>
+      <if test="desc!=null and desc!=''">
+        DESCRIPTION = #{desc,jdbcType=VARCHAR} and
+      </if>
+      <if test="startDate!=null and endDate!=null and startDate!='' and endDate!=''">
+        to_char(CREATED_DATE_TIME,'yyyy-MM-dd')  between #{startDate,jdbcType=VARCHAR}
+        and #{endDate,jdbcType=VARCHAR} and
+      </if>
+      AMPUTATED=0
+    </trim>
+    order by CREATED_DATE_TIME desc
+  </select>
+
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    select
+    <include refid="Base_Column_List"/>
+    from SMS_SEND
+    where state = 1
+    <trim prefix="and" suffixOverrides="and">
+      <if test="name != null and name != ''">
+        name like '%'||#{name,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="description != null and description != ''">
+        DESCRIPTION like '%'||#{description,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="isTiming != null and isTiming != ''">
+        IS_TIMING = #{isTiming,jdbcType=DECIMAL}  and
+      </if>
+      <if test="type != null and type != ''">
+        TYPE = #{type,jdbcType=DECIMAL}  and
+      </if>
+      <if test="sendTelephone!=null and sendTelephone!=''">
+        RECEIVE_TELEPHONE like '%'||#{sendTelephone,jdbcType=VARCHAR}||'%' and
+      </if>
+
+      <if test="startDate!=null and startDate!=''">
+        to_char(CREATED_DATE_TIME,'yyyy-MM-dd') &gt;= #{startDate,jdbcType=VARCHAR} and
+      </if>
+      <if test=" endDate!=null and endDate!=''">
+        to_char(CREATED_DATE_TIME,'yyyy-MM-dd') &lt;= #{endDate,jdbcType=VARCHAR} and
+      </if>
+      AMPUTATED=0
+    </trim>
+    order by CREATED_DATE_TIME desc
+  </select>
+</mapper>

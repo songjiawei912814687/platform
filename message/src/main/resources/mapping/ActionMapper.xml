@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.mapper.mybatis.ActionMapper">
+
+  <resultMap id="BaseResultMap" type="com.message.domain.output.ActionOutput">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="menu_id" jdbcType="INTEGER" property="menuId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, code, menu_id, name
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from action
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from action
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.message.model.Action">
+    insert into action (id, code, menu_id,
+      name)
+    values (#{id,jdbcType=INTEGER}, #{code,jdbcType=INTEGER}, #{menuId,jdbcType=INTEGER},
+      #{name,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.model.Action">
+    insert into action
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="menuId != null">
+        menu_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.model.Action">
+    update action
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.model.Action">
+    update action
+    set code = #{code,jdbcType=INTEGER},
+      menu_id = #{menuId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    a.id, a.code, a.menu_id, a.name
+    from action a
+    WHERE a.code like '%'||'A_MESSAGE'||'%'
+  </select>
+
+  <select id="findByRoles" resultMap="BaseResultMap">
+    select
+    a.id, a.code, a.menu_id, a.name
+    from action a
+    left join role_action ra on ra.action_id = a.id
+    where ra.role_id in
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+      #{item}
+    </foreach>
+
+  </select>
+
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    select
+    <include refid="Base_Column_List"/>
+    from action
+    <trim prefix="where" suffixOverrides="and">
+      <if test="menu_id != null"> menu_id = #{menuId,jdbcType=INTEGER} and </if>
+    </trim>
+  </select>
+</mapper>

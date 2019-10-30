@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.PitApplyMapper">
+  <resultMap id="BaseResultMap" type="com.api.domain.output.MeetingApply">
+    <result column="APPOINTMENT_DATE" jdbcType="TIMESTAMP" property="appointmentDate" />
+    <result column="END_DATE_TIME" jdbcType="DECIMAL" property="endDateTime" />
+    <result column="MEETING_ROOM_ID" jdbcType="DECIMAL" property="meetingRoomId" />
+    <result column="START_DATE_TIME" jdbcType="DECIMAL" property="startDateTime" />
+    <result column="THEME" jdbcType="VARCHAR" property="theme" />
+    <result column="roomName" jdbcType="VARCHAR" property="roomName" />
+    <result column="organizationName" jdbcType="VARCHAR" property="organizationName" />
+    <result column="employeesName" jdbcType="VARCHAR" property="employeesName" />
+    <result column="host_unit" jdbcType="VARCHAR" property="hostUnit" />
+  </resultMap>
+
+  <select id="selectPage" resultMap="BaseResultMap">
+    SELECT
+    meetingApply.theme,
+    meetingApply.meeting_room_id,
+    meetingApply.end_date_time,
+    meetingApply.start_date_time,
+    meetingApply.APPOINTMENT_date,
+    meetingApply.host_unit,
+    meetingRoom.name as roomName,
+    organization.name as organizationName,
+    emplyees.name as employeesName
+    FROM
+    PIT_APPLY meetingApply
+    left join EMPLOYEES emplyees on emplyees.id=meetingApply.employees_id
+    left join ORGANIZATION organization on organization.id=meetingApply.organization_id
+    left join PIT meetingRoom on meetingRoom.id =meetingApply.meeting_room_id
+    WHERE meetingApply.AMPUTATED = 0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="date!=null and date !='' "> to_char(meetingApply.APPOINTMENT_DATE, 'yyyy-mm-dd')= #{date}  and </if>
+      <if test="meetingRoomId!=null and meetingRoomId !='' "> meetingApply.meeting_room_id=#{meetingRoomId} and </if>
+      <if test="startDateTime!=null and startDateTime !='' "> meetingApply.start_date_time &lt;= #{startDateTime} and </if>
+      <if test="endDateTime!=null and endDateTime !='' "> meetingApply.end_date_time &gt;= #{endDateTime} and </if>
+    </trim>
+    ORDER by meetingApply.end_date_time
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT
+    meetingApply.theme,
+    meetingApply.meeting_room_id,
+    meetingApply.end_date_time,
+    meetingApply.start_date_time,
+    meetingApply.APPOINTMENT_date,
+    meetingApply.host_unit,
+    meetingRoom.name as roomName,
+    organization.name as organizationName,
+    emplyees.name as employeesName
+    FROM
+    PIT_APPLY meetingApply
+    left join EMPLOYEES emplyees on emplyees.id=meetingApply.employees_id
+    left join ORGANIZATION organization on organization.id=meetingApply.organization_id
+    left join PIT meetingRoom on meetingRoom.id =meetingApply.meeting_room_id
+    WHERE meetingApply.AMPUTATED = 0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="date!=null and date !='' "> to_char(meetingApply.APPOINTMENT_date, 'yyyy-mm-dd')= #{date}  and </if>
+      <if test="meetingRoomId!=null and meetingRoomId !='' "> meetingApply.meeting_room_id=#{meetingRoomId} and </if>
+      <if test="endDateTime!=null and endDateTime !='' "> meetingApply.end_date_time &gt;=#{endDateTime} and </if>
+    </trim>
+    ORDER by meetingApply.end_date_time
+  </select>
+
+  <select id="selectNextMeeting" resultMap="BaseResultMap">
+    SELECT
+    meetingApply.theme,
+    meetingApply.meeting_room_id,
+    meetingApply.end_date_time,
+    meetingApply.start_date_time,
+    meetingApply.APPOINTMENT_date,
+    meetingApply.host_unit,
+    meetingRoom.name as roomName,
+    organization.name as organizationName,
+    emplyees.name as employeesName
+    FROM
+    PIT_APPLY meetingApply
+    left join EMPLOYEES emplyees on emplyees.id=meetingApply.employees_id
+    left join ORGANIZATION organization on organization.id=meetingApply.organization_id
+    left join PIT meetingRoom on meetingRoom.id =meetingApply.meeting_room_id
+    WHERE meetingApply.AMPUTATED = 0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="date!=null and date !='' "> to_char(meetingApply.APPOINTMENT_DATE, 'yyyy-mm-dd')= #{date}  and </if>
+      <if test="meetingRoomId!=null and meetingRoomId !='' "> meetingApply.meeting_room_id=#{meetingRoomId} and </if>
+      <if test="startDateTime!=null and startDateTime !='' "> meetingApply.start_date_time  &gt; #{startDateTime} and </if>
+    </trim>
+    ORDER by meetingApply.start_date_time
+  </select>
+</mapper>

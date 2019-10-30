@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.TradingResultMapper">
+  <resultMap id="BaseResultMap" type="com.api.model.TradingResult">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ANNOUNCEMENT" jdbcType="VARCHAR" property="announcement" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="END_TIME" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="OWNER" jdbcType="VARCHAR" property="owner" />
+    <result column="PRICE" jdbcType="DECIMAL" property="price" />
+    <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="TRADING_CENTER_ID" jdbcType="DECIMAL" property="tradingCenterId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ANNOUNCEMENT, CREATED_DATE_TIME, END_TIME, OWNER, PRICE, START_TIME, TRADING_CENTER_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TRADING_RESULT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from TRADING_RESULT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.TradingResult">
+    insert into TRADING_RESULT (ID, ANNOUNCEMENT, CREATED_DATE_TIME, 
+      END_TIME, OWNER, PRICE, 
+      START_TIME, TRADING_CENTER_ID)
+    values (#{id,jdbcType=DECIMAL}, #{announcement,jdbcType=VARCHAR}, #{createdDateTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{owner,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{tradingCenterId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.TradingResult">
+    insert into TRADING_RESULT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="announcement != null">
+        ANNOUNCEMENT,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="endTime != null">
+        END_TIME,
+      </if>
+      <if test="owner != null">
+        OWNER,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="startTime != null">
+        START_TIME,
+      </if>
+      <if test="tradingCenterId != null">
+        TRADING_CENTER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="announcement != null">
+        #{announcement,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="owner != null">
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradingCenterId != null">
+        #{tradingCenterId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.TradingResult">
+    update TRADING_RESULT
+    <set>
+      <if test="announcement != null">
+        ANNOUNCEMENT = #{announcement,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="owner != null">
+        OWNER = #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradingCenterId != null">
+        TRADING_CENTER_ID = #{tradingCenterId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.TradingResult">
+    update TRADING_RESULT
+    set ANNOUNCEMENT = #{announcement,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      OWNER = #{owner,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      TRADING_CENTER_ID = #{tradingCenterId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    ID, ANNOUNCEMENT, CREATED_DATE_TIME, END_TIME, OWNER, PRICE, START_TIME
+    from
+    TRADING_RESULT
+    order by CREATED_DATE_TIME desc
+  </select>
+</mapper>

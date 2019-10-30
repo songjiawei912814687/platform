@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.knowledge.mapper.mybatis.AttachmentMapper">
+  <resultMap id="BaseResultMap" type="com.knowledge.model.Attachment">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="ATTACHMENT_SIZE" jdbcType="DECIMAL" property="attachmentSize" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="RESOURCES_ID" jdbcType="DECIMAL" property="resourcesId" />
+    <result column="RESOURCES_TYPE" jdbcType="DECIMAL" property="resourcesType" />
+    <result column="SOURCE_FILE_NAME" jdbcType="VARCHAR" property="sourceFileName" />
+    <result column="SUFFIX" jdbcType="VARCHAR" property="suffix" />
+    <result column="TAG" jdbcType="VARCHAR" property="tag" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, ATTACHMENT_SIZE, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, 
+    FILE_NAME, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, RESOURCES_ID, 
+    RESOURCES_TYPE, SOURCE_FILE_NAME, SUFFIX, TAG, URL
+  </sql>
+  <update id="deleteByApplyId" parameterType="java.lang.Integer">
+    update ATTACHMENT set AMPUTATED=1
+    where RESOURCES_ID = #{id,jdbcType=INTEGER} and RESOURCES_TYPE=1
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ATTACHMENT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectByApplyId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ATTACHMENT
+    where RESOURCES_ID = #{applyId,jdbcType=DECIMAL} and RESOURCES_TYPE=1 and AMPUTATED=0
+  </select>
+</mapper>

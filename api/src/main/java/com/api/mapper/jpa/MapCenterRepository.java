@@ -1,0 +1,1 @@
+package com.api.mapper.jpa;import com.api.model.MapCenter;import com.api.core.base.BaseMapper;import org.springframework.stereotype.Repository;/** * @author: XiGuoQing * @description: * @date: Created in 下午 2:02 2018/10/30 0030 * @modified by: */@Repositorypublic interface MapCenterRepository extends BaseMapper<MapCenter,Integer> {}

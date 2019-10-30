@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.SmallProjectTransMapper">
+  <resultMap id="BaseResultMap" type="com.api.model.SmallProjectTrans">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="BID_TIME" jdbcType="VARCHAR" property="bidTime" />
+    <result column="BUDGTARY_PRICE" jdbcType="DECIMAL" property="budgtaryPrice" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PUBLISH_END_TIME" jdbcType="VARCHAR" property="publishEndTime" />
+    <result column="TENDER_UNIT" jdbcType="VARCHAR" property="tenderUnit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BID_TIME, BUDGTARY_PRICE, CREATED_DATE_TIME, PROJECT_NAME, PUBLISH_END_TIME, 
+    TENDER_UNIT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SMALL_PROJECT_TRANS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SMALL_PROJECT_TRANS
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.SmallProjectTrans">
+    insert into SMALL_PROJECT_TRANS (ID, BID_TIME, BUDGTARY_PRICE, 
+      CREATED_DATE_TIME, PROJECT_NAME, PUBLISH_END_TIME, 
+      TENDER_UNIT)
+    values (#{id,jdbcType=VARCHAR}, #{bidTime,jdbcType=VARCHAR}, #{budgtaryPrice,jdbcType=DECIMAL}, 
+      #{createdDateTime,jdbcType=TIMESTAMP}, #{projectName,jdbcType=VARCHAR}, #{publishEndTime,jdbcType=VARCHAR}, 
+      #{tenderUnit,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.SmallProjectTrans">
+    insert into SMALL_PROJECT_TRANS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="bidTime != null">
+        BID_TIME,
+      </if>
+      <if test="budgtaryPrice != null">
+        BUDGTARY_PRICE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME,
+      </if>
+      <if test="publishEndTime != null">
+        PUBLISH_END_TIME,
+      </if>
+      <if test="tenderUnit != null">
+        TENDER_UNIT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bidTime != null">
+        #{bidTime,jdbcType=VARCHAR},
+      </if>
+      <if test="budgtaryPrice != null">
+        #{budgtaryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishEndTime != null">
+        #{publishEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tenderUnit != null">
+        #{tenderUnit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.SmallProjectTrans">
+    update SMALL_PROJECT_TRANS
+    <set>
+      <if test="bidTime != null">
+        BID_TIME = #{bidTime,jdbcType=VARCHAR},
+      </if>
+      <if test="budgtaryPrice != null">
+        BUDGTARY_PRICE = #{budgtaryPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishEndTime != null">
+        PUBLISH_END_TIME = #{publishEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tenderUnit != null">
+        TENDER_UNIT = #{tenderUnit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.SmallProjectTrans">
+    update SMALL_PROJECT_TRANS
+    set BID_TIME = #{bidTime,jdbcType=VARCHAR},
+      BUDGTARY_PRICE = #{budgtaryPrice,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      PUBLISH_END_TIME = #{publishEndTime,jdbcType=VARCHAR},
+      TENDER_UNIT = #{tenderUnit,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from SMALL_PROJECT_TRANS
+    order by CREATED_DATE_TIME desc
+
+  </select>
+</mapper>

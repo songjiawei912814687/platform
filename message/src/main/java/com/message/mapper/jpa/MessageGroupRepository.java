@@ -1,0 +1,1 @@
+package com.message.mapper.jpa;import com.message.core.base.BaseMapper;import com.message.model.MessageGroup;import org.springframework.stereotype.Repository;/** * @author: XiGuoQing * @description: * @date: Created in 下午 4:37 2018/10/23 0023 * @modified by: */@Repositorypublic interface MessageGroupRepository extends BaseMapper<MessageGroup,Integer> {}

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.screen.mapper.mybatis.ConfigMapper">
+  <resultMap id="BaseResultMap" type="com.screen.model.Config">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CONFIG_KEY" jdbcType="VARCHAR" property="configKey" />
+    <result column="CONFIG_NO" jdbcType="VARCHAR" property="configNo" />
+    <result column="CONFIG_VALUE" jdbcType="VARCHAR" property="configValue" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DIS_PLAY_ORDER_BY" jdbcType="DECIMAL" property="disPlayOrderBy" />
+    <result column="HIS_CHILD" jdbcType="DECIMAL" property="hisChild" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="RESOURCE_MOUDLE" jdbcType="VARCHAR" property="resourceMoudle" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CONFIG_KEY, CONFIG_NO, CONFIG_VALUE, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, 
+    DIS_PLAY_ORDER_BY, HIS_CHILD, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, 
+    NAME, PARENT_ID, STATE, RESOURCE_MOUDLE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CONFIG
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from CONFIG
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.screen.model.Config">
+    insert into CONFIG (ID, CONFIG_KEY, CONFIG_NO, 
+      CONFIG_VALUE, CREATED_DATE_TIME, CREATED_USER_ID, 
+      CREATED_USER_NAME, DIS_PLAY_ORDER_BY, HIS_CHILD, 
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, 
+      LAST_UPDATE_USER_NAME, NAME, PARENT_ID, 
+      STATE, RESOURCE_MOUDLE)
+    values (#{id,jdbcType=DECIMAL}, #{configKey,jdbcType=VARCHAR}, #{configNo,jdbcType=VARCHAR}, 
+      #{configValue,jdbcType=VARCHAR}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, 
+      #{createdUserName,jdbcType=VARCHAR}, #{disPlayOrderBy,jdbcType=DECIMAL}, #{hisChild,jdbcType=DECIMAL}, 
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL}, 
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=DECIMAL}, 
+      #{state,jdbcType=DECIMAL}, #{resourceMoudle,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.screen.model.Config">
+    insert into CONFIG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="configKey != null">
+        CONFIG_KEY,
+      </if>
+      <if test="configNo != null">
+        CONFIG_NO,
+      </if>
+      <if test="configValue != null">
+        CONFIG_VALUE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="disPlayOrderBy != null">
+        DIS_PLAY_ORDER_BY,
+      </if>
+      <if test="hisChild != null">
+        HIS_CHILD,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="resourceMoudle != null">
+        RESOURCE_MOUDLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="configKey != null">
+        #{configKey,jdbcType=VARCHAR},
+      </if>
+      <if test="configNo != null">
+        #{configNo,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null">
+        #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="disPlayOrderBy != null">
+        #{disPlayOrderBy,jdbcType=DECIMAL},
+      </if>
+      <if test="hisChild != null">
+        #{hisChild,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="resourceMoudle != null">
+        #{resourceMoudle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.screen.model.Config">
+    update CONFIG
+    <set>
+      <if test="configKey != null">
+        CONFIG_KEY = #{configKey,jdbcType=VARCHAR},
+      </if>
+      <if test="configNo != null">
+        CONFIG_NO = #{configNo,jdbcType=VARCHAR},
+      </if>
+      <if test="configValue != null">
+        CONFIG_VALUE = #{configValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="disPlayOrderBy != null">
+        DIS_PLAY_ORDER_BY = #{disPlayOrderBy,jdbcType=DECIMAL},
+      </if>
+      <if test="hisChild != null">
+        HIS_CHILD = #{hisChild,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="resourceMoudle != null">
+        RESOURCE_MOUDLE = #{resourceMoudle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.screen.model.Config">
+    update CONFIG
+    set CONFIG_KEY = #{configKey,jdbcType=VARCHAR},
+      CONFIG_NO = #{configNo,jdbcType=VARCHAR},
+      CONFIG_VALUE = #{configValue,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DIS_PLAY_ORDER_BY = #{disPlayOrderBy,jdbcType=DECIMAL},
+      HIS_CHILD = #{hisChild,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      STATE = #{state,jdbcType=DECIMAL},
+      RESOURCE_MOUDLE = #{resourceMoudle,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="selectByIdAndState" parameterType="map" resultMap="BaseResultMap">
+    select
+    id,
+    PARENT_ID,
+    CONFIG_KEY,
+    CONFIG_VALUE,
+    CONFIG_NO,
+    NAME,
+    DIS_PLAY_ORDER_BY,
+    HIS_CHILD,
+    STATE,
+    RESOURCE_MOUDLE
+    from CONFIG
+    where
+    PARENT_ID=#{id,jdbcType=DECIMAL}
+    and STATE =#{state,jdbcType=DECIMAL}
+  </select>
+</mapper>

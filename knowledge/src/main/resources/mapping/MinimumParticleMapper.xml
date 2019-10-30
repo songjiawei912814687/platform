@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.knowledge.mapper.mybatis.MinimumParticleMapper">
+  <resultMap id="BaseResultMap" type="com.knowledge.domain.output.MinimumParticleOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="HAPPENING_TYPE" jdbcType="VARCHAR" property="happeningType" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="PROCESS" jdbcType="VARCHAR" property="process" />
+    <result column="QL_NAME" jdbcType="VARCHAR" property="qlName" />
+    <result column="contentInvolve" jdbcType="VARCHAR" property="contentInvolve" />
+    <result column="QLSX_ID" jdbcType="VARCHAR" property="qlsxId" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="parentType" jdbcType="DECIMAL" property="parentType" />
+    <result column="PATH" jdbcType="VARCHAR" property="path" />
+    <result column="ORG_ID" jdbcType="DECIMAL" property="orgId"/>
+    <result column="QL_INNER_CODE" jdbcType="VARCHAR" property="qlInnerCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DISPLAY_ORDER,
+    HAPPENING_TYPE, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+    PROCESS, QLSX_ID,PARENT_ID,PATH,ORG_ID,QL_INNER_CODE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    MINIMUM_PARTICLE.AMPUTATED,
+    MINIMUM_PARTICLE.CREATED_DATE_TIME,
+    MINIMUM_PARTICLE.CREATED_USER_ID,
+    MINIMUM_PARTICLE.CREATED_USER_NAME,
+    MINIMUM_PARTICLE.DISPLAY_ORDER,
+    MINIMUM_PARTICLE.HAPPENING_TYPE,
+    MINIMUM_PARTICLE.LAST_UPDATE_DATE_TIME,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_ID,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_NAME,
+    MINIMUM_PARTICLE.PROCESS,
+    MINIMUM_PARTICLE.QLSX_ID,
+    QLT_QLSX.QL_NAME as QL_NAME,
+    MINIMUM_PARTICLE.PARENT_ID,
+    MINIMUM_PARTICLE.PATH,
+    mp.HAPPENING_TYPE parentType,
+    MINIMUM_PARTICLE.ORG_ID
+    FROM MINIMUM_PARTICLE
+    left join QLT_QLSX on MINIMUM_PARTICLE.QLSX_ID = QLT_QLSX.QL_FULL_ID
+    left join MINIMUM_PARTICLE mp on mp.id = MINIMUM_PARTICLE.PARENT_ID
+    where MINIMUM_PARTICLE.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from MINIMUM_PARTICLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.knowledge.model.MinimumParticle">
+    insert into MINIMUM_PARTICLE (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DISPLAY_ORDER,
+      HAPPENING_TYPE, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, PROCESS, QLSX_ID,PARENT_ID,PATH
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{displayOrder,jdbcType=DECIMAL},
+      #{happeningType,jdbcType=VARCHAR}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{process,jdbcType=VARCHAR}, #{qlsxId,jdbcType=VARCHAR},
+      #{parentId,jdbcType=DECIMAL}, #{path,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.knowledge.model.MinimumParticle">
+    insert into MINIMUM_PARTICLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="happeningType != null">
+        HAPPENING_TYPE,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="process != null">
+        PROCESS,
+      </if>
+      <if test="qlsxId != null">
+        QLSX_ID,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="path != null">
+        PATH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="happeningType != null">
+        #{happeningType,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="process != null">
+        #{process,jdbcType=VARCHAR},
+      </if>
+      <if test="qlsxId != null">
+        #{qlsxId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.knowledge.model.MinimumParticle">
+    update MINIMUM_PARTICLE
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="happeningType != null">
+        HAPPENING_TYPE = #{happeningType,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="process != null">
+        PROCESS = #{process,jdbcType=VARCHAR},
+      </if>
+      <if test="qlsxId != null">
+        QLSX_ID = #{qlsxId,jdbcType=VARCHAR},
+      </if>
+      <if test="qlInnerCode!=null">
+        QL_INNER_CODE = #{qlInnerCode,jdbcType=VARCHAR}
+      </if>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="path != null">
+        PATH = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId!=null">
+        ORG_ID = #{orgId,jdbcType=DECIMAL}
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.knowledge.model.MinimumParticle">
+    update MINIMUM_PARTICLE
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      HAPPENING_TYPE = #{happeningType,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      PROCESS = #{process,jdbcType=VARCHAR},
+      QLSX_ID = #{qlsxId,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      PATH = #{path,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="isRepeat" parameterType="com.knowledge.model.MinimumParticle" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MINIMUM_PARTICLE
+    where
+    AMPUTATED = #{amputated,jdbcType=DECIMAL}
+    and HAPPENING_TYPE = #{happeningType,jdbcType=VARCHAR}
+    and QLSX_ID = #{qlsxId,jdbcType=VARCHAR}
+    <if test="id != null">
+      and id != #{id,jdbcType=DECIMAL}
+    </if>
+
+  </select>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT MINIMUM_PARTICLE.id,MINIMUM_PARTICLE.AMPUTATED, MINIMUM_PARTICLE.CREATED_DATE_TIME, MINIMUM_PARTICLE.CREATED_USER_ID, MINIMUM_PARTICLE.CREATED_USER_NAME,
+    MINIMUM_PARTICLE.DISPLAY_ORDER,MINIMUM_PARTICLE.HAPPENING_TYPE, MINIMUM_PARTICLE.LAST_UPDATE_DATE_TIME,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_ID, MINIMUM_PARTICLE.LAST_UPDATE_USER_NAME,
+    MINIMUM_PARTICLE.PROCESS, MINIMUM_PARTICLE.QLSX_ID, QLT_QLSX.QL_NAME  QL_NAME,QLT_QLSX.CONTENT_INVOLVE contentInvolve
+    FROM MINIMUM_PARTICLE left join QLT_QLSX on MINIMUM_PARTICLE.QLSX_ID = QLT_QLSX.QL_FULL_ID
+    WHERE  MINIMUM_PARTICLE.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="qlName!=null and qlName !='' ">  QLT_QLSX.QL_NAME like  '%'||#{qlName,jdbcType=VARCHAR}||'%'  and </if>
+      <if test="happeningType!=null and happeningType !='' "> MINIMUM_PARTICLE.HAPPENING_TYPE like '%'||#{happeningType,jdbcType=VARCHAR}||'%'  and </if>
+    </trim>
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT MINIMUM_PARTICLE.id,MINIMUM_PARTICLE.AMPUTATED, MINIMUM_PARTICLE.CREATED_DATE_TIME, MINIMUM_PARTICLE.CREATED_USER_ID, MINIMUM_PARTICLE.CREATED_USER_NAME,
+    MINIMUM_PARTICLE.DISPLAY_ORDER,MINIMUM_PARTICLE.HAPPENING_TYPE, MINIMUM_PARTICLE.LAST_UPDATE_DATE_TIME,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_ID, MINIMUM_PARTICLE.LAST_UPDATE_USER_NAME,
+    MINIMUM_PARTICLE.PROCESS, MINIMUM_PARTICLE.QLSX_ID, QLT_QLSX.QL_NAME  QL_NAME,QLT_QLSX.CONTENT_INVOLVE contentInvolve
+    FROM MINIMUM_PARTICLE left join QLT_QLSX on MINIMUM_PARTICLE.QLSX_ID = QLT_QLSX.QL_FULL_ID
+    WHERE  MINIMUM_PARTICLE.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="qlName!=null and qlName !='' ">  QLT_QLSX.QL_NAME like  '%'||#{qlName,jdbcType=VARCHAR}||'%'  and </if>
+      <if test="happeningType!=null and happeningType !='' "> MINIMUM_PARTICLE.HAPPENING_TYPE like '%'||#{happeningType,jdbcType=VARCHAR}||'%'  and </if>
+    </trim>
+  </select>
+
+
+  <select id="selectByQlId" parameterType="string" resultMap="BaseResultMap">
+    select
+    mp.id,
+    mp.HAPPENING_TYPE,
+    mp.PROCESS,
+    mp.QLSX_ID,
+    qq.QL_NAME as QL_NAME,
+    qq.CONTENT_INVOLVE as contentInvolve
+    FROM MINIMUM_PARTICLE mp
+    left join QLT_QLSX qq on
+    mp.QLSX_ID = qq.QL_FULL_ID,
+    mp.ORG_ID
+    where mp.QLSX_ID = #{qlId,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findByQlsxIdAndParentId" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    FROM MINIMUM_PARTICLE
+    where QLSX_ID = #{qlId,jdbcType=VARCHAR} and PARENT_ID  = 0 and AMPUTATED = 0
+  </select>
+
+
+  <select id="selectCountByQullId" parameterType="string" resultType="int">
+    select count(1) from MINIMUM_PARTICLE
+    where QLSX_ID = #{qlId,jdbcType=VARCHAR}
+  </select>
+
+  <!--<select id="getByQlNameAndHappeningType" resultMap="BaseResultMap" parameterType="com.knowledge.domain.output.MinimumParticleOutput">-->
+    <!--SELECT-->
+      <!--MINIMUM_PARTICLE. ID,-->
+      <!--MINIMUM_PARTICLE.AMPUTATED,-->
+      <!--MINIMUM_PARTICLE.CREATED_DATE_TIME,-->
+      <!--MINIMUM_PARTICLE.CREATED_USER_ID,-->
+      <!--MINIMUM_PARTICLE.CREATED_USER_NAME,-->
+      <!--MINIMUM_PARTICLE.DISPLAY_ORDER,-->
+      <!--MINIMUM_PARTICLE.HAPPENING_TYPE,-->
+      <!--MINIMUM_PARTICLE.LAST_UPDATE_DATE_TIME,-->
+      <!--MINIMUM_PARTICLE.LAST_UPDATE_USER_ID,-->
+      <!--MINIMUM_PARTICLE.LAST_UPDATE_USER_NAME,-->
+      <!--MINIMUM_PARTICLE. PROCESS,-->
+      <!--MINIMUM_PARTICLE. PATH,-->
+      <!--MINIMUM_PARTICLE.PARENT_ID,-->
+      <!--MINIMUM_PARTICLE.QLSX_ID,-->
+      <!--QLT_QLSX.QL_NAME,-->
+      <!--QLT_QLSX.ACP_INSTITUTION AS acpInstitution-->
+    <!--from MINIMUM_PARTICLE-->
+    <!--left join QLT_QLSX on MINIMUM_PARTICLE.QLSX_ID = QLT_QLSX.QL_FULL_ID-->
+    <!--WHERE MINIMUM_PARTICLE.AMPUTATED = 0-->
+    <!--and QLT_QLSX.QL_NAME  like '%'||#{qlName,jdbcType=VARCHAR}||'%'-->
+    <!--AND MINIMUM_PARTICLE.HAPPENING_TYPE  like  '%'||#{happeningType,jdbcType=VARCHAR}||'%'-->
+    <!--and QLT_QLSX.ACP_INSTITUTION like '%'||#{acpInstitution,jdbcType=VARCHAR}||'%'-->
+    <!--<if test="ouoCode!=null and ouoCode!=''">-->
+    <!--and QLT_QLSX.OUORGCODE IN(-->
+      <!--SELECT DISTINCT-->
+		<!--QQ.OUORGCODE-->
+	<!--FROM-->
+		<!--QLT_QLSX qq-->
+	<!--INNER JOIN "ORGANIZATION" o ON QQ.OUORGCODE = o.OUORGCODE-->
+	<!--WHERE-->
+		<!--1 = 1-->
+    <!--<if test="orgId!=null or employeeId!=null">-->
+	<!--and-->
+      <!--(EXISTS (-->
+			<!--SELECT-->
+				<!--ROLE_ORGAN.ORGAN_ID-->
+			<!--FROM-->
+				<!--USER_ROLE-->
+			<!--INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID-->
+			<!--WHERE-->
+				<!--o. ID = ROLE_ORGAN.ORGAN_ID-->
+    <!--AND USER_ROLE.USER_ID = #{userId}-->
+    <!--<if test="orgId!=null and orgId!=''">-->
+      <!--UNION ALL-->
+      <!--SELECT-->
+      <!--organ.ID-->
+      <!--FROM-->
+      <!--ORGANIZATION organ-->
+      <!--WHERE-->
+      <!--(organ.LINKED_ID =#{orgId} or organ.id = #{orgId})-->
+      <!--AND o.id = organ.id-->
+      <!--AND organ.AMPUTATED = 0-->
+    <!--</if>-->
+	  <!--)-->
+    <!--</if>-->
+    <!--)-->
+  <!--)-->
+    <!--</if>-->
+  <!--</select>-->
+
+  <select id="getByQlNameAndHappeningType" resultMap="BaseResultMap" parameterType="com.knowledge.domain.output.MinimumParticleOutput">
+    SELECT
+    MINIMUM_PARTICLE. ID,
+    MINIMUM_PARTICLE.AMPUTATED,
+    MINIMUM_PARTICLE.CREATED_DATE_TIME,
+    MINIMUM_PARTICLE.CREATED_USER_ID,
+    MINIMUM_PARTICLE.CREATED_USER_NAME,
+    MINIMUM_PARTICLE.DISPLAY_ORDER,
+    MINIMUM_PARTICLE.HAPPENING_TYPE,
+    MINIMUM_PARTICLE.LAST_UPDATE_DATE_TIME,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_ID,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_NAME,
+    MINIMUM_PARTICLE. PROCESS,
+    MINIMUM_PARTICLE. PATH,
+    MINIMUM_PARTICLE.PARENT_ID,
+    MINIMUM_PARTICLE.QLSX_ID,
+    MINIMUM_PARTICLE.ORG_ID,
+    QLT_QLSX.QL_NAME,
+    QLT_QLSX.ACP_INSTITUTION AS acpInstitution
+    from MINIMUM_PARTICLE
+    left join QLT_QLSX on MINIMUM_PARTICLE.QLSX_ID = QLT_QLSX.QL_FULL_ID
+    WHERE MINIMUM_PARTICLE.AMPUTATED  in(0,1)
+    <trim prefix="and" suffixOverrides="and">
+      <if test="organizationId!=null and organizationId!=''">
+        MINIMUM_PARTICLE.ORG_ID in  (select o.id from
+        "ORGANIZATION" o start WITH o.id = #{organizationId,jdbcType = DECIMAL}
+        CONNECT by PRIOR o.id = o.PARENT_ID ) and
+      </if>
+      <if test="qlName!=null and qlName!=''">
+         QLT_QLSX.QL_NAME  like '%'||#{qlName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="happeningType!=null and happeningType!=''">
+         MINIMUM_PARTICLE.HAPPENING_TYPE  like  '%'||#{happeningType,jdbcType=VARCHAR}||'%' and
+      </if>
+    </trim>
+
+  </select>
+
+
+  <select id="getByPath" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    SELECT MINIMUM_PARTICLE.id,MINIMUM_PARTICLE.AMPUTATED, MINIMUM_PARTICLE.CREATED_DATE_TIME,
+    MINIMUM_PARTICLE.CREATED_USER_ID, MINIMUM_PARTICLE.CREATED_USER_NAME,
+    MINIMUM_PARTICLE.DISPLAY_ORDER,MINIMUM_PARTICLE.HAPPENING_TYPE, MINIMUM_PARTICLE.LAST_UPDATE_DATE_TIME,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_ID, MINIMUM_PARTICLE.LAST_UPDATE_USER_NAME,
+    MINIMUM_PARTICLE.PROCESS, MINIMUM_PARTICLE.PATH,MINIMUM_PARTICLE.PARENT_ID,MINIMUM_PARTICLE.ORG_ID,
+    MINIMUM_PARTICLE.QLSX_ID,QLT_QLSX.QL_NAME,QLT_QLSX.ACP_INSTITUTION as acpInstitution
+    FROM MINIMUM_PARTICLE left join QLT_QLSX on MINIMUM_PARTICLE.QLSX_ID = QLT_QLSX.QL_FULL_ID
+    WHERE MINIMUM_PARTICLE.ID in (${path})
+  </select>
+
+  <select id="getSonEmlemrnt" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MINIMUM_PARTICLE
+    where path like  '%,'||#{id}||'%'
+  </select>
+
+    <select id="selectParList" parameterType="int" resultMap="BaseResultMap">
+         SELECT
+    MINIMUM_PARTICLE. ID,
+    MINIMUM_PARTICLE.AMPUTATED,
+    MINIMUM_PARTICLE.CREATED_DATE_TIME,
+    MINIMUM_PARTICLE.CREATED_USER_ID,
+    MINIMUM_PARTICLE.CREATED_USER_NAME,
+    MINIMUM_PARTICLE.DISPLAY_ORDER,
+    MINIMUM_PARTICLE.HAPPENING_TYPE,
+    MINIMUM_PARTICLE.LAST_UPDATE_DATE_TIME,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_ID,
+    MINIMUM_PARTICLE.LAST_UPDATE_USER_NAME,
+    MINIMUM_PARTICLE. PROCESS,
+    MINIMUM_PARTICLE. PATH,
+    MINIMUM_PARTICLE.PARENT_ID,
+    MINIMUM_PARTICLE.QLSX_ID,
+    MINIMUM_PARTICLE.ORG_ID,
+    QLT_QLSX.QL_NAME,
+    QLT_QLSX.ACP_INSTITUTION AS acpInstitution
+    from MINIMUM_PARTICLE
+    left join QLT_QLSX on MINIMUM_PARTICLE.QLSX_ID = QLT_QLSX.QL_FULL_ID
+    WHERE MINIMUM_PARTICLE.AMPUTATED in(0,1)
+    <trim prefix="and" suffixOverrides="and">
+        <if test="orgId!=null and orgId!=''">
+            MINIMUM_PARTICLE.ORG_ID = #{orgId,jdbcType=DECIMAL} and
+        </if>
+    </trim>
+
+    </select>
+
+</mapper>

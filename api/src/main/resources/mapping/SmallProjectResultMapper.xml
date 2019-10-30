@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.SmallProjectResultMapper">
+  <resultMap id="BaseResultMap" type="com.api.model.SmallProjectResult">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="BID_COST" jdbcType="DECIMAL" property="bidCost" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="GET_UNIT" jdbcType="VARCHAR" property="getUnit" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PUBLISH_END_TIME" jdbcType="VARCHAR" property="publishEndTime" />
+    <result column="PUBLISH_START_TIME" jdbcType="VARCHAR" property="publishStartTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BID_COST, CREATED_DATE_TIME, GET_UNIT, PROJECT_NAME, PUBLISH_END_TIME, PUBLISH_START_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SMALL_PROJECT_RESULT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SMALL_PROJECT_RESULT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.SmallProjectResult">
+    insert into SMALL_PROJECT_RESULT (ID, BID_COST, CREATED_DATE_TIME, 
+      GET_UNIT, PROJECT_NAME, PUBLISH_END_TIME, 
+      PUBLISH_START_TIME)
+    values (#{id,jdbcType=VARCHAR}, #{bidCost,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, 
+      #{getUnit,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{publishEndTime,jdbcType=VARCHAR}, 
+      #{publishStartTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.SmallProjectResult">
+    insert into SMALL_PROJECT_RESULT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="bidCost != null">
+        BID_COST,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="getUnit != null">
+        GET_UNIT,
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME,
+      </if>
+      <if test="publishEndTime != null">
+        PUBLISH_END_TIME,
+      </if>
+      <if test="publishStartTime != null">
+        PUBLISH_START_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="bidCost != null">
+        #{bidCost,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getUnit != null">
+        #{getUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishEndTime != null">
+        #{publishEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="publishStartTime != null">
+        #{publishStartTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.SmallProjectResult">
+    update SMALL_PROJECT_RESULT
+    <set>
+      <if test="bidCost != null">
+        BID_COST = #{bidCost,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="getUnit != null">
+        GET_UNIT = #{getUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishEndTime != null">
+        PUBLISH_END_TIME = #{publishEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="publishStartTime != null">
+        PUBLISH_START_TIME = #{publishStartTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.SmallProjectResult">
+    update SMALL_PROJECT_RESULT
+    set BID_COST = #{bidCost,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      GET_UNIT = #{getUnit,jdbcType=VARCHAR},
+      PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      PUBLISH_END_TIME = #{publishEndTime,jdbcType=VARCHAR},
+      PUBLISH_START_TIME = #{publishStartTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from SMALL_PROJECT_RESULT
+    order by CREATED_DATE_TIME desc
+
+  </select>
+</mapper>

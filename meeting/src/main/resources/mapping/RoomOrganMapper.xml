@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meeting.mapper.mybatis.RoomOrganMapper">
+    <resultMap id="BaseResultMap" type="com.meeting.model.RoomOrgan">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="ORGAN_ID" jdbcType="DECIMAL" property="organId"/>
+        <result column="ROOM_ID" jdbcType="DECIMAL" property="roomId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, ORGAN_ID, ROOM_ID
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ROLE_ORGAN
+        where ID = #{id,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ROLE_ORGAN
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+    <insert id="insert" parameterType="com.meeting.model.RoomOrgan">
+    insert into ROLE_ORGAN (ID, ORGAN_ID, ROOM_ID
+      )
+    values (#{id,jdbcType=DECIMAL}, #{organId,jdbcType=DECIMAL}, #{roomId,jdbcType=DECIMAL}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.meeting.model.RoomOrgan">
+        insert into ROLE_ORGAN
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="organId != null">
+                ORGAN_ID,
+            </if>
+            <if test="roomId != null">
+                ROOM_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=DECIMAL},
+            </if>
+            <if test="organId != null">
+                #{organId,jdbcType=DECIMAL},
+            </if>
+            <if test="roomId != null">
+                #{roomId,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.meeting.model.RoomOrgan">
+        update ROLE_ORGAN
+        <set>
+            <if test="organId != null">
+                ORGAN_ID = #{organId,jdbcType=DECIMAL},
+            </if>
+            <if test="roomId != null">
+                ROOM_ID = #{roomId,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.meeting.model.RoomOrgan">
+    update ROLE_ORGAN
+    set ORGAN_ID = #{organId,jdbcType=DECIMAL},
+      ROOM_ID = #{roomId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+    <resultMap id="OrganResultMap" type="com.meeting.domain.output.OrganPermissterOutput">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId"/>
+        <result column="NAME" jdbcType="DECIMAL" property="name"/>
+        <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder"/>
+    </resultMap>
+
+    <select id="findOrganByRoleId" resultMap="OrganResultMap" parameterType="java.lang.Integer">
+    SELECT
+	id,
+	parent_id,
+	name
+    FROM
+	"ORGANIZATION" o
+    INNER JOIN ROLE_ORGAN ro ON ro.ORGAN_ID = o."ID"
+    INNER JOIN USER_ROLE ur ON ur.room_id = ro.room_id
+    WHERE
+	ur.user_id = #{userId,jdbcType=DECIMAL} and
+	o.amputated = 0
+  </select>
+
+    <select id="findAllOrgan" resultMap="OrganResultMap" >
+        SELECT
+        id,
+        parent_id,
+        name,
+        DISPLAY_ORDER
+        FROM
+        "ORGANIZATION"
+        where amputated = 0
+    </select>
+
+    <select id="findOrganByuserId" resultMap="OrganResultMap" >
+        SELECT
+        ID,
+        NAME,
+        PARENT_ID,
+        DISPLAY_ORDER
+        FROM
+        (
+        SELECT
+        ORGANIZATION.ID,
+        ORGANIZATION.NAME,
+        ORGANIZATION.PARENT_ID,
+        ORGANIZATION.DISPLAY_ORDER
+        FROM
+        USER_ROLE
+        INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+        LEFT JOIN ORGANIZATION ON ORGANIZATION.id = ROLE_ORGAN.ORGAN_ID
+        WHERE
+        ORGANIZATION.AMPUTATED = 0
+        AND USER_ROLE.USER_ID = #{userId}
+        <if test="path!=null">
+            UNION ALL
+            SELECT
+            ORGANIZATION.ID,
+            ORGANIZATION.NAME,
+            ORGANIZATION.PARENT_ID,
+            ORGANIZATION.DISPLAY_ORDER
+            FROM
+            ORGANIZATION
+            WHERE
+            ORGANIZATION.id in  (${path})
+            AND ORGANIZATION.AMPUTATED =0
+        </if>
+        <if test="linkedId!=null">
+            UNION ALL
+            SELECT
+            ORGANIZATION.ID,
+            ORGANIZATION.NAME,
+            ORGANIZATION.PARENT_ID,
+            ORGANIZATION.DISPLAY_ORDER
+            FROM
+            ORGANIZATION
+            WHERE
+            ORGANIZATION.LINKED_ID =#{linkedId}
+            AND ORGANIZATION.AMPUTATED =0
+        </if>
+        )
+        GROUP BY
+        ID,
+        NAME,
+        PARENT_ID,
+        DISPLAY_ORDER
+        ORDER BY
+        DISPLAY_ORDER
+    </select>
+
+
+</mapper>

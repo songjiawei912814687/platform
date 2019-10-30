@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stamp.mapper.mybatis.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.stamp.domain.output.MenuOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DIS_PLAY_ORDER_BY" jdbcType="DECIMAL" property="disPlayOrderBy" />
+    <result column="IS_SHOW" jdbcType="DECIMAL" property="isShow" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="HAS_CHILD" jdbcType="DECIMAL" property="hasChild" />
+    <result column="ENAME" jdbcType="VARCHAR" property="ename" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="PATH" jdbcType="VARCHAR" property="path" />
+    <result column="E_NAME" jdbcType="VARCHAR" property="eName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CODE, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DIS_PLAY_ORDER_BY,
+    IS_SHOW, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME,
+    PARENT_ID, DESCRIPTION, HAS_CHILD, ENAME, ICON, PATH, E_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MENU
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from MENU
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.stamp.model.Menu">
+    insert into MENU (ID, CODE, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DIS_PLAY_ORDER_BY,
+      IS_SHOW, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, NAME, PARENT_ID,
+      DESCRIPTION, HAS_CHILD, ENAME,
+      ICON, PATH, E_NAME)
+    values (#{id,jdbcType=DECIMAL}, #{code,jdbcType=VARCHAR}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{disPlayOrderBy,jdbcType=DECIMAL},
+      #{isShow,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{parentId,jdbcType=DECIMAL},
+      #{description,jdbcType=VARCHAR}, #{hasChild,jdbcType=DECIMAL}, #{ename,jdbcType=VARCHAR},
+      #{icon,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{eName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.stamp.model.Menu">
+    insert into MENU
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="disPlayOrderBy != null">
+        DIS_PLAY_ORDER_BY,
+      </if>
+      <if test="isShow != null">
+        IS_SHOW,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="hasChild != null">
+        HAS_CHILD,
+      </if>
+      <if test="ename != null">
+        ENAME,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+      <if test="path != null">
+        PATH,
+      </if>
+      <if test="eName != null">
+        E_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="disPlayOrderBy != null">
+        #{disPlayOrderBy,jdbcType=DECIMAL},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="hasChild != null">
+        #{hasChild,jdbcType=DECIMAL},
+      </if>
+      <if test="ename != null">
+        #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="eName != null">
+        #{eName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.stamp.model.Menu">
+    update MENU
+    <set>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="disPlayOrderBy != null">
+        DIS_PLAY_ORDER_BY = #{disPlayOrderBy,jdbcType=DECIMAL},
+      </if>
+      <if test="isShow != null">
+        IS_SHOW = #{isShow,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="hasChild != null">
+        HAS_CHILD = #{hasChild,jdbcType=DECIMAL},
+      </if>
+      <if test="ename != null">
+        ENAME = #{ename,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        PATH = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="eName != null">
+        E_NAME = #{eName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.stamp.model.Menu">
+    update MENU
+    set CODE = #{code,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DIS_PLAY_ORDER_BY = #{disPlayOrderBy,jdbcType=DECIMAL},
+      IS_SHOW = #{isShow,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=DECIMAL},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      HAS_CHILD = #{hasChild,jdbcType=DECIMAL},
+      ENAME = #{ename,jdbcType=VARCHAR},
+      ICON = #{icon,jdbcType=VARCHAR},
+      PATH = #{path,jdbcType=VARCHAR},
+      E_NAME = #{eName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+  select
+  m.id, m.code ,m.dis_play_order_by,
+  m.has_child,m.path,m.icon,m.ename,
+  m.name, m.parent_id,m.is_show
+  from menu m
+  where m.is_show = 0
+  and m.code like 'M_STAMP'||'%'
+  ORDER BY m.LAST_UPDATE_DATE_TIME DESC
+</select>
+
+
+  <select id="findByRoles" resultMap="BaseResultMap">
+  SELECT
+  temp.*
+  FROM
+  (
+  SELECT
+  M . ID,
+  M .code,
+  M .dis_play_order_by,
+  M .has_child,
+  M . PATH,
+  M .icon,
+  M .ename,
+  M . NAME,
+  M .parent_id,
+  M .is_show,
+  m.LAST_UPDATE_DATE_TIME,
+  ROW_NUMBER () OVER (
+  PARTITION BY m.ID
+  ORDER BY m.ID desc
+  ) AS row_flg
+  FROM
+  menu M
+  LEFT JOIN role_menu rm ON rm.menu_id = M . ID
+  WHERE
+  M .is_show = 0
+  AND rm.role_id IN
+  <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+    #{item}
+  </foreach>
+  AND M .code LIKE 'M_STAMP' || '%'
+  ) temp
+  WHERE
+  temp.row_flg = '1'
+  ORDER BY
+  temp.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="findByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from menu
+    where is_show = 0 and parent_id = #{parentId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from menu where is_show=0
+  </select>
+
+
+  <select id="selectAllToW" resultMap="BaseResultMap" >
+  select
+  m.id, m.code ,m.dis_play_order_by,
+  m.has_child,m.path,m.icon,m.ename,
+  m.name, m.parent_id,m.is_show
+  from menu m
+  where m.is_show = 0
+  ORDER BY m.LAST_UPDATE_DATE_TIME DESC
+</select>
+</mapper>

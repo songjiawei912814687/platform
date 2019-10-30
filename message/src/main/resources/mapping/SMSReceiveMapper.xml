@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.mapper.mybatis.SMSReceiveMapper">
+  <resultMap id="BaseResultMap" type="com.message.domain.output.SMSReceiveOutPut">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="SEND_ID" jdbcType="DECIMAL" property="sendId" />
+    <result column="SEND_NAME" jdbcType="VARCHAR" property="sendName" />
+    <result column="SEND_TIME" jdbcType="VARCHAR" property="sendTime"/>
+    <result column="SEND_TELEPHONE" jdbcType="VARCHAR" property="sendTelephone" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="TYPE" jdbcType="DECIMAL" property="type" />
+    <result column="TYPE_NAME" jdbcType="VARCHAR" property="typeName"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+    DISPLAY_ORDER, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+    SEND_ID, SEND_NAME, SEND_TELEPHONE, STATE, TYPE,SEND_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SMS_RECEIVE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from SMS_RECEIVE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.message.model.SMSReceive">
+    insert into SMS_RECEIVE (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+      DISPLAY_ORDER, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, SEND_ID, SEND_NAME,
+      SEND_TELEPHONE, STATE, TYPE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{displayOrder,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{sendId,jdbcType=DECIMAL}, #{sendName,jdbcType=VARCHAR},
+      #{sendTelephone,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL}, #{type,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.model.SMSReceive">
+    insert into SMS_RECEIVE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="sendId != null">
+        SEND_ID,
+      </if>
+      <if test="sendName != null">
+        SEND_NAME,
+      </if>
+      <if test="sendTelephone != null">
+        SEND_TELEPHONE,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendId != null">
+        #{sendId,jdbcType=DECIMAL},
+      </if>
+      <if test="sendName != null">
+        #{sendName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTelephone != null">
+        #{sendTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.model.SMSReceive">
+    update SMS_RECEIVE
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendId != null">
+        SEND_ID = #{sendId,jdbcType=DECIMAL},
+      </if>
+      <if test="sendName != null">
+        SEND_NAME = #{sendName,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTelephone != null">
+        SEND_TELEPHONE = #{sendTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.model.SMSReceive">
+    update SMS_RECEIVE
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      SEND_ID = #{sendId,jdbcType=DECIMAL},
+      SEND_NAME = #{sendName,jdbcType=VARCHAR},
+      SEND_TELEPHONE = #{sendTelephone,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL},
+      TYPE = #{type,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap" >
+    select
+   <include refid="Base_Column_List"/>
+    from SMS_RECEIVE
+    <trim prefix="where" suffixOverrides="and">
+      <if test="type!=null and type!=''" >
+         TYPE = #{type,jdbcType=DECIMAL} and
+      </if>
+      <if test="sendTelephone!=null and sendTelephone!='' ">
+         SEND_TELEPHONE like '%'||#{sendTelephone,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="content!=null and content!='' ">
+        DESCRIPTION like '%'||#{content,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="startDate!=null and startDate!=''">
+        SEND_TIME &gt;= #{startDate,jdbcType=VARCHAR} and
+      </if>
+      <if test=" endDate!=null and endDate!=''">
+        SEND_TIME &lt; #{endDate,jdbcType=VARCHAR} and
+      </if>
+      AMPUTATED = 0
+    </trim>
+    order by CREATED_DATE_TIME desc
+  </select>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List"/>
+    from SMS_RECEIVE
+    <trim prefix="where" suffixOverrides="and">
+      <if test="type!=null and type!=''" >
+        TYPE = #{type,jdbcType=DECIMAL} and
+      </if>
+      <if test="sendTelephone!=null and sendTelephone!='' ">
+        SEND_TELEPHONE like '%'||#{sendTelephone,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="content!=null and content!='' ">
+        DESCRIPTION like '%'||#{content,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="startDate!=null and startDate!=''">
+        SEND_TIME &gt;= #{startDate,jdbcType=VARCHAR} and
+      </if>
+      <if test=" endDate!=null and endDate!=''">
+        SEND_TIME &lt; #{endDate,jdbcType=VARCHAR} and
+      </if>
+
+      AMPUTATED = 0
+    </trim>
+    order by CREATED_DATE_TIME desc
+  </select>
+
+</mapper>

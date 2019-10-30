@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.knowledge.mapper.mybatis.MaterialListMapper">
+  <resultMap id="BaseResultMap" type="com.knowledge.domain.output.MaterialListOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="METERIA_ORGANIZATION" jdbcType="VARCHAR" property="meteriaOrganization" />
+    <result column="MATERIAL_FORM" jdbcType="VARCHAR" property="materialForm" />
+    <result column="MINIMUM_PARTICLE_ID" jdbcType="DECIMAL" property="minimumParticleId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="NECESSARILY_DESCRIPTION" jdbcType="VARCHAR" property="necessarilyDescription" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="REQUEST_DETAIL" jdbcType="VARCHAR" property="requestDetail" />
+    <result column="EMPTY_TABLE_FILE_NAME" jdbcType="VARCHAR" property="emptyTableFileName" />
+    <result column="EMPTY_TABLE_FILE_URL" jdbcType="VARCHAR" property="emptyTableFileUrl" />
+    <result column="EXAMPLE_TABLE_FILE_NAME" jdbcType="VARCHAR" property="exampleTableFileName" />
+    <result column="EXAMPLE_TABLE_FILE_URL" jdbcType="VARCHAR" property="exampleTableFileUrl" />
+    <result column="ORG_ID" jdbcType="DECIMAL" property="orgId"/>
+    <result column="IS_MINI" jdbcType="DECIMAL" property="isMini"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DISPLAY_ORDER,
+    LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, METERIA_ORGANIZATION,
+    MATERIAL_FORM, MINIMUM_PARTICLE_ID, NAME, NECESSARILY_DESCRIPTION, REMARK, REQUEST_DETAIL,
+    EMPTY_TABLE_FILE_NAME,EMPTY_TABLE_FILE_URL,EXAMPLE_TABLE_FILE_NAME,EXAMPLE_TABLE_FILE_URL,
+    ORG_ID,IS_MINI
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MATERIAL_LIST
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from MATERIAL_LIST
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.knowledge.model.MaterialList">
+    insert into MATERIAL_LIST (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DISPLAY_ORDER,
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, METERIA_ORGANIZATION,
+      MATERIAL_FORM, MINIMUM_PARTICLE_ID, NAME,
+      NECESSARILY_DESCRIPTION, REMARK, REQUEST_DETAIL
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{displayOrder,jdbcType=DECIMAL},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{meteriaOrganization,jdbcType=VARCHAR},
+      #{materialForm,jdbcType=VARCHAR}, #{minimumParticleId,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR},
+      #{necessarilyDescription,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{requestDetail,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.knowledge.model.MaterialList">
+    insert into MATERIAL_LIST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="meteriaOrganization != null">
+        METERIA_ORGANIZATION,
+      </if>
+      <if test="materialForm != null">
+        MATERIAL_FORM,
+      </if>
+      <if test="minimumParticleId != null">
+        MINIMUM_PARTICLE_ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="necessarilyDescription != null">
+        NECESSARILY_DESCRIPTION,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="requestDetail != null">
+        REQUEST_DETAIL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="meteriaOrganization != null">
+        #{meteriaOrganization,jdbcType=VARCHAR},
+      </if>
+      <if test="materialForm != null">
+        #{materialForm,jdbcType=VARCHAR},
+      </if>
+      <if test="minimumParticleId != null">
+        #{minimumParticleId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="necessarilyDescription != null">
+        #{necessarilyDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="requestDetail != null">
+        #{requestDetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.knowledge.model.MaterialList">
+    update MATERIAL_LIST
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="meteriaOrganization != null">
+        METERIA_ORGANIZATION = #{meteriaOrganization,jdbcType=VARCHAR},
+      </if>
+      <if test="materialForm != null">
+        MATERIAL_FORM = #{materialForm,jdbcType=VARCHAR},
+      </if>
+      <if test="minimumParticleId != null">
+        MINIMUM_PARTICLE_ID = #{minimumParticleId,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="necessarilyDescription != null">
+        NECESSARILY_DESCRIPTION = #{necessarilyDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="requestDetail != null">
+        REQUEST_DETAIL = #{requestDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.knowledge.model.MaterialList">
+    update MATERIAL_LIST
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      METERIA_ORGANIZATION = #{meteriaOrganization,jdbcType=VARCHAR},
+      MATERIAL_FORM = #{materialForm,jdbcType=VARCHAR},
+      MINIMUM_PARTICLE_ID = #{minimumParticleId,jdbcType=DECIMAL},
+      NAME = #{name,jdbcType=VARCHAR},
+      NECESSARILY_DESCRIPTION = #{necessarilyDescription,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      REQUEST_DETAIL = #{requestDetail,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="isRepeat" parameterType="com.knowledge.model.MaterialList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MATERIAL_LIST
+    where
+    AMPUTATED = #{amputated,jdbcType=DECIMAL}
+    and MINIMUM_PARTICLE_ID = #{minimumParticleId,jdbcType=VARCHAR}
+    and NAME = #{name,jdbcType=VARCHAR}
+    <if test="id != null">
+      and id != #{id,jdbcType=DECIMAL}
+    </if>
+  </select>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM MATERIAL_LIST
+    WHERE  AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">  NAME like  '%'||#{name,jdbcType=VARCHAR}||'%'  and </if>
+      <if test="minimumParticleId!=null and minimumParticleId !='' ">  MINIMUM_PARTICLE_ID = #{minimumParticleId,jdbcType=DECIMAL}  and </if>
+    </trim>
+  </select>
+
+  <!--查询分页-->
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM MATERIAL_LIST
+    WHERE  AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">  NAME like  '%'||#{name,jdbcType=VARCHAR}||'%'  and </if>
+    </trim>
+  </select>
+
+
+  <select id="selectByMinId" parameterType="int" resultMap="BaseResultMap">
+  select
+    ml.ID,
+    ml.MINIMUM_PARTICLE_ID,
+    ml.NAME,
+    ml.METERIA_ORGANIZATION,
+    ml.MATERIAL_FORM,
+    ml.REQUEST_DETAIL,
+    ml.NECESSARILY_DESCRIPTION,
+    ml.REMARK,
+    ml.EMPTY_TABLE_FILE_NAME,
+    ml.EMPTY_TABLE_FILE_URL,
+    ml.EXAMPLE_TABLE_FILE_NAME,
+    ml.EXAMPLE_TABLE_FILE_URL,
+    ml.IS_MINI,
+    mp.HAPPENING_TYPE,
+    mp.PROCESS
+    from MATERIAL_LIST ml
+    left join MINIMUM_PARTICLE mp
+    on ml.MINIMUM_PARTICLE_ID = mp.ID
+      where ml.MINIMUM_PARTICLE_ID=#{miniId,jdbcType=DECIMAL} and ml.AMPUTATED=0
+  </select>
+
+  <select id="getParentMaterialLIst" parameterType="com.knowledge.model.MaterialList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MATERIAL_LIST
+    where MATERIAL_LIST.MINIMUM_PARTICLE_ID=#{minimumParticleId,jdbcType=DECIMAL} and NAME like  '%'||#{name,jdbcType=VARCHAR}||'%' and AMPUTATED=0
+  </select>
+
+  <select id="selectByPrimaryKeyInBatch" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MATERIAL_LIST
+    where ID in (${materialList})
+  </select>
+</mapper>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.mapper.mybatis.MoModelsMapper">
+  <resultMap id="BaseResultMap" type="com.message.model.MoModels">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ADD_SERIAL" jdbcType="VARCHAR" property="addSerial" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="SEND_TIME" jdbcType="VARCHAR" property="sendTime" />
+    <result column="SMS_CONTENT" jdbcType="VARCHAR" property="smsContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ADD_SERIAL, AMPUTATED,
+     MOBILE, SEND_TIME,
+    SMS_CONTENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from MO_MODELS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from MO_MODELS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.message.model.MoModels">
+    insert into MO_MODELS (ID, ADD_SERIAL, AMPUTATED, 
+      CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, 
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, 
+      LAST_UPDATE_USER_NAME, MOBILE, SEND_TIME, 
+      SMS_CONTENT)
+    values (#{id,jdbcType=DECIMAL}, #{addSerial,jdbcType=VARCHAR}, #{amputated,jdbcType=DECIMAL}, 
+      #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, 
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL}, 
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{sendTime,jdbcType=VARCHAR}, 
+      #{smsContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.model.MoModels">
+    insert into MO_MODELS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="addSerial != null">
+        ADD_SERIAL,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="sendTime != null">
+        SEND_TIME,
+      </if>
+      <if test="smsContent != null">
+        SMS_CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="addSerial != null">
+        #{addSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null">
+        #{sendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null">
+        #{smsContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.model.MoModels">
+    update MO_MODELS
+    <set>
+      <if test="addSerial != null">
+        ADD_SERIAL = #{addSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sendTime != null">
+        SEND_TIME = #{sendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="smsContent != null">
+        SMS_CONTENT = #{smsContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.model.MoModels">
+    update MO_MODELS
+    set ADD_SERIAL = #{addSerial,jdbcType=VARCHAR},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      SEND_TIME = #{sendTime,jdbcType=VARCHAR},
+      SMS_CONTENT = #{smsContent,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectPageList" resultMap="BaseResultMap">
+    select
+    ID,MOBILE,SEND_TIME,SMS_CONTENT
+    from MO_MODELS
+    where AMPUTATED=0
+  </select>
+</mapper>

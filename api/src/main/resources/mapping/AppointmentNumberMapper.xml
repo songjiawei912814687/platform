@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.AppointmentNumberMapper">
+  <resultMap id="BaseResultMap" type="com.api.domain.output.AppointmentNumberOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="APPOINT_DATE_TIME" jdbcType="VARCHAR" property="appointDateTime" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="GROUP_CODE" jdbcType="VARCHAR" property="groupCode" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PRIORITY_CODE" jdbcType="VARCHAR" property="priorityCode" />
+    <result column="SEQUENCE" jdbcType="DECIMAL" property="sequence" />
+    <result column="SERVICE_EMP_CODE" jdbcType="VARCHAR" property="serviceEmpCode" />
+    <result column="SOURCE" jdbcType="VARCHAR" property="source" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, APPOINT_DATE_TIME, CODE, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, 
+    GROUP_CODE, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MOBILE, 
+    NAME, PRIORITY_CODE, SEQUENCE, SERVICE_EMP_CODE, SOURCE, GROUP_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from APPOINTMENT_NUMBER
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from APPOINTMENT_NUMBER
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.AppointmentNumber">
+    insert into APPOINTMENT_NUMBER (ID, AMPUTATED, APPOINT_DATE_TIME, 
+      CODE, CREATED_DATE_TIME, CREATED_USER_ID, 
+      CREATED_USER_NAME, GROUP_CODE, LAST_UPDATE_DATE_TIME, 
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MOBILE, 
+      NAME, PRIORITY_CODE, SEQUENCE, 
+      SERVICE_EMP_CODE, SOURCE, GROUP_NAME
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{appointDateTime,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, 
+      #{createdUserName,jdbcType=VARCHAR}, #{groupCode,jdbcType=VARCHAR}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{priorityCode,jdbcType=VARCHAR}, #{sequence,jdbcType=DECIMAL}, 
+      #{serviceEmpCode,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.AppointmentNumber">
+    insert into APPOINTMENT_NUMBER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="appointDateTime != null">
+        APPOINT_DATE_TIME,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="groupCode != null">
+        GROUP_CODE,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="mobile != null">
+        MOBILE,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="priorityCode != null">
+        PRIORITY_CODE,
+      </if>
+      <if test="sequence != null">
+        SEQUENCE,
+      </if>
+      <if test="serviceEmpCode != null">
+        SERVICE_EMP_CODE,
+      </if>
+      <if test="source != null">
+        SOURCE,
+      </if>
+      <if test="groupName != null">
+        GROUP_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="appointDateTime != null">
+        #{appointDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupCode != null">
+        #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="priorityCode != null">
+        #{priorityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceEmpCode != null">
+        #{serviceEmpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null">
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.AppointmentNumber">
+    update APPOINTMENT_NUMBER
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="appointDateTime != null">
+        APPOINT_DATE_TIME = #{appointDateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupCode != null">
+        GROUP_CODE = #{groupCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="priorityCode != null">
+        PRIORITY_CODE = #{priorityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        SEQUENCE = #{sequence,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceEmpCode != null">
+        SERVICE_EMP_CODE = #{serviceEmpCode,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null">
+        GROUP_NAME = #{groupName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.AppointmentNumber">
+    update APPOINTMENT_NUMBER
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      APPOINT_DATE_TIME = #{appointDateTime,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      GROUP_CODE = #{groupCode,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PRIORITY_CODE = #{priorityCode,jdbcType=VARCHAR},
+      SEQUENCE = #{sequence,jdbcType=DECIMAL},
+      SERVICE_EMP_CODE = #{serviceEmpCode,jdbcType=VARCHAR},
+      SOURCE = #{source,jdbcType=VARCHAR},
+      GROUP_NAME = #{groupName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="selectByCodeAndPhone" parameterType="map" resultMap="BaseResultMap">
+    select
+    ID,AMPUTATED,APPOINT_DATE_TIME,CODE,MOBILE,NAME,GROUP_CODE,GROUP_NAME,LAST_UPDATE_DATE_TIME
+    from APPOINTMENT_NUMBER
+    where code = #{code,jdbcType=VARCHAR} and MOBILE = #{phone,jdbcType=VARCHAR}
+    and APPOINT_DATE_TIME>= to_char(SYSDATE,'YYYY-MM-DD HH24:MI:SS')
+    order by APPOINT_DATE_TIME desc
+  </select>
+
+
+
+</mapper>

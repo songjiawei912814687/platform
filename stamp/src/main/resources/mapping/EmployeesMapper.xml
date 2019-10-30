@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stamp.mapper.mybatis.EmployeesMapper">
+  <resultMap id="BaseResultMap" type="com.stamp.domain.output.EmployeesOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ACTIVATION_ID" jdbcType="DECIMAL" property="activationId" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="ATTENDANCE_STATE" jdbcType="DECIMAL" property="attendanceState" />
+    <result column="BANK_CARD_NUMBER" jdbcType="VARCHAR" property="bankCardNumber" />
+    <result column="CITIZEN_CARDS" jdbcType="VARCHAR" property="citizenCards" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DATE_BIRTH" jdbcType="TIMESTAMP" property="dateBirth" />
+    <result column="DEPARTURE_DATE_TIME" jdbcType="TIMESTAMP" property="departureDateTime" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="ID_CARD" jdbcType="VARCHAR" property="idCard" />
+    <result column="INDUCTION_DATE_TIME" jdbcType="TIMESTAMP" property="inductionDateTime" />
+    <result column="JOBS_ID" jdbcType="DECIMAL" property="jobsId" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MARITAL_STATUS" jdbcType="DECIMAL" property="maritalStatus" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="NATIONAL" jdbcType="VARCHAR" property="national" />
+    <result column="OFFICE" jdbcType="VARCHAR" property="office" />
+    <result column="OFFICE_PHONE" jdbcType="VARCHAR" property="officePhone" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="PARTY_MEMBER_STATE" jdbcType="DECIMAL" property="partyMemberState" />
+    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="PLATE_NO" jdbcType="VARCHAR" property="plateNo" />
+    <result column="RECORD_OF_FORMAL_SCHOOLING" jdbcType="DECIMAL" property="recordOfFormalSchooling" />
+    <result column="RESERVE_CADRES_STATE" jdbcType="DECIMAL" property="reserveCadresState" />
+    <result column="SEX" jdbcType="DECIMAL" property="sex" />
+    <result column="USER_COMPILE" jdbcType="DECIMAL" property="userCompile" />
+    <result column="WINDOW_ID" jdbcType="DECIMAL" property="windowId" />
+    <result column="WINDOW_STATE" jdbcType="DECIMAL" property="windowState" />
+    <result column="WORKING_STATE" jdbcType="DECIMAL" property="workingState" />
+    <result column="JOIN_PARTY_DATE" jdbcType="TIMESTAMP" property="joinPartyDate" />
+    <result column="PARTY_BRANCH" jdbcType="DECIMAL" property="partyBranch" />
+    <result column="CITIZEN_CARD_PHYSICAL_ADDRESS" jdbcType="VARCHAR" property="citizenCardPhysicalAddress" />
+    <result column="WINDOW_NO" jdbcType="VARCHAR" property="windowNo" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="WINDOW_NAME" jdbcType="VARCHAR" property="windowName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ACTIVATION_ID, AMPUTATED, ATTENDANCE_STATE, BANK_CARD_NUMBER, CITIZEN_CARDS,
+    CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DATE_BIRTH, DEPARTURE_DATE_TIME,
+    EMAIL, EMPLOYEE_NO, ICON, ID_CARD, INDUCTION_DATE_TIME, JOBS_ID, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MARITAL_STATUS, NAME, NATIONAL, OFFICE,
+    OFFICE_PHONE, ORGANIZATION_ID, PARTY_MEMBER_STATE, PHONE_NUMBER, PLATE_NO, RECORD_OF_FORMAL_SCHOOLING,
+    RESERVE_CADRES_STATE, SEX, USER_COMPILE, WINDOW_ID, WINDOW_STATE, WORKING_STATE,
+    JOIN_PARTY_DATE, PARTY_BRANCH, CITIZEN_CARD_PHYSICAL_ADDRESS, WINDOW_NO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+     SELECT
+      employees.ACTIVATION_ID,
+      employees.ATTENDANCE_STATE,
+      employees.BANK_CARD_NUMBER,
+      employees.CITIZEN_CARDS,
+      employees.CREATED_DATE_TIME,
+      employees.CREATED_USER_ID,
+      employees.CREATED_USER_NAME,
+      employees.DATE_BIRTH,
+      employees.DEPARTURE_DATE_TIME,
+      employees.EMAIL,
+      employees.EMPLOYEE_NO,
+      employees.ICON,
+      employees.ID,
+      employees.ID_CARD,
+      employees.INDUCTION_DATE_TIME,
+      employees.AMPUTATED,
+      employees.JOBS_ID,
+      employees.LAST_UPDATE_DATE_TIME,
+      employees.LAST_UPDATE_USER_ID,
+      employees.LAST_UPDATE_USER_NAME,
+      employees.NAME,
+      employees.NATIONAL,
+      employees.MARITAL_STATUS,
+      employees.OFFICE,
+      employees.OFFICE_PHONE,
+      employees.ORGANIZATION_ID,
+      employees.PARTY_MEMBER_STATE,
+      employees.PHONE_NUMBER,
+      employees.PLATE_NO,
+      employees.RECORD_OF_FORMAL_SCHOOLING,
+      employees.SEX,
+      employees.USER_COMPILE,
+      employees.WINDOW_ID,
+      employees.WINDOW_NO,
+      employees.WORKING_STATE,
+      employees.RESERVE_CADRES_STATE,
+      employees.WINDOW_STATE,
+      employees.party_Branch,
+      employees.join_Party_Date,
+      employees.citizen_Card_Physical_Address,
+      window.NAME AS WINDOW_NAME,
+      jobs.NAME AS JOBS_NAME,
+      ORGANIZATION.NAME AS ORGANIZATION_NAME
+      FROM
+          EMPLOYEES employees
+      LEFT JOIN WINDOW window ON window.ID = employees.WINDOW_ID
+      LEFT JOIN JOBS jobs ON jobs.ID = employees.JOBS_ID
+      AND jobs.AMPUTATED = 0
+      LEFT JOIN ORGANIZATION ORGANIZATION ON ORGANIZATION . ID = employees.ORGANIZATION_ID
+      AND ORGANIZATION.AMPUTATED = 0
+    where employees.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from EMPLOYEES
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.stamp.model.Employees">
+    insert into EMPLOYEES (ID, ACTIVATION_ID, AMPUTATED,
+      ATTENDANCE_STATE, BANK_CARD_NUMBER, CITIZEN_CARDS,
+      CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+      DATE_BIRTH, DEPARTURE_DATE_TIME, EMAIL,
+      EMPLOYEE_NO, ICON, ID_CARD,
+      INDUCTION_DATE_TIME, JOBS_ID, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MARITAL_STATUS,
+      NAME, NATIONAL, OFFICE,
+      OFFICE_PHONE, ORGANIZATION_ID, PARTY_MEMBER_STATE,
+      PHONE_NUMBER, PLATE_NO, RECORD_OF_FORMAL_SCHOOLING,
+      RESERVE_CADRES_STATE, SEX, USER_COMPILE,
+      WINDOW_ID, WINDOW_STATE, WORKING_STATE,
+      JOIN_PARTY_DATE, PARTY_BRANCH, CITIZEN_CARD_PHYSICAL_ADDRESS,
+      WINDOW_NO)
+    values (#{id,jdbcType=DECIMAL}, #{activationId,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL},
+      #{attendanceState,jdbcType=DECIMAL}, #{bankCardNumber,jdbcType=VARCHAR}, #{citizenCards,jdbcType=VARCHAR},
+      #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR},
+      #{dateBirth,jdbcType=TIMESTAMP}, #{departureDateTime,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR},
+      #{employeeNo,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR},
+      #{inductionDateTime,jdbcType=TIMESTAMP}, #{jobsId,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{maritalStatus,jdbcType=DECIMAL},
+      #{name,jdbcType=VARCHAR}, #{national,jdbcType=VARCHAR}, #{office,jdbcType=VARCHAR},
+      #{officePhone,jdbcType=VARCHAR}, #{organizationId,jdbcType=DECIMAL}, #{partyMemberState,jdbcType=DECIMAL},
+      #{phoneNumber,jdbcType=VARCHAR}, #{plateNo,jdbcType=VARCHAR}, #{recordOfFormalSchooling,jdbcType=DECIMAL},
+      #{reserveCadresState,jdbcType=DECIMAL}, #{sex,jdbcType=DECIMAL}, #{userCompile,jdbcType=DECIMAL},
+      #{windowId,jdbcType=DECIMAL}, #{windowState,jdbcType=DECIMAL}, #{workingState,jdbcType=DECIMAL},
+      #{joinPartyDate,jdbcType=TIMESTAMP}, #{partyBranch,jdbcType=DECIMAL}, #{citizenCardPhysicalAddress,jdbcType=VARCHAR},
+      #{windowNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.stamp.model.Employees">
+    insert into EMPLOYEES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="activationId != null">
+        ACTIVATION_ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="attendanceState != null">
+        ATTENDANCE_STATE,
+      </if>
+      <if test="bankCardNumber != null">
+        BANK_CARD_NUMBER,
+      </if>
+      <if test="citizenCards != null">
+        CITIZEN_CARDS,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="dateBirth != null">
+        DATE_BIRTH,
+      </if>
+      <if test="departureDateTime != null">
+        DEPARTURE_DATE_TIME,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+      <if test="idCard != null">
+        ID_CARD,
+      </if>
+      <if test="inductionDateTime != null">
+        INDUCTION_DATE_TIME,
+      </if>
+      <if test="jobsId != null">
+        JOBS_ID,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="maritalStatus != null">
+        MARITAL_STATUS,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="national != null">
+        NATIONAL,
+      </if>
+      <if test="office != null">
+        OFFICE,
+      </if>
+      <if test="officePhone != null">
+        OFFICE_PHONE,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+      <if test="partyMemberState != null">
+        PARTY_MEMBER_STATE,
+      </if>
+      <if test="phoneNumber != null">
+        PHONE_NUMBER,
+      </if>
+      <if test="plateNo != null">
+        PLATE_NO,
+      </if>
+      <if test="recordOfFormalSchooling != null">
+        RECORD_OF_FORMAL_SCHOOLING,
+      </if>
+      <if test="reserveCadresState != null">
+        RESERVE_CADRES_STATE,
+      </if>
+      <if test="sex != null">
+        SEX,
+      </if>
+      <if test="userCompile != null">
+        USER_COMPILE,
+      </if>
+      <if test="windowId != null">
+        WINDOW_ID,
+      </if>
+      <if test="windowState != null">
+        WINDOW_STATE,
+      </if>
+      <if test="workingState != null">
+        WORKING_STATE,
+      </if>
+      <if test="joinPartyDate != null">
+        JOIN_PARTY_DATE,
+      </if>
+      <if test="partyBranch != null">
+        PARTY_BRANCH,
+      </if>
+      <if test="citizenCardPhysicalAddress != null">
+        CITIZEN_CARD_PHYSICAL_ADDRESS,
+      </if>
+      <if test="windowNo != null">
+        WINDOW_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="activationId != null">
+        #{activationId,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="attendanceState != null">
+        #{attendanceState,jdbcType=DECIMAL},
+      </if>
+      <if test="bankCardNumber != null">
+        #{bankCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="citizenCards != null">
+        #{citizenCards,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="dateBirth != null">
+        #{dateBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departureDateTime != null">
+        #{departureDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="inductionDateTime != null">
+        #{inductionDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobsId != null">
+        #{jobsId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null">
+        #{maritalStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="national != null">
+        #{national,jdbcType=VARCHAR},
+      </if>
+      <if test="office != null">
+        #{office,jdbcType=VARCHAR},
+      </if>
+      <if test="officePhone != null">
+        #{officePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="partyMemberState != null">
+        #{partyMemberState,jdbcType=DECIMAL},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNo != null">
+        #{plateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordOfFormalSchooling != null">
+        #{recordOfFormalSchooling,jdbcType=DECIMAL},
+      </if>
+      <if test="reserveCadresState != null">
+        #{reserveCadresState,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=DECIMAL},
+      </if>
+      <if test="userCompile != null">
+        #{userCompile,jdbcType=DECIMAL},
+      </if>
+      <if test="windowId != null">
+        #{windowId,jdbcType=DECIMAL},
+      </if>
+      <if test="windowState != null">
+        #{windowState,jdbcType=DECIMAL},
+      </if>
+      <if test="workingState != null">
+        #{workingState,jdbcType=DECIMAL},
+      </if>
+      <if test="joinPartyDate != null">
+        #{joinPartyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="partyBranch != null">
+        #{partyBranch,jdbcType=DECIMAL},
+      </if>
+      <if test="citizenCardPhysicalAddress != null">
+        #{citizenCardPhysicalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="windowNo != null">
+        #{windowNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.stamp.model.Employees">
+    update EMPLOYEES
+    <set>
+      <if test="activationId != null">
+        ACTIVATION_ID = #{activationId,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="attendanceState != null">
+        ATTENDANCE_STATE = #{attendanceState,jdbcType=DECIMAL},
+      </if>
+      <if test="bankCardNumber != null">
+        BANK_CARD_NUMBER = #{bankCardNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="citizenCards != null">
+        CITIZEN_CARDS = #{citizenCards,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="dateBirth != null">
+        DATE_BIRTH = #{dateBirth,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departureDateTime != null">
+        DEPARTURE_DATE_TIME = #{departureDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeNo != null">
+        EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null">
+        ID_CARD = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="inductionDateTime != null">
+        INDUCTION_DATE_TIME = #{inductionDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobsId != null">
+        JOBS_ID = #{jobsId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="maritalStatus != null">
+        MARITAL_STATUS = #{maritalStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="national != null">
+        NATIONAL = #{national,jdbcType=VARCHAR},
+      </if>
+      <if test="office != null">
+        OFFICE = #{office,jdbcType=VARCHAR},
+      </if>
+      <if test="officePhone != null">
+        OFFICE_PHONE = #{officePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="partyMemberState != null">
+        PARTY_MEMBER_STATE = #{partyMemberState,jdbcType=DECIMAL},
+      </if>
+      <if test="phoneNumber != null">
+        PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNo != null">
+        PLATE_NO = #{plateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recordOfFormalSchooling != null">
+        RECORD_OF_FORMAL_SCHOOLING = #{recordOfFormalSchooling,jdbcType=DECIMAL},
+      </if>
+      <if test="reserveCadresState != null">
+        RESERVE_CADRES_STATE = #{reserveCadresState,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null">
+        SEX = #{sex,jdbcType=DECIMAL},
+      </if>
+      <if test="userCompile != null">
+        USER_COMPILE = #{userCompile,jdbcType=DECIMAL},
+      </if>
+      <if test="windowId != null">
+        WINDOW_ID = #{windowId,jdbcType=DECIMAL},
+      </if>
+      <if test="windowState != null">
+        WINDOW_STATE = #{windowState,jdbcType=DECIMAL},
+      </if>
+      <if test="workingState != null">
+        WORKING_STATE = #{workingState,jdbcType=DECIMAL},
+      </if>
+      <if test="joinPartyDate != null">
+        JOIN_PARTY_DATE = #{joinPartyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="partyBranch != null">
+        PARTY_BRANCH = #{partyBranch,jdbcType=DECIMAL},
+      </if>
+      <if test="citizenCardPhysicalAddress != null">
+        CITIZEN_CARD_PHYSICAL_ADDRESS = #{citizenCardPhysicalAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="windowNo != null">
+        WINDOW_NO = #{windowNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.stamp.model.Employees">
+    update EMPLOYEES
+    set ACTIVATION_ID = #{activationId,jdbcType=DECIMAL},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      ATTENDANCE_STATE = #{attendanceState,jdbcType=DECIMAL},
+      BANK_CARD_NUMBER = #{bankCardNumber,jdbcType=VARCHAR},
+      CITIZEN_CARDS = #{citizenCards,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DATE_BIRTH = #{dateBirth,jdbcType=TIMESTAMP},
+      DEPARTURE_DATE_TIME = #{departureDateTime,jdbcType=TIMESTAMP},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      EMPLOYEE_NO = #{employeeNo,jdbcType=VARCHAR},
+      ICON = #{icon,jdbcType=VARCHAR},
+      ID_CARD = #{idCard,jdbcType=VARCHAR},
+      INDUCTION_DATE_TIME = #{inductionDateTime,jdbcType=TIMESTAMP},
+      JOBS_ID = #{jobsId,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MARITAL_STATUS = #{maritalStatus,jdbcType=DECIMAL},
+      NAME = #{name,jdbcType=VARCHAR},
+      NATIONAL = #{national,jdbcType=VARCHAR},
+      OFFICE = #{office,jdbcType=VARCHAR},
+      OFFICE_PHONE = #{officePhone,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      PARTY_MEMBER_STATE = #{partyMemberState,jdbcType=DECIMAL},
+      PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      PLATE_NO = #{plateNo,jdbcType=VARCHAR},
+      RECORD_OF_FORMAL_SCHOOLING = #{recordOfFormalSchooling,jdbcType=DECIMAL},
+      RESERVE_CADRES_STATE = #{reserveCadresState,jdbcType=DECIMAL},
+      SEX = #{sex,jdbcType=DECIMAL},
+      USER_COMPILE = #{userCompile,jdbcType=DECIMAL},
+      WINDOW_ID = #{windowId,jdbcType=DECIMAL},
+      WINDOW_STATE = #{windowState,jdbcType=DECIMAL},
+      WORKING_STATE = #{workingState,jdbcType=DECIMAL},
+      JOIN_PARTY_DATE = #{joinPartyDate,jdbcType=TIMESTAMP},
+      PARTY_BRANCH = #{partyBranch,jdbcType=DECIMAL},
+      CITIZEN_CARD_PHYSICAL_ADDRESS = #{citizenCardPhysicalAddress,jdbcType=VARCHAR},
+      WINDOW_NO = #{windowNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByPath" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    employees.ACTIVATION_ID,
+    employees.ATTENDANCE_STATE,
+    employees.BANK_CARD_NUMBER,
+    employees.CITIZEN_CARDS,
+    employees.CREATED_DATE_TIME,
+    employees.CREATED_USER_ID,
+    employees.CREATED_USER_NAME,
+    employees.DATE_BIRTH,
+    employees.DEPARTURE_DATE_TIME,
+    employees.EMAIL,
+    employees.EMPLOYEE_NO,
+    employees.ICON,
+    employees.ID,
+    employees.ID_CARD,
+    employees.INDUCTION_DATE_TIME,
+    employees.AMPUTATED,
+    employees.JOBS_ID,
+    employees.LAST_UPDATE_DATE_TIME,
+    employees.LAST_UPDATE_USER_ID,
+    employees.LAST_UPDATE_USER_NAME,
+    employees.NAME,
+    employees.NATIONAL,
+    employees.MARITAL_STATUS,
+    employees.OFFICE,
+    employees.OFFICE_PHONE,
+    employees.ORGANIZATION_ID,
+    employees.PARTY_MEMBER_STATE,
+    employees.PHONE_NUMBER,
+    employees.PLATE_NO,
+    employees.RECORD_OF_FORMAL_SCHOOLING,
+    employees.SEX,
+    employees.USER_COMPILE,
+    employees.WINDOW_ID,
+    employees.WINDOW_NO,
+    employees.WORKING_STATE,
+    employees.RESERVE_CADRES_STATE,
+    employees.WINDOW_STATE,
+    so.NAME AS organizationName
+    FROM
+    EMPLOYEES employees
+    LEFT JOIN  STAMP_ORGAN so ON so . ID = employees.ORGANIZATION_ID
+    AND so.AMPUTATED = 0
+    WHERE employees.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">employees.NAME like '%'||#{name}||'%' and</if>
+      <if test="employeeNo!=null and employeeNo != ''">employees.EMPLOYEE_NO like '%'||#{employeeNo}||'%'and</if>
+      <if test="path!=null and  path!= ''">CONCAT(so.PATH ,',') like '%'||#{path}||'%'and</if>
+      <if test="jobsName!=null and jobsName != ''">jobs.NAME like '%'||#{jobsName}||'%'and</if>
+      <if test="organId != null and organId !=''">employees.ORGANIZATION_ID = #{organId,jdbcType=DECIMAL} and</if>
+    </trim>
+    ORDER BY employees.EMPLOYEE_NO
+  </select>
+
+  <select id="selectByOrgId" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    employees.ACTIVATION_ID,
+    employees.ATTENDANCE_STATE,
+    employees.BANK_CARD_NUMBER,
+    employees.CITIZEN_CARDS,
+    employees.CREATED_DATE_TIME,
+    employees.CREATED_USER_ID,
+    employees.CREATED_USER_NAME,
+    employees.DATE_BIRTH,
+    employees.DEPARTURE_DATE_TIME,
+    employees.EMAIL,
+    employees.EMPLOYEE_NO,
+    employees.ICON,
+    employees.ID,
+    employees.ID_CARD,
+    employees.INDUCTION_DATE_TIME,
+    employees.AMPUTATED,
+    employees.JOBS_ID,
+    employees.LAST_UPDATE_DATE_TIME,
+    employees.LAST_UPDATE_USER_ID,
+    employees.LAST_UPDATE_USER_NAME,
+    employees.NAME,
+    employees.NATIONAL,
+    employees.MARITAL_STATUS,
+    employees.OFFICE,
+    employees.OFFICE_PHONE,
+    employees.ORGANIZATION_ID,
+    employees.PARTY_MEMBER_STATE,
+    employees.PHONE_NUMBER,
+    employees.PLATE_NO,
+    employees.RECORD_OF_FORMAL_SCHOOLING,
+    employees.SEX,
+    employees.USER_COMPILE,
+    employees.WINDOW_ID,
+    employees.WORKING_STATE,
+    employees.RESERVE_CADRES_STATE,
+    employees.WINDOW_STATE,
+    window.NAME AS WINDOW_NAME,
+    jobs.NAME AS JOBS_NAME,
+    so.NAME AS organizationName
+    FROM
+    EMPLOYEES employees
+    LEFT JOIN WINDOW window ON window.ID = employees.WINDOW_ID
+    LEFT JOIN JOBS jobs ON jobs.ID = employees.JOBS_ID
+    AND jobs.AMPUTATED = 0
+    LEFT JOIN ORGANIZATION so ON so . ID = employees.ORGANIZATION_ID
+    AND so.AMPUTATED = 0
+    WHERE employees.AMPUTATED=0
+    and employees.WORKING_STATE = 1
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !=''">employees.NAME like '%'||#{name}||'%' and</if>
+      <if test="employeeNo!=null and employeeNo != ''">employees.EMPLOYEE_NO like '%'||#{employeeNo}||'%'and</if>
+      <if test="jobsName!=null and jobsName != ''">jobs.NAME like '%'||#{jobsName}||'%'and</if>
+      <if test="stampOrgId != null">employees.ORGANIZATION_ID = #{stampOrgId,jdbcType=DECIMAL} and</if>
+    </trim>
+    ORDER BY EMPLOYEE_NO
+  </select>
+
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    employees.ACTIVATION_ID,
+    employees.ATTENDANCE_STATE,
+    employees.BANK_CARD_NUMBER,
+    employees.CITIZEN_CARDS,
+    employees.CREATED_DATE_TIME,
+    employees.CREATED_USER_ID,
+    employees.CREATED_USER_NAME,
+    employees.DATE_BIRTH,
+    employees.DEPARTURE_DATE_TIME,
+    employees.EMAIL,
+    employees.EMPLOYEE_NO,
+    employees.ICON,
+    employees.ID,
+    employees.ID_CARD,
+    employees.INDUCTION_DATE_TIME,
+    employees.AMPUTATED,
+    employees.JOBS_ID,
+    employees.LAST_UPDATE_DATE_TIME,
+    employees.LAST_UPDATE_USER_ID,
+    employees.LAST_UPDATE_USER_NAME,
+    employees.NAME,
+    employees.NATIONAL,
+    employees.MARITAL_STATUS,
+    employees.OFFICE,
+    employees.OFFICE_PHONE,
+    employees.ORGANIZATION_ID,
+    employees.PARTY_MEMBER_STATE,
+    employees.PHONE_NUMBER,
+    employees.PLATE_NO,
+    employees.RECORD_OF_FORMAL_SCHOOLING,
+    employees.SEX,
+    employees.USER_COMPILE,
+    employees.WINDOW_ID,
+    employees.WINDOW_NO,
+    employees.WORKING_STATE,
+    employees.RESERVE_CADRES_STATE,
+    employees.WINDOW_STATE,
+    window.NAME AS WINDOW_NAME,
+    jobs.NAME AS JOBS_NAME,
+    ORGANIZATION.NAME AS ORGANIZATION_NAME
+    FROM
+    EMPLOYEES employees
+    LEFT JOIN WINDOW window ON window.ID = employees.WINDOW_ID
+    LEFT JOIN JOBS jobs ON jobs.ID = employees.JOBS_ID
+    AND jobs.AMPUTATED = 0
+    LEFT JOIN ORGANIZATION ORGANIZATION ON ORGANIZATION . ID = employees.ORGANIZATION_ID
+    AND ORGANIZATION.AMPUTATED = 0
+    WHERE employees.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="state!=null and state !=''">employees.WORKING_STATE = #{state} and</if>
+      <if test="name!=null and name !=''">employees.NAME like '%'||#{name}||'%' and</if>
+      <if test="employeeNo!=null and employeeNo != ''">employees.EMPLOYEE_NO like '%'||#{employeeNo}||'%'and</if>
+      <if test="organizationId != null and organizationId !=''">CONCAT(ORGANIZATION.PATH ,',') like '%'||#{organizationId}||',%'and
+      </if>
+      <if test="organizationPerId != null and organizationPerId !=''">CONCAT(ORGANIZATION.PATH ,',') like '%'||#{organizationPerId}||',%'and
+      </if>
+      <if test="organizationName!=null and organizationName != ''">ORGANIZATION.NAME like
+        '%'||#{organizationName}||'%'and
+      </if>
+      <if test="jobsName!=null and jobsName != ''">jobs.NAME like '%'||#{jobsName}||'%'and</if>
+      <if test="organId != null and organId !=''">CONCAT(ORGANIZATION.PATH ,',') like '%'||#{organId}||',%' and</if>
+      <if test="phoneNumber != null and phoneNumber !=''">employees.PHONE_NUMBER like
+        '%'||#{phoneNumber}||'%'and
+      </if>
+      <if test="employeeId != null and employeeId !=''"> employees.id=#{employeeId} and
+      </if>
+      <if test="nameOrPhone != null and nameOrPhone != ''">
+        (employees.PHONE_NUMBER like '%'||#{nameOrPhone}||'%'
+        or employees.EMPLOYEE_NO like '%'||#{nameOrPhone}||'%'
+        or employees.NAME like '%'||#{nameOrPhone}||'%'
+        or employees.PLATE_NO like '%'||#{nameOrPhone}||'%') and
+      </if>
+
+    </trim>
+    order by EMPLOYEE_NO
+  </select>
+</mapper>

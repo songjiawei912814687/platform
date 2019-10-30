@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stamp.mapper.mybatis.RoleOrganMapper">
+    <resultMap id="BaseResultMap" type="com.stamp.model.RoleOrgan">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="ORGAN_ID" jdbcType="DECIMAL" property="organId"/>
+        <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, ORGAN_ID, ROLE_ID
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ROLE_ORGAN
+        where ID = #{id,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ROLE_ORGAN
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+    <insert id="insert" parameterType="com.stamp.model.RoleOrgan">
+    insert into ROLE_ORGAN (ID, ORGAN_ID, ROLE_ID
+      )
+    values (#{id,jdbcType=DECIMAL}, #{organId,jdbcType=DECIMAL}, #{roleId,jdbcType=DECIMAL}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.stamp.model.RoleOrgan">
+        insert into ROLE_ORGAN
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="organId != null">
+                ORGAN_ID,
+            </if>
+            <if test="roleId != null">
+                ROLE_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=DECIMAL},
+            </if>
+            <if test="organId != null">
+                #{organId,jdbcType=DECIMAL},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.stamp.model.RoleOrgan">
+        update ROLE_ORGAN
+        <set>
+            <if test="organId != null">
+                ORGAN_ID = #{organId,jdbcType=DECIMAL},
+            </if>
+            <if test="roleId != null">
+                ROLE_ID = #{roleId,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.stamp.model.RoleOrgan">
+    update ROLE_ORGAN
+    set ORGAN_ID = #{organId,jdbcType=DECIMAL},
+      ROLE_ID = #{roleId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+    <resultMap id="OrganResultMap" type="com.stamp.domain.output.OrganPermissterOutput">
+        <id column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId"/>
+        <result column="NAME" jdbcType="DECIMAL" property="name"/>
+    </resultMap>
+
+
+    <select id="findAllOrgan" resultMap="OrganResultMap" >
+        SELECT
+        id,
+        parent_id,
+        name
+        FROM
+        "ORGANIZATION"
+        where amputated = 0
+    </select>
+
+    <select id="findOrganByuserId" resultMap="OrganResultMap" >
+        SELECT
+        ID,
+        NAME,
+        PARENT_ID
+        FROM
+        (
+        SELECT
+        ORGANIZATION.ID,
+        ORGANIZATION.NAME,
+        ORGANIZATION.PARENT_ID,
+        ORGANIZATION.DISPLAY_ORDER
+        FROM
+        USER_ROLE
+        INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+        LEFT JOIN ORGANIZATION ON ORGANIZATION.id = ROLE_ORGAN.ORGAN_ID
+        WHERE
+        ORGANIZATION.AMPUTATED = 0
+        AND USER_ROLE.USER_ID = #{userId}
+        <if test="path!=null">
+            UNION ALL
+            SELECT
+            ORGANIZATION.ID,
+            ORGANIZATION.NAME,
+            ORGANIZATION.PARENT_ID,
+            ORGANIZATION.DISPLAY_ORDER
+            FROM
+            ORGANIZATION
+            WHERE
+            ORGANIZATION.id in  (${path})
+            AND ORGANIZATION.AMPUTATED =0
+        </if>
+        <if test="linkedId!=null">
+            UNION ALL
+            SELECT
+            ORGANIZATION.ID,
+            ORGANIZATION.NAME,
+            ORGANIZATION.PARENT_ID,
+            ORGANIZATION.DISPLAY_ORDER
+            FROM
+            ORGANIZATION
+            WHERE
+            ORGANIZATION.LINKED_ID =#{linkedId}
+            AND ORGANIZATION.AMPUTATED =0
+        </if>
+        )
+        GROUP BY
+        ID,
+        NAME,
+        PARENT_ID,
+        DISPLAY_ORDER
+        ORDER BY
+        DISPLAY_ORDER
+    </select>
+
+
+</mapper>

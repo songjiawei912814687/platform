@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.NoticeBoardMapper">
+  <resultMap id="BaseResultMap" type="com.api.model.NoticeBoard">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="ENTERPRISE_CODE" jdbcType="VARCHAR" property="enterpriseCode" />
+    <result column="ENTERPRISE_NAME" jdbcType="VARCHAR" property="enterpriseName" />
+    <result column="PUBLISH_TIME" jdbcType="VARCHAR" property="publishTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, ENTERPRISE_CODE, ENTERPRISE_NAME, PUBLISH_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from NOTICE_BOARD
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from NOTICE_BOARD
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.NoticeBoard">
+    insert into NOTICE_BOARD (ID, CREATED_DATE_TIME, ENTERPRISE_CODE, 
+      ENTERPRISE_NAME, PUBLISH_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{enterpriseCode,jdbcType=VARCHAR}, 
+      #{enterpriseName,jdbcType=VARCHAR}, #{publishTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.NoticeBoard">
+    insert into NOTICE_BOARD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="enterpriseCode != null">
+        ENTERPRISE_CODE,
+      </if>
+      <if test="enterpriseName != null">
+        ENTERPRISE_NAME,
+      </if>
+      <if test="publishTime != null">
+        PUBLISH_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseCode != null">
+        #{enterpriseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null">
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.NoticeBoard">
+    update NOTICE_BOARD
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseCode != null">
+        ENTERPRISE_CODE = #{enterpriseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="enterpriseName != null">
+        ENTERPRISE_NAME = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishTime != null">
+        PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.NoticeBoard">
+    update NOTICE_BOARD
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      ENTERPRISE_CODE = #{enterpriseCode,jdbcType=VARCHAR},
+      ENTERPRISE_NAME = #{enterpriseName,jdbcType=VARCHAR},
+      PUBLISH_TIME = #{publishTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from NOTICE_BOARD
+    order by CREATED_DATE_TIME desc
+  </select>
+</mapper>

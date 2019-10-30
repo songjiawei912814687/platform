@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.mapper.mybatis.MaterialsMapper">
+  <resultMap id="BaseResultMap" type="com.message.model.Materials">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="EMPTY_TABLE_FILE_NAME" jdbcType="VARCHAR" property="emptyTableFileName" />
+    <result column="EMPTY_TABLE_FILE_URL" jdbcType="VARCHAR" property="emptyTableFileUrl" />
+    <result column="EXAMPLE_TABLE_FILE_NAME" jdbcType="VARCHAR" property="exampleTableFileName" />
+    <result column="EXAMPLE_TABLE_FILE_URL" jdbcType="VARCHAR" property="exampleTableFileUrl" />
+    <result column="FORMAT" jdbcType="DECIMAL" property="format" />
+    <result column="IS_RQ" jdbcType="DECIMAL" property="isRq" />
+    <result column="MATERIAL_GU_ID" jdbcType="VARCHAR" property="materialGuId" />
+    <result column="MATERIAL_RES" jdbcType="VARCHAR" property="materialRes" />
+    <result column="NECESSITY" jdbcType="DECIMAL" property="necessity" />
+    <result column="QIT_QLSX_ID" jdbcType="DECIMAL" property="qitQlsxId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.message.model.MaterialsWithBLOBs">
+    <result column="BAK" jdbcType="CLOB" property="bak" />
+    <result column="DETAIL_REQUIREMENT" jdbcType="CLOB" property="detailRequirement" />
+    <result column="NECESSITY_DESC" jdbcType="CLOB" property="necessityDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, EMPTY_TABLE_FILE_NAME, EMPTY_TABLE_FILE_URL, EXAMPLE_TABLE_FILE_NAME, EXAMPLE_TABLE_FILE_URL, 
+    FORMAT, IS_RQ, MATERIAL_GU_ID, MATERIAL_RES, NECESSITY, QIT_QLSX_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    BAK, DETAIL_REQUIREMENT, NECESSITY_DESC
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from MATERIALS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from MATERIALS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.message.model.MaterialsWithBLOBs">
+    insert into MATERIALS (ID, NAME, EMPTY_TABLE_FILE_NAME, 
+      EMPTY_TABLE_FILE_URL, EXAMPLE_TABLE_FILE_NAME, 
+      EXAMPLE_TABLE_FILE_URL, FORMAT, IS_RQ, 
+      MATERIAL_GU_ID, MATERIAL_RES, NECESSITY, 
+      QIT_QLSX_ID, BAK, DETAIL_REQUIREMENT, 
+      NECESSITY_DESC)
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{emptyTableFileName,jdbcType=VARCHAR}, 
+      #{emptyTableFileUrl,jdbcType=VARCHAR}, #{exampleTableFileName,jdbcType=VARCHAR}, 
+      #{exampleTableFileUrl,jdbcType=VARCHAR}, #{format,jdbcType=DECIMAL}, #{isRq,jdbcType=DECIMAL}, 
+      #{materialGuId,jdbcType=VARCHAR}, #{materialRes,jdbcType=VARCHAR}, #{necessity,jdbcType=DECIMAL}, 
+      #{qitQlsxId,jdbcType=DECIMAL}, #{bak,jdbcType=CLOB}, #{detailRequirement,jdbcType=CLOB}, 
+      #{necessityDesc,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.model.MaterialsWithBLOBs">
+    insert into MATERIALS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="emptyTableFileName != null">
+        EMPTY_TABLE_FILE_NAME,
+      </if>
+      <if test="emptyTableFileUrl != null">
+        EMPTY_TABLE_FILE_URL,
+      </if>
+      <if test="exampleTableFileName != null">
+        EXAMPLE_TABLE_FILE_NAME,
+      </if>
+      <if test="exampleTableFileUrl != null">
+        EXAMPLE_TABLE_FILE_URL,
+      </if>
+      <if test="format != null">
+        FORMAT,
+      </if>
+      <if test="isRq != null">
+        IS_RQ,
+      </if>
+      <if test="materialGuId != null">
+        MATERIAL_GU_ID,
+      </if>
+      <if test="materialRes != null">
+        MATERIAL_RES,
+      </if>
+      <if test="necessity != null">
+        NECESSITY,
+      </if>
+      <if test="qitQlsxId != null">
+        QIT_QLSX_ID,
+      </if>
+      <if test="bak != null">
+        BAK,
+      </if>
+      <if test="detailRequirement != null">
+        DETAIL_REQUIREMENT,
+      </if>
+      <if test="necessityDesc != null">
+        NECESSITY_DESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="emptyTableFileName != null">
+        #{emptyTableFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="emptyTableFileUrl != null">
+        #{emptyTableFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="exampleTableFileName != null">
+        #{exampleTableFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="exampleTableFileUrl != null">
+        #{exampleTableFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null">
+        #{format,jdbcType=DECIMAL},
+      </if>
+      <if test="isRq != null">
+        #{isRq,jdbcType=DECIMAL},
+      </if>
+      <if test="materialGuId != null">
+        #{materialGuId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialRes != null">
+        #{materialRes,jdbcType=VARCHAR},
+      </if>
+      <if test="necessity != null">
+        #{necessity,jdbcType=DECIMAL},
+      </if>
+      <if test="qitQlsxId != null">
+        #{qitQlsxId,jdbcType=DECIMAL},
+      </if>
+      <if test="bak != null">
+        #{bak,jdbcType=CLOB},
+      </if>
+      <if test="detailRequirement != null">
+        #{detailRequirement,jdbcType=CLOB},
+      </if>
+      <if test="necessityDesc != null">
+        #{necessityDesc,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.model.MaterialsWithBLOBs">
+    update MATERIALS
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="emptyTableFileName != null">
+        EMPTY_TABLE_FILE_NAME = #{emptyTableFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="emptyTableFileUrl != null">
+        EMPTY_TABLE_FILE_URL = #{emptyTableFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="exampleTableFileName != null">
+        EXAMPLE_TABLE_FILE_NAME = #{exampleTableFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="exampleTableFileUrl != null">
+        EXAMPLE_TABLE_FILE_URL = #{exampleTableFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null">
+        FORMAT = #{format,jdbcType=DECIMAL},
+      </if>
+      <if test="isRq != null">
+        IS_RQ = #{isRq,jdbcType=DECIMAL},
+      </if>
+      <if test="materialGuId != null">
+        MATERIAL_GU_ID = #{materialGuId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialRes != null">
+        MATERIAL_RES = #{materialRes,jdbcType=VARCHAR},
+      </if>
+      <if test="necessity != null">
+        NECESSITY = #{necessity,jdbcType=DECIMAL},
+      </if>
+      <if test="qitQlsxId != null">
+        QIT_QLSX_ID = #{qitQlsxId,jdbcType=DECIMAL},
+      </if>
+      <if test="bak != null">
+        BAK = #{bak,jdbcType=CLOB},
+      </if>
+      <if test="detailRequirement != null">
+        DETAIL_REQUIREMENT = #{detailRequirement,jdbcType=CLOB},
+      </if>
+      <if test="necessityDesc != null">
+        NECESSITY_DESC = #{necessityDesc,jdbcType=CLOB},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.message.model.MaterialsWithBLOBs">
+    update MATERIALS
+    set NAME = #{name,jdbcType=VARCHAR},
+      EMPTY_TABLE_FILE_NAME = #{emptyTableFileName,jdbcType=VARCHAR},
+      EMPTY_TABLE_FILE_URL = #{emptyTableFileUrl,jdbcType=VARCHAR},
+      EXAMPLE_TABLE_FILE_NAME = #{exampleTableFileName,jdbcType=VARCHAR},
+      EXAMPLE_TABLE_FILE_URL = #{exampleTableFileUrl,jdbcType=VARCHAR},
+      FORMAT = #{format,jdbcType=DECIMAL},
+      IS_RQ = #{isRq,jdbcType=DECIMAL},
+      MATERIAL_GU_ID = #{materialGuId,jdbcType=VARCHAR},
+      MATERIAL_RES = #{materialRes,jdbcType=VARCHAR},
+      NECESSITY = #{necessity,jdbcType=DECIMAL},
+      QIT_QLSX_ID = #{qitQlsxId,jdbcType=DECIMAL},
+      BAK = #{bak,jdbcType=CLOB},
+      DETAIL_REQUIREMENT = #{detailRequirement,jdbcType=CLOB},
+      NECESSITY_DESC = #{necessityDesc,jdbcType=CLOB}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.model.Materials">
+    update MATERIALS
+    set NAME = #{name,jdbcType=VARCHAR},
+      EMPTY_TABLE_FILE_NAME = #{emptyTableFileName,jdbcType=VARCHAR},
+      EMPTY_TABLE_FILE_URL = #{emptyTableFileUrl,jdbcType=VARCHAR},
+      EXAMPLE_TABLE_FILE_NAME = #{exampleTableFileName,jdbcType=VARCHAR},
+      EXAMPLE_TABLE_FILE_URL = #{exampleTableFileUrl,jdbcType=VARCHAR},
+      FORMAT = #{format,jdbcType=DECIMAL},
+      IS_RQ = #{isRq,jdbcType=DECIMAL},
+      MATERIAL_GU_ID = #{materialGuId,jdbcType=VARCHAR},
+      MATERIAL_RES = #{materialRes,jdbcType=VARCHAR},
+      NECESSITY = #{necessity,jdbcType=DECIMAL},
+      QIT_QLSX_ID = #{qitQlsxId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

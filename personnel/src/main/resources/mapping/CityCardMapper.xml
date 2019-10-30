@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personnel.mapper.mybatis.CityCardMapper">
+  <resultMap id="BaseResultMap" type="com.personnel.model.CityCard">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CITY_CARD_NO" jdbcType="VARCHAR" property="cityCardNo" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PERSON_ID" jdbcType="DECIMAL" property="personId" />
+    <result column="PERSON_NO" jdbcType="VARCHAR" property="personNo" />
+    <result column="PHONE_NO" jdbcType="VARCHAR" property="phoneNo" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime"/>
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CITY_CARD_NO, NAME, PERSON_ID, PERSON_NO, PHONE_NO, STATE,CREATED_DATE_TIME,LAST_UPDATE_DATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from CITYCARD
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from CITYCARD
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.personnel.model.CityCard">
+    insert into CITYCARD (ID, CITY_CARD_NO, NAME,
+      PERSON_ID, PERSON_NO, PHONE_NO,
+      STATE,CREATED_DATE_TIME,LAST_UPDATE_DATE_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{cityCardNo,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{personId,jdbcType=DECIMAL}, #{personNo,jdbcType=VARCHAR}, #{phoneNo,jdbcType=VARCHAR},
+      #{state,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=VARCHAR}, #{lastUpdateDateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.personnel.model.CityCard">
+    insert into CITYCARD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cityCardNo != null">
+        CITY_CARD_NO,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="personId != null">
+        PERSON_ID,
+      </if>
+      <if test="personNo != null">
+        PERSON_NO,
+      </if>
+      <if test="phoneNo != null">
+        PHONE_NO,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=VARCHAR},
+      </if>
+
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="cityCardNo != null">
+        #{cityCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=DECIMAL},
+      </if>
+      <if test="personNo != null">
+        #{personNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null">
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=VARCHAR},
+      </if>
+
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.personnel.model.CityCard">
+    update CITYCARD
+    <set>
+      <if test="cityCardNo != null">
+        CITY_CARD_NO = #{cityCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="personId != null">
+        PERSON_ID = #{personId,jdbcType=DECIMAL},
+      </if>
+      <if test="personNo != null">
+        PERSON_NO = #{personNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null">
+        PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=VARCHAR},
+      </if>
+
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.personnel.model.CityCard">
+    update CITYCARD
+    set CITY_CARD_NO = #{cityCardNo,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PERSON_ID = #{personId,jdbcType=DECIMAL},
+      PERSON_NO = #{personNo,jdbcType=VARCHAR},
+      PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByityCardNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from CITYCARD
+    where CITY_CARD_NO = #{cityCardNo,jdbcType=VARCHAR}
+  </select>
+
+    <select id="selectByState" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from CITYCARD
+        where STATE = #{state,jdbcType=DECIMAL}
+    </select>
+
+  <select id="selectByPersonId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from CITYCARD
+    where PERSON_ID = #{personId,jdbcType=DECIMAL}
+    and STATE = 1
+  </select>
+</mapper>

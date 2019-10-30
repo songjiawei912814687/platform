@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.screenData.mapper.mybatis.DepartmentNumbersMapper">
+  <resultMap id="BaseResultMap" type="com.screenData.domain.output.DepartmentNumbersOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DEPART_ID" jdbcType="DECIMAL" property="departId" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PERSON_NUM" jdbcType="DECIMAL" property="personNum" />
+    <result column="YEAR_MONTH" jdbcType="VARCHAR" property="yearMonth" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DEPART_ID, DISPLAY_ORDER, 
+    LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME, PERSON_NUM, 
+    YEAR_MONTH
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from DEPARTMENT_NUMBERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from DEPARTMENT_NUMBERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.screenData.model.DepartmentNumbers">
+    insert into DEPARTMENT_NUMBERS (ID, CREATED_DATE_TIME, CREATED_USER_ID, 
+      CREATED_USER_NAME, DEPART_ID, DISPLAY_ORDER, 
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, 
+      LAST_UPDATE_USER_NAME, NAME, PERSON_NUM, 
+      YEAR_MONTH)
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, 
+      #{createdUserName,jdbcType=VARCHAR}, #{departId,jdbcType=DECIMAL}, #{displayOrder,jdbcType=DECIMAL}, 
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL}, 
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{personNum,jdbcType=DECIMAL}, 
+      #{yearMonth,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.screenData.model.DepartmentNumbers">
+    insert into DEPARTMENT_NUMBERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="departId != null">
+        DEPART_ID,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="personNum != null">
+        PERSON_NUM,
+      </if>
+      <if test="yearMonth != null">
+        YEAR_MONTH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="departId != null">
+        #{departId,jdbcType=DECIMAL},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="personNum != null">
+        #{personNum,jdbcType=DECIMAL},
+      </if>
+      <if test="yearMonth != null">
+        #{yearMonth,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.screenData.model.DepartmentNumbers">
+    update DEPARTMENT_NUMBERS
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="departId != null">
+        DEPART_ID = #{departId,jdbcType=DECIMAL},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="personNum != null">
+        PERSON_NUM = #{personNum,jdbcType=DECIMAL},
+      </if>
+      <if test="yearMonth != null">
+        YEAR_MONTH = #{yearMonth,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.screenData.model.DepartmentNumbers">
+    update DEPARTMENT_NUMBERS
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DEPART_ID = #{departId,jdbcType=DECIMAL},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PERSON_NUM = #{personNum,jdbcType=DECIMAL},
+      YEAR_MONTH = #{yearMonth,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="selectNumberById" parameterType="map" resultType="int">
+    SELECT
+	sum(PERSON_NUM)
+FROM
+	DEPARTMENT_NUMBERS
+WHERE
+	(
+		DEPART_ID =  #{id,jdbcType=DECIMAL}
+		OR DEPART_ID IN (
+			SELECT
+				ID
+			FROM
+				ORGANIZATION
+			WHERE
+				LINKED_ID =  #{id,jdbcType=DECIMAL}
+		)
+	)
+AND YEAR_MONTH = #{yearMonth,jdbcType=VARCHAR}
+  </select>
+</mapper>

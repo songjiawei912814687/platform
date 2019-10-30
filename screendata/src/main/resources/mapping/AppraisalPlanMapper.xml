@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.screenData.mapper.mybatis.AppraisalPlanMapper">
+  <resultMap id="BaseResultMap" type="com.screenData.domain.output.PerformanceIndexOutput">
+    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="departmentName" jdbcType="VARCHAR" property="departmentName" />
+  </resultMap>
+
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    APPRAISAL_PLAN.FINAL_SCORE score,
+    "ORGANIZATION"."NAME" departmentName
+    FROM
+    APPRAISAL_PLAN
+    LEFT JOIN "ORGANIZATION" ON "ORGANIZATION". ID = APPRAISAL_PLAN.ORGANIZATION_ID
+    WHERE
+    APPRAISAL_PLAN."TYPE" = 0
+    AND APPRAISAL_PLAN.OBJECT_TYPE = 0
+    AND APPRAISAL_PLAN."MONTH" = #{month,jdbcType=DECIMAL}
+    AND APPRAISAL_PLAN."YEAR" = #{year,jdbcType=DECIMAL}
+    AND APPRAISAL_PLAN.AMPUTATED = 0
+    ORDER BY APPRAISAL_PLAN.FINAL_SCORE DESC,NLSSORT("ORGANIZATION"."NAME", 'NLS_SORT=SCHINESE_PINYIN_M')
+  </select>
+
+
+</mapper>
+

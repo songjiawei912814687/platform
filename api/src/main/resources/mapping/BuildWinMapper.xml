@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.BuildWinMapper">
+  <resultMap id="BaseResultMap" type="com.api.model.BuildWin">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="ENTERPRISE_NAME" jdbcType="VARCHAR" property="enterpriseName" />
+    <result column="PERSONNELS" jdbcType="VARCHAR" property="personnels" />
+    <result column="PUBLISH_END_TIME" jdbcType="VARCHAR" property="publishEndTime" />
+    <result column="PUBLISH_START_TIME" jdbcType="VARCHAR" property="publishStartTime" />
+    <result column="TENDER_NAME" jdbcType="VARCHAR" property="tenderName" />
+    <result column="WIN_PRICE" jdbcType="DECIMAL" property="winPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, ENTERPRISE_NAME, PERSONNELS, PUBLISH_END_TIME, PUBLISH_START_TIME, 
+    TENDER_NAME, WIN_PRICE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BUILD_WIN
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from BUILD_WIN
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.BuildWin">
+    insert into BUILD_WIN (ID, CREATED_DATE_TIME, ENTERPRISE_NAME, 
+      PERSONNELS, PUBLISH_END_TIME, PUBLISH_START_TIME, 
+      TENDER_NAME, WIN_PRICE)
+    values (#{id,jdbcType=VARCHAR}, #{createdDateTime,jdbcType=TIMESTAMP}, #{enterpriseName,jdbcType=VARCHAR}, 
+      #{personnels,jdbcType=VARCHAR}, #{publishEndTime,jdbcType=VARCHAR}, #{publishStartTime,jdbcType=VARCHAR}, 
+      #{tenderName,jdbcType=VARCHAR}, #{winPrice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.BuildWin">
+    insert into BUILD_WIN
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="enterpriseName != null">
+        ENTERPRISE_NAME,
+      </if>
+      <if test="personnels != null">
+        PERSONNELS,
+      </if>
+      <if test="publishEndTime != null">
+        PUBLISH_END_TIME,
+      </if>
+      <if test="publishStartTime != null">
+        PUBLISH_START_TIME,
+      </if>
+      <if test="tenderName != null">
+        TENDER_NAME,
+      </if>
+      <if test="winPrice != null">
+        WIN_PRICE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseName != null">
+        #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="personnels != null">
+        #{personnels,jdbcType=VARCHAR},
+      </if>
+      <if test="publishEndTime != null">
+        #{publishEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="publishStartTime != null">
+        #{publishStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tenderName != null">
+        #{tenderName,jdbcType=VARCHAR},
+      </if>
+      <if test="winPrice != null">
+        #{winPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.BuildWin">
+    update BUILD_WIN
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enterpriseName != null">
+        ENTERPRISE_NAME = #{enterpriseName,jdbcType=VARCHAR},
+      </if>
+      <if test="personnels != null">
+        PERSONNELS = #{personnels,jdbcType=VARCHAR},
+      </if>
+      <if test="publishEndTime != null">
+        PUBLISH_END_TIME = #{publishEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="publishStartTime != null">
+        PUBLISH_START_TIME = #{publishStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tenderName != null">
+        TENDER_NAME = #{tenderName,jdbcType=VARCHAR},
+      </if>
+      <if test="winPrice != null">
+        WIN_PRICE = #{winPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.BuildWin">
+    update BUILD_WIN
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      ENTERPRISE_NAME = #{enterpriseName,jdbcType=VARCHAR},
+      PERSONNELS = #{personnels,jdbcType=VARCHAR},
+      PUBLISH_END_TIME = #{publishEndTime,jdbcType=VARCHAR},
+      PUBLISH_START_TIME = #{publishStartTime,jdbcType=VARCHAR},
+      TENDER_NAME = #{tenderName,jdbcType=VARCHAR},
+      WIN_PRICE = #{winPrice,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from BUILD_WIN
+    order by CREATED_DATE_TIME desc
+
+  </select>
+</mapper>

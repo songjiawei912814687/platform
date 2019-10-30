@@ -1,0 +1,1 @@
+package com.screenData.domain.output;import com.screenData.model.TotalInterface;/** * @author: XiGuoQing * @description: * @date: Created in 下午 2:11 2018/10/30 0030 * @modified by: */public class TotalInterfaceOutput extends TotalInterface {}

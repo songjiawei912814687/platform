@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personnel.mapper.mybatis.DimissionMapper">
+  <resultMap id="BaseResultMap" type="com.personnel.domian.output.DimissionOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DEPARTURE_TIME" jdbcType="TIMESTAMP" property="departureTime" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="REASON" jdbcType="VARCHAR" property="reason" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="employeeName" jdbcType="VARCHAR" property="employeeName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DEPARTURE_TIME, EMPLOYEE_ID,
+    LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, REASON, STATE
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from DIMISSION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.personnel.model.Dimission">
+    insert into DIMISSION (ID, CREATED_DATE_TIME, CREATED_USER_ID,
+      CREATED_USER_NAME, DEPARTURE_TIME, EMPLOYEE_ID,
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, REASON, STATE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL},
+      #{createdUserName,jdbcType=VARCHAR}, #{departureTime,jdbcType=TIMESTAMP}, #{employeeId,jdbcType=DECIMAL},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.personnel.model.Dimission">
+    insert into DIMISSION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="departureTime != null">
+        DEPARTURE_TIME,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="departureTime != null">
+        #{departureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.personnel.model.Dimission">
+    update DIMISSION
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="departureTime != null">
+        DEPARTURE_TIME = #{departureTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.personnel.model.Dimission">
+    update DIMISSION
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DEPARTURE_TIME = #{departureTime,jdbcType=TIMESTAMP},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      REASON = #{reason,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  SELECT
+	d.reason,
+	d.state,
+	d.EMPLOYEE_ID,
+	d.DEPARTURE_TIME,
+	e.name as employeeName
+FROM
+	DIMISSION d
+	left join EMPLOYEES e on e.id=d.EMPLOYEE_ID
+    where d.ID = #{id,jdbcType=DECIMAL}
+  </select>
+
+
+  <select id="selectByEmployeeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    d.reason,
+    d.state,
+    d.EMPLOYEE_ID,
+    d.DEPARTURE_TIME,
+    e.name as employeeName
+    FROM
+    DIMISSION d left join EMPLOYEES e on e.id=d.EMPLOYEE_ID
+    where d.EMPLOYEE_ID = #{id,jdbcType=DECIMAL} and d.state=0
+  </select>
+</mapper>

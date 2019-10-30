@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.LighthouseMapper">
+  <resultMap id="BaseResultMap" type="com.api.model.Lighthouse">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CLASS_VALUE" jdbcType="VARCHAR" property="classValue" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="PUBLISH_START_TIME" jdbcType="VARCHAR" property="publishStartTime" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CLASS_VALUE, CREATED_DATE_TIME, PUBLISH_START_TIME, TITLE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from LIGHTHOUSE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from LIGHTHOUSE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.Lighthouse">
+    insert into LIGHTHOUSE (ID, CLASS_VALUE, CREATED_DATE_TIME, 
+      PUBLISH_START_TIME, TITLE)
+    values (#{id,jdbcType=DECIMAL}, #{classValue,jdbcType=VARCHAR}, #{createdDateTime,jdbcType=TIMESTAMP}, 
+      #{publishStartTime,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.Lighthouse">
+    insert into LIGHTHOUSE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="classValue != null">
+        CLASS_VALUE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="publishStartTime != null">
+        PUBLISH_START_TIME,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="classValue != null">
+        #{classValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishStartTime != null">
+        #{publishStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.Lighthouse">
+    update LIGHTHOUSE
+    <set>
+      <if test="classValue != null">
+        CLASS_VALUE = #{classValue,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishStartTime != null">
+        PUBLISH_START_TIME = #{publishStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.Lighthouse">
+    update LIGHTHOUSE
+    set CLASS_VALUE = #{classValue,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      PUBLISH_START_TIME = #{publishStartTime,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from LIGHTHOUSE
+    order by CREATED_DATE_TIME desc
+
+  </select>
+</mapper>

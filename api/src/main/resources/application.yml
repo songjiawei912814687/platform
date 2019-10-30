@@ -1,0 +1,148 @@
+server:
+  port: 8777
+  tomcat:
+    uri-encoding: UTF-8
+
+
+spring:
+  application:
+    name: api
+  servlet:
+    multipart:
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.Oracle10gDialect
+        enable_lazy_load_no_trans: true
+    open-in-view: true
+    database: oracle
+
+  jackson:
+    default-property-inclusion: non_null
+  aop:
+    auto: true
+
+  datasource:
+    name: dataSource
+#    url: jdbc:oracle:thin:@139.196.192.24:1521:fyplatform
+    url: jdbc:oracle:thin:@10.32.250.83:1521:fyplatform
+#    url: jdbc:oracle:thin:@10.71.177.154:1521:fyplatform
+    username: fyplatform
+    password: 123456
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: oracle.jdbc.OracleDriver
+    filters: stat,wall,slf4j
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+  #redis配置
+  redis:
+    database: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: 5000
+        max-idle: 8
+        min-idle: 0
+    timeout: 10000ms
+    redis-queue:
+      host: 10.32.194.4
+      port: 6379
+      password: nova
+      testOnBorrow: false
+    redis-myredis:
+      host: 10.32.250.87
+      port: 6379
+      password:
+      testOnBorrow: false
+
+#mybatis 配置
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.api.model  # 注意：对应实体类的路径
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: oracle
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://10.32.250.85:8761/eureka/
+#       defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    #优先使用IP地址作为主机名的标识
+    prefer-ip-address: true
+    #续约任务调用时间间隔
+    lease-renewal-interval-in-seconds: 5000
+    #服务失效时间
+    lease-expiration-duration-in-seconds: 5000
+
+#----------------------参数--------------------------------------------------------#
+jianyi:
+  token: hzjyjs287b07ab4b1b4172adeab32f62031b49
+
+feedback:
+  deadline: 2
+
+#微信预约
+wechatqueHost: http://10.71.177.154:8000
+#发布到88服务器
+queHost: http://10.32.194.4:8000
+
+companyCode: M
+
+getDeptsUrl: /service/queue.asmx/GetDepts
+
+getBookableGroupsUrl: /service/queue.asmx/GetBookableGroups
+
+getBookableDateByDeptUrl: /service/queue.asmx/GetBookableDateByDept
+
+getAppointmentSummaryUrl: /service/queue.asmx/GetAppointmentSummary
+
+appointmentUrl: /service/queue.asmx/Appointment
+
+cancelAppointmentUrl: /service/queue.asmx/CancelAppointmentById
+
+############################sqlserver 直连################################################################
+sqlserver:
+  ##172.16.19.246
+  url: jdbc:sqlserver://10.32.194.4:1433;DatabaseName=NQueue
+  user: sa
+  password: Sql2008
+  className: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+##用于外网服务器
+insertSqlserver:
+  url: jdbc:sqlserver://10.71.177.154:1433;DatabaseName=NQueue
+  user: sa
+  password: Sql2008
+  className: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+
+
+
+
+
+

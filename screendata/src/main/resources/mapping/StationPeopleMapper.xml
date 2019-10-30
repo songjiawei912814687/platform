@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.screenData.mapper.mybatis.StationPeopleMapper">
+  <resultMap id="BaseResultMap" type="com.screenData.domain.output.StationPeopleOutput">
+    <id column="RESOURCE_ID" jdbcType="DECIMAL" property="resourceId" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="CREATION_TIME" jdbcType="TIMESTAMP" property="creationTime" />
+    <result column="DEPT_CODE" jdbcType="VARCHAR" property="deptCode" />
+    <result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+    <result column="FULL_SEQUENCE" jdbcType="VARCHAR" property="fullSequence" />
+    <result column="GROUP_CODE" jdbcType="VARCHAR" property="groupCode" />
+    <result column="GROUP_NAME" jdbcType="VARCHAR" property="groupName" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PRIORITY_CODE" jdbcType="VARCHAR" property="priorityCode" />
+    <result column="SCHEDULE_CODE" jdbcType="VARCHAR" property="scheduleCode" />
+    <result column="SEQUENCE_NUMBER" jdbcType="DECIMAL" property="sequenceNumber" />
+    <result column="SORT_INDEX" jdbcType="DECIMAL" property="sortIndex" />
+    <result column="SOURCE" jdbcType="VARCHAR" property="source" />
+    <result column="STATUS_CODE" jdbcType="VARCHAR" property="statusCode" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+    <result column="TAKE_NUMBER_TIME" jdbcType="TIMESTAMP" property="takeNumberTime"/>
+    <result column="CANCEL_TIME" jdbcType="TIMESTAMP" property="cancelTime"/>
+    <result column="COMPLETE_TIME" jdbcType="TIMESTAMP" property="completeTime"/>
+    <result column="START_WORK_TIME" jdbcType="TIMESTAMP" property="startWorkTime"/>
+    <result column="PASS_TIME" jdbcType="TIMESTAMP" property="passTime"/>
+    <result column="MATTERS" jdbcType="VARCHAR" property="matters"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    CODE, CREATION_TIME, DEPT_CODE, DEPT_NAME, FULL_SEQUENCE, GROUP_CODE, GROUP_NAME,
+    MOBILE, NAME, PRIORITY_CODE, RESOURCE_ID, SCHEDULE_CODE, SEQUENCE_NUMBER, SORT_INDEX,
+    SOURCE, STATUS_CODE,STATUS,TAKE_NUMBER_TIME,CANCEL_TIME,COMPLETE_TIME,START_WORK_TIME,PASS_TIME,MATTERS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from STATION_PEOPLE
+    where RESOURCE_ID = #{resourceId,jdbcType=DECIMAL}
+  </select>
+
+  <update id="updateByResultId" parameterType="com.common.model.PageData" >
+    update STATION_PEOPLE
+    set STATUS_CODE = #{statusCode,jdbcType=VARCHAR},
+        STATUS = #{status,jdbcType=DECIMAL},
+        <if test="cancelTime!=null">
+          CANCEL_TIME = #{cancelTime,jdbcType = TIMESTAMP}
+        </if>
+        <if test="completeTime!=null">
+          COMPLETE_TIME = #{completeTime,jdbcType = TIMESTAMP}
+        </if>
+        <if test="startWorkTime!=null">
+          START_WORK_TIME = #{startWorkTime,jdbcType = TIMESTAMP}
+        </if>
+        <if test="passTime!=null">
+          PASS_TIME = #{passTime,jdbcType = TIMESTAMP}
+        </if>
+    where RESOURCE_ID = #{resourceId,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByPhone" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from STATION_PEOPLE sp
+    left join EVALUATION_RESULTS er
+    on er.APPRAISER_MOBILE= sp.MOBILE
+    where sp.MOBILE=#{phone,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByResourceId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from STATION_PEOPLE
+    where RESOURCE_ID = #{resourceId,jdbcType=DECIMAL}
+  </select>
+
+
+  <select id="selectByStatus" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from STATION_PEOPLE
+    where STATUS = #{status,jdbcType=DECIMAL}
+    and to_char(COMPLETE_TIME,'yyyy-MM-dd') = #{completeDate,jdbcType=VARCHAR}
+
+  </select>
+
+  <select id="selectByStatusAndTime" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from STATION_PEOPLE
+    where STATUS = #{status,jdbcType=DECIMAL}
+    and to_char(TAKE_NUMBER_TIME,'yyyy-MM-dd hi24:mi:ss') = #{takeNumberDate,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByTakeTime" parameterType="map" resultMap="BaseResultMap">
+    SELECT m.orgName as orgName ,m.takeCount as takeCount ,m.compCount as  compCount
+    from
+
+    (SELECT s.DEPT_CODE as dept_code ,count(s.CREATION_TIME) as takeCount,count(s.COMPLETE_TIME) as compCount ,O.NAME as orgName
+    from
+    (SELECT RESOURCE_ID, DEPT_CODE, CREATION_TIME,COMPLETE_TIME,NAME FROM STATION_PEOPLE where to_char(CREATION_TIME,'yyyy-MM-dd hh24:mi')
+    between #{startTime,jdbcType=VARCHAR} and #{endTime,jdbcType=VARCHAR})s
+    left join ORGANIZATION O
+    ON S.DEPT_CODE = O.ORGANIZATION_NO
+    GROUP BY s.DEPT_CODE,O.NAME ORDER BY count(s.CREATION_TIME) desc )m where rownum &lt;= 10
+  </select>
+
+  <select id="selectDeptName" resultType="string">
+    select s.DEPT_NAME
+    from
+    (select  DISTINCT  sp.DEPT_NAME as DEPT_NAME from STATION_PEOPLE sp) s
+    where ROWNUM&lt;= 11
+  </select>
+
+  <!--<select id="selectByTake" parameterType="string" resultMap="BaseResultMap">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from STATION_PEOPLE-->
+    <!--where to_char(TAKE_NUMBER_TIME,'yyyy-MM-dd') = #{takeDate,jdbcType=VARCHAR}-->
+
+  <!--</select>-->
+
+  <select id="selectByTake" parameterType="string" resultType="integer">
+    select
+    count (TAKE_NUMBER_TIME)
+    from STATION_PEOPLE
+    where to_char(TAKE_NUMBER_TIME,'yyyy-MM-dd') = #{takeDate,jdbcType=VARCHAR}
+
+  </select>
+
+
+  <!--<select id="selectByComp" parameterType="string" resultMap="BaseResultMap">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from STATION_PEOPLE-->
+    <!--where to_char(COMPLETE_TIME,'yyyy-MM-dd') = #{compDate,jdbcType=VARCHAR}-->
+  <!--</select>-->
+
+
+  <select id="selectByComp" parameterType="string" resultType="integer">
+    select
+    count (COMPLETE_TIME)
+    from STATION_PEOPLE
+    where to_char(COMPLETE_TIME,'yyyy-MM-dd') = #{compDate,jdbcType=VARCHAR}
+    order by COMPLETE_TIME
+  </select>
+
+</mapper>

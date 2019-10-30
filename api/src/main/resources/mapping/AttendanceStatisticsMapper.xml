@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.AttendanceStatisticsMapper">
+  <resultMap id="BaseResultMap" type="com.api.domain.output.AttendanceStatistics">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="BE_LATE" jdbcType="VARCHAR" property="beLate" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NAME" jdbcType="VARCHAR" property="employeeName" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="LEAVE_EARLY" jdbcType="VARCHAR" property="leaveEarly" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="PUNCH" jdbcType="VARCHAR" property="punch" />
+    <result column="PUNCH_TIME" jdbcType="TIMESTAMP" property="punchTime" />
+    <result column="SIGN_IN_TIME" jdbcType="TIMESTAMP" property="signInTime" />
+    <result column="SIGN_OUT_TIME" jdbcType="TIMESTAMP" property="signOutTime" />
+    <result column="STATUS_NAME" jdbcType="VARCHAR" property="statusName" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ATTENDANCE_DATE" jdbcType="TIMESTAMP" property="attendanceDate" />
+    <result column="IS_LEAVE" jdbcType="VARCHAR" property="isLeave" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, BE_LATE, EMPLOYEE_ID, EMPLOYEE_NAME, EMPLOYEE_NO, JOBS_NAME, LEAVE_EARLY, ORGANIZATION_NAME, 
+    PUNCH, PUNCH_TIME, SIGN_IN_TIME, SIGN_OUT_TIME, STATUS_NAME, ORGANIZATION_ID, ATTENDANCE_DATE,IS_LEAVE
+  </sql>
+  <select id="selectByDate" parameterType="com.common.model.PageData" resultType="com.api.domain.output.StaffManagementOutput">
+    SELECT
+    sum( CASE a.is_leave WHEN '是' THEN 1 ELSE 0 END) leaveNumber,
+    sum( CASE a.punch WHEN '否' THEN 1 ELSE 0 END)	 punchNumber,
+    sum( CASE a.leave_Early WHEN '是' THEN 1 ELSE 0 END)	 leaveEarlyNumber,
+    sum( CASE a.be_Late WHEN '是' THEN 1 ELSE 0 END)	 beLateNumber
+    FROM
+    ATTENDANCE_STATISTICS a
+    LEft join organization organ on organ.id=a.ORGANIZATION_ID
+    where
+    TO_CHAR (a.ATTENDANCE_DATE,'yyyy-mm-dd') = #{date,jdbcType=VARCHAR}
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="path !=null and path !=''">
+        CONCAT(organ.PATH,',') like '%'||#{path,jdbcType=VARCHAR}||'%' and
+      </if>
+    </trim>
+  </select>
+
+  <select id="selectMaxDate" resultType="java.lang.String">
+      SELECT to_char(MAX(ATTENDANCE_DATE),'yyyy-mm-dd')from ATTENDANCE_STATISTICS
+  </select>
+</mapper>

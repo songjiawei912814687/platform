@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.api.mapper.mybatis.QltQlsxMapper">
+  <resultMap id="BaseResultMap" type="com.api.domain.output.QltQlsxOutput">
+    <id column="QL_FULL_ID" jdbcType="VARCHAR" property="qlFullId" />
+    <result column="ACCEPT_ADDRESS_INFO" jdbcType="VARCHAR" property="acceptAddressInfo" />
+    <result column="ANTICIPATE_DAY" jdbcType="DECIMAL" property="anticipateDay" />
+    <result column="APPLYERMIN_COUNT" jdbcType="DECIMAL" property="applyerminCount" />
+    <result column="APPLY_CONDITION" jdbcType="VARCHAR" property="applyCondition" />
+    <result column="ACP_INSTITUTION" jdbcType="VARCHAR" property="acpInstitution" />
+    <result column="APPLICABLE_OBJECT" jdbcType="VARCHAR" property="applicableObject" />
+    <result column="APPLY_TYPE" jdbcType="VARCHAR" property="applyType" />
+    <result column="APPLY_TYPE_TEL" jdbcType="VARCHAR" property="applyTypeTel" />
+    <result column="BANJIAN_FINISHFILES" jdbcType="VARCHAR" property="banjianFinishfiles" />
+    <result column="BJTYPE" jdbcType="VARCHAR" property="bjtype" />
+    <result column="BAN_REQUIREMENT" jdbcType="VARCHAR" property="banRequirement" />
+    <result column="CHARGE_BASIS" jdbcType="VARCHAR" property="chargeBasis" />
+    <result column="CHARGE_FLAG" jdbcType="VARCHAR" property="chargeFlag" />
+    <result column="CONTENT_INVOLVE" jdbcType="VARCHAR" property="contentInvolve" />
+    <result column="COUNT_LIMIT" jdbcType="VARCHAR" property="countLimit" />
+    <result column="DEC_INSTITUTION" jdbcType="VARCHAR" property="decInstitution" />
+    <result column="IM_FLOW_URL" jdbcType="VARCHAR" property="imFlowUrl" />
+    <result column="ITEMSOURCE" jdbcType="VARCHAR" property="itemsource" />
+    <result column="LAWBASIS" jdbcType="VARCHAR" property="lawbasis" />
+    <result column="LEAD_DEPT" jdbcType="VARCHAR" property="leadDept" />
+    <result column="LINK_TEL" jdbcType="VARCHAR" property="linkTel" />
+    <result column="MATERIAL_INFO" jdbcType="VARCHAR" property="materialInfo" />
+    <result column="OUT_FLOW_DESC" jdbcType="VARCHAR" property="outFlowDesc" />
+    <result column="QA_INFO" jdbcType="VARCHAR" property="qaInfo" />
+    <result column="QL_KIND" jdbcType="VARCHAR" property="qlKind" />
+    <result column="QL_NAME" jdbcType="VARCHAR" property="qlName" />
+    <result column="RELATED" jdbcType="VARCHAR" property="related" />
+    <result column="SHIXIANGSCTYPE" jdbcType="VARCHAR" property="shixiangsctype" />
+    <result column="SUPERVISE_TEL" jdbcType="VARCHAR" property="superviseTel" />
+    <result column="SERVICE_DAY" jdbcType="VARCHAR" property="serviceDay" />
+    <result column="SERVICE_MODE" jdbcType="VARCHAR" property="serviceMode" />
+    <result column="XINGZHENXDRXY" jdbcType="VARCHAR" property="xingzhenxdrxy" />
+    <result column="HOT" jdbcType="DECIMAL" property="hot" />
+    <result column="PARTICLES" jdbcType="DECIMAL" property="particles" />
+    <result column="PROMISE_DAY" jdbcType="DECIMAL" property="promiseDay" />
+    <result column="TONGID" jdbcType="DECIMAL" property="tongid" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="HANG_YE_CLASS_TYPE" jdbcType="VARCHAR" property="hangYeClassType"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    QL_FULL_ID,ACCEPT_ADDRESS_INFO, ANTICIPATE_DAY, APPLYERMIN_COUNT, APPLY_CONDITION,
+    ACP_INSTITUTION, APPLICABLE_OBJECT, APPLY_TYPE, APPLY_TYPE_TEL, BANJIAN_FINISHFILES, 
+    BJTYPE, BAN_REQUIREMENT, CHARGE_BASIS, CHARGE_FLAG, CONTENT_INVOLVE, COUNT_LIMIT, 
+    DEC_INSTITUTION, IM_FLOW_URL, ITEMSOURCE, LAWBASIS, LEAD_DEPT, LINK_TEL, MATERIAL_INFO, 
+    OUT_FLOW_DESC, PROMISE_DAY, QA_INFO,  QL_KIND, QL_NAME, RELATED, SHIXIANGSCTYPE,
+    SUPERVISE_TEL, SERVICE_DAY, SERVICE_MODE, XINGZHENXDRXY, HOT, PARTICLES, TONGID, 
+    UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    QL_FULL_ID,
+    QL_NAME,
+    BJTYPE,
+    CONTENT_INVOLVE,
+    APPLICABLE_OBJECT,
+    QL_KIND,
+    ITEMSOURCE,
+    ACP_INSTITUTION,
+    DEC_INSTITUTION,
+    LEAD_DEPT,
+    SHIXIANGSCTYPE,
+    APPLY_TYPE,
+    APPLY_TYPE_TEL,
+    ACCEPT_ADDRESS_INFO,
+    LINK_TEL,
+    SUPERVISE_TEL,
+    BANJIAN_FINISHFILES,
+    APPLYERMIN_COUNT,
+    PROMISE_DAY,
+    ANTICIPATE_DAY,
+    HOT,
+    PARTICLES
+    from QLT_QLSX
+    where QL_FULL_ID= #{qlFullId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from QLT_QLSX
+    where ROWGU_ID = #{rowguId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.api.model.QltQlsx">
+    insert into QLT_QLSX ( ACCEPT_ADDRESS_INFO, ANTICIPATE_DAY,
+      APPLYERMIN_COUNT, APPLY_CONDITION, ACP_INSTITUTION, 
+      APPLICABLE_OBJECT, APPLY_TYPE, APPLY_TYPE_TEL, 
+      BANJIAN_FINISHFILES, BJTYPE, BAN_REQUIREMENT, 
+      CHARGE_BASIS, CHARGE_FLAG, CONTENT_INVOLVE, 
+      COUNT_LIMIT, DEC_INSTITUTION, IM_FLOW_URL, 
+      ITEMSOURCE, LAWBASIS, LEAD_DEPT, 
+      LINK_TEL, MATERIAL_INFO, OUT_FLOW_DESC, 
+      PROMISE_DAY, QA_INFO, QL_FULL_ID, 
+      QL_KIND, QL_NAME, RELATED, 
+      SHIXIANGSCTYPE, SUPERVISE_TEL, SERVICE_DAY, 
+      SERVICE_MODE, XINGZHENXDRXY, HOT, 
+      PARTICLES, TONGID, UPDATE_DATE
+      )
+    values ( #{acceptAddressInfo,jdbcType=VARCHAR}, #{anticipateDay,jdbcType=DECIMAL},
+      #{applyerminCount,jdbcType=DECIMAL}, #{applyCondition,jdbcType=VARCHAR}, #{acpInstitution,jdbcType=VARCHAR}, 
+      #{applicableObject,jdbcType=VARCHAR}, #{applyType,jdbcType=VARCHAR}, #{applyTypeTel,jdbcType=VARCHAR}, 
+      #{banjianFinishfiles,jdbcType=VARCHAR}, #{bjtype,jdbcType=VARCHAR}, #{banRequirement,jdbcType=VARCHAR}, 
+      #{chargeBasis,jdbcType=VARCHAR}, #{chargeFlag,jdbcType=VARCHAR}, #{contentInvolve,jdbcType=VARCHAR}, 
+      #{countLimit,jdbcType=VARCHAR}, #{decInstitution,jdbcType=VARCHAR}, #{imFlowUrl,jdbcType=VARCHAR}, 
+      #{itemsource,jdbcType=VARCHAR}, #{lawbasis,jdbcType=VARCHAR}, #{leadDept,jdbcType=VARCHAR}, 
+      #{linkTel,jdbcType=VARCHAR}, #{materialInfo,jdbcType=VARCHAR}, #{outFlowDesc,jdbcType=VARCHAR}, 
+      #{promiseDay,jdbcType=DECIMAL}, #{qaInfo,jdbcType=VARCHAR}, #{qlFullId,jdbcType=VARCHAR}, 
+      #{qlKind,jdbcType=VARCHAR}, #{qlName,jdbcType=VARCHAR}, #{related,jdbcType=VARCHAR}, 
+      #{shixiangsctype,jdbcType=VARCHAR}, #{superviseTel,jdbcType=VARCHAR}, #{serviceDay,jdbcType=VARCHAR}, 
+      #{serviceMode,jdbcType=VARCHAR}, #{xingzhenxdrxy,jdbcType=VARCHAR}, #{hot,jdbcType=DECIMAL}, 
+      #{particles,jdbcType=DECIMAL}, #{tongid,jdbcType=DECIMAL}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.api.model.QltQlsx">
+    insert into QLT_QLSX
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="acceptAddressInfo != null">
+        ACCEPT_ADDRESS_INFO,
+      </if>
+      <if test="anticipateDay != null">
+        ANTICIPATE_DAY,
+      </if>
+      <if test="applyerminCount != null">
+        APPLYERMIN_COUNT,
+      </if>
+      <if test="applyCondition != null">
+        APPLY_CONDITION,
+      </if>
+      <if test="acpInstitution != null">
+        ACP_INSTITUTION,
+      </if>
+      <if test="applicableObject != null">
+        APPLICABLE_OBJECT,
+      </if>
+      <if test="applyType != null">
+        APPLY_TYPE,
+      </if>
+      <if test="applyTypeTel != null">
+        APPLY_TYPE_TEL,
+      </if>
+      <if test="banjianFinishfiles != null">
+        BANJIAN_FINISHFILES,
+      </if>
+      <if test="bjtype != null">
+        BJTYPE,
+      </if>
+      <if test="banRequirement != null">
+        BAN_REQUIREMENT,
+      </if>
+      <if test="chargeBasis != null">
+        CHARGE_BASIS,
+      </if>
+      <if test="chargeFlag != null">
+        CHARGE_FLAG,
+      </if>
+      <if test="contentInvolve != null">
+        CONTENT_INVOLVE,
+      </if>
+      <if test="countLimit != null">
+        COUNT_LIMIT,
+      </if>
+      <if test="decInstitution != null">
+        DEC_INSTITUTION,
+      </if>
+      <if test="imFlowUrl != null">
+        IM_FLOW_URL,
+      </if>
+      <if test="itemsource != null">
+        ITEMSOURCE,
+      </if>
+      <if test="lawbasis != null">
+        LAWBASIS,
+      </if>
+      <if test="leadDept != null">
+        LEAD_DEPT,
+      </if>
+      <if test="linkTel != null">
+        LINK_TEL,
+      </if>
+      <if test="materialInfo != null">
+        MATERIAL_INFO,
+      </if>
+      <if test="outFlowDesc != null">
+        OUT_FLOW_DESC,
+      </if>
+      <if test="promiseDay != null">
+        PROMISE_DAY,
+      </if>
+      <if test="qaInfo != null">
+        QA_INFO,
+      </if>
+      <if test="qlFullId != null">
+        QL_FULL_ID,
+      </if>
+      <if test="qlKind != null">
+        QL_KIND,
+      </if>
+      <if test="qlName != null">
+        QL_NAME,
+      </if>
+      <if test="related != null">
+        RELATED,
+      </if>
+      <if test="shixiangsctype != null">
+        SHIXIANGSCTYPE,
+      </if>
+      <if test="superviseTel != null">
+        SUPERVISE_TEL,
+      </if>
+      <if test="serviceDay != null">
+        SERVICE_DAY,
+      </if>
+      <if test="serviceMode != null">
+        SERVICE_MODE,
+      </if>
+      <if test="xingzhenxdrxy != null">
+        XINGZHENXDRXY,
+      </if>
+      <if test="hot != null">
+        HOT,
+      </if>
+      <if test="particles != null">
+        PARTICLES,
+      </if>
+      <if test="tongid != null">
+        TONGID,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rowguId != null">
+        #{rowguId,jdbcType=VARCHAR},
+      </if>
+      <if test="acceptAddressInfo != null">
+        #{acceptAddressInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="anticipateDay != null">
+        #{anticipateDay,jdbcType=DECIMAL},
+      </if>
+      <if test="applyerminCount != null">
+        #{applyerminCount,jdbcType=DECIMAL},
+      </if>
+      <if test="applyCondition != null">
+        #{applyCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="acpInstitution != null">
+        #{acpInstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="applicableObject != null">
+        #{applicableObject,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null">
+        #{applyType,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTypeTel != null">
+        #{applyTypeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="banjianFinishfiles != null">
+        #{banjianFinishfiles,jdbcType=VARCHAR},
+      </if>
+      <if test="bjtype != null">
+        #{bjtype,jdbcType=VARCHAR},
+      </if>
+      <if test="banRequirement != null">
+        #{banRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeBasis != null">
+        #{chargeBasis,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeFlag != null">
+        #{chargeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="contentInvolve != null">
+        #{contentInvolve,jdbcType=VARCHAR},
+      </if>
+      <if test="countLimit != null">
+        #{countLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="decInstitution != null">
+        #{decInstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="imFlowUrl != null">
+        #{imFlowUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsource != null">
+        #{itemsource,jdbcType=VARCHAR},
+      </if>
+      <if test="lawbasis != null">
+        #{lawbasis,jdbcType=VARCHAR},
+      </if>
+      <if test="leadDept != null">
+        #{leadDept,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTel != null">
+        #{linkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="materialInfo != null">
+        #{materialInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="outFlowDesc != null">
+        #{outFlowDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="promiseDay != null">
+        #{promiseDay,jdbcType=DECIMAL},
+      </if>
+      <if test="qaInfo != null">
+        #{qaInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="qlFullId != null">
+        #{qlFullId,jdbcType=VARCHAR},
+      </if>
+      <if test="qlKind != null">
+        #{qlKind,jdbcType=VARCHAR},
+      </if>
+      <if test="qlName != null">
+        #{qlName,jdbcType=VARCHAR},
+      </if>
+      <if test="related != null">
+        #{related,jdbcType=VARCHAR},
+      </if>
+      <if test="shixiangsctype != null">
+        #{shixiangsctype,jdbcType=VARCHAR},
+      </if>
+      <if test="superviseTel != null">
+        #{superviseTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceDay != null">
+        #{serviceDay,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceMode != null">
+        #{serviceMode,jdbcType=VARCHAR},
+      </if>
+      <if test="xingzhenxdrxy != null">
+        #{xingzhenxdrxy,jdbcType=VARCHAR},
+      </if>
+      <if test="hot != null">
+        #{hot,jdbcType=DECIMAL},
+      </if>
+      <if test="particles != null">
+        #{particles,jdbcType=DECIMAL},
+      </if>
+      <if test="tongid != null">
+        #{tongid,jdbcType=DECIMAL},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.api.model.QltQlsx">
+    update QLT_QLSX
+    <set>
+      <if test="acceptAddressInfo != null">
+        ACCEPT_ADDRESS_INFO = #{acceptAddressInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="anticipateDay != null">
+        ANTICIPATE_DAY = #{anticipateDay,jdbcType=DECIMAL},
+      </if>
+      <if test="applyerminCount != null">
+        APPLYERMIN_COUNT = #{applyerminCount,jdbcType=DECIMAL},
+      </if>
+      <if test="applyCondition != null">
+        APPLY_CONDITION = #{applyCondition,jdbcType=VARCHAR},
+      </if>
+      <if test="acpInstitution != null">
+        ACP_INSTITUTION = #{acpInstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="applicableObject != null">
+        APPLICABLE_OBJECT = #{applicableObject,jdbcType=VARCHAR},
+      </if>
+      <if test="applyType != null">
+        APPLY_TYPE = #{applyType,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTypeTel != null">
+        APPLY_TYPE_TEL = #{applyTypeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="banjianFinishfiles != null">
+        BANJIAN_FINISHFILES = #{banjianFinishfiles,jdbcType=VARCHAR},
+      </if>
+      <if test="bjtype != null">
+        BJTYPE = #{bjtype,jdbcType=VARCHAR},
+      </if>
+      <if test="banRequirement != null">
+        BAN_REQUIREMENT = #{banRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeBasis != null">
+        CHARGE_BASIS = #{chargeBasis,jdbcType=VARCHAR},
+      </if>
+      <if test="chargeFlag != null">
+        CHARGE_FLAG = #{chargeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="contentInvolve != null">
+        CONTENT_INVOLVE = #{contentInvolve,jdbcType=VARCHAR},
+      </if>
+      <if test="countLimit != null">
+        COUNT_LIMIT = #{countLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="decInstitution != null">
+        DEC_INSTITUTION = #{decInstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="imFlowUrl != null">
+        IM_FLOW_URL = #{imFlowUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsource != null">
+        ITEMSOURCE = #{itemsource,jdbcType=VARCHAR},
+      </if>
+      <if test="lawbasis != null">
+        LAWBASIS = #{lawbasis,jdbcType=VARCHAR},
+      </if>
+      <if test="leadDept != null">
+        LEAD_DEPT = #{leadDept,jdbcType=VARCHAR},
+      </if>
+      <if test="linkTel != null">
+        LINK_TEL = #{linkTel,jdbcType=VARCHAR},
+      </if>
+      <if test="materialInfo != null">
+        MATERIAL_INFO = #{materialInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="outFlowDesc != null">
+        OUT_FLOW_DESC = #{outFlowDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="promiseDay != null">
+        PROMISE_DAY = #{promiseDay,jdbcType=DECIMAL},
+      </if>
+      <if test="qaInfo != null">
+        QA_INFO = #{qaInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="qlKind != null">
+        QL_KIND = #{qlKind,jdbcType=VARCHAR},
+      </if>
+      <if test="qlName != null">
+        QL_NAME = #{qlName,jdbcType=VARCHAR},
+      </if>
+      <if test="related != null">
+        RELATED = #{related,jdbcType=VARCHAR},
+      </if>
+      <if test="shixiangsctype != null">
+        SHIXIANGSCTYPE = #{shixiangsctype,jdbcType=VARCHAR},
+      </if>
+      <if test="superviseTel != null">
+        SUPERVISE_TEL = #{superviseTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceDay != null">
+        SERVICE_DAY = #{serviceDay,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceMode != null">
+        SERVICE_MODE = #{serviceMode,jdbcType=VARCHAR},
+      </if>
+      <if test="xingzhenxdrxy != null">
+        XINGZHENXDRXY = #{xingzhenxdrxy,jdbcType=VARCHAR},
+      </if>
+      <if test="hot != null">
+        HOT = #{hot,jdbcType=DECIMAL},
+      </if>
+      <if test="particles != null">
+        PARTICLES = #{particles,jdbcType=DECIMAL},
+      </if>
+      <if test="tongid != null">
+        TONGID = #{tongid,jdbcType=DECIMAL},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where QL_FULL_ID = #{qlFullId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.api.model.QltQlsx">
+    update QLT_QLSX
+    set ACCEPT_ADDRESS_INFO = #{acceptAddressInfo,jdbcType=VARCHAR},
+      ANTICIPATE_DAY = #{anticipateDay,jdbcType=DECIMAL},
+      APPLYERMIN_COUNT = #{applyerminCount,jdbcType=DECIMAL},
+      APPLY_CONDITION = #{applyCondition,jdbcType=VARCHAR},
+      ACP_INSTITUTION = #{acpInstitution,jdbcType=VARCHAR},
+      APPLICABLE_OBJECT = #{applicableObject,jdbcType=VARCHAR},
+      APPLY_TYPE = #{applyType,jdbcType=VARCHAR},
+      APPLY_TYPE_TEL = #{applyTypeTel,jdbcType=VARCHAR},
+      BANJIAN_FINISHFILES = #{banjianFinishfiles,jdbcType=VARCHAR},
+      BJTYPE = #{bjtype,jdbcType=VARCHAR},
+      BAN_REQUIREMENT = #{banRequirement,jdbcType=VARCHAR},
+      CHARGE_BASIS = #{chargeBasis,jdbcType=VARCHAR},
+      CHARGE_FLAG = #{chargeFlag,jdbcType=VARCHAR},
+      CONTENT_INVOLVE = #{contentInvolve,jdbcType=VARCHAR},
+      COUNT_LIMIT = #{countLimit,jdbcType=VARCHAR},
+      DEC_INSTITUTION = #{decInstitution,jdbcType=VARCHAR},
+      IM_FLOW_URL = #{imFlowUrl,jdbcType=VARCHAR},
+      ITEMSOURCE = #{itemsource,jdbcType=VARCHAR},
+      LAWBASIS = #{lawbasis,jdbcType=VARCHAR},
+      LEAD_DEPT = #{leadDept,jdbcType=VARCHAR},
+      LINK_TEL = #{linkTel,jdbcType=VARCHAR},
+      MATERIAL_INFO = #{materialInfo,jdbcType=VARCHAR},
+      OUT_FLOW_DESC = #{outFlowDesc,jdbcType=VARCHAR},
+      PROMISE_DAY = #{promiseDay,jdbcType=DECIMAL},
+      QA_INFO = #{qaInfo,jdbcType=VARCHAR},
+      QL_KIND = #{qlKind,jdbcType=VARCHAR},
+      QL_NAME = #{qlName,jdbcType=VARCHAR},
+      RELATED = #{related,jdbcType=VARCHAR},
+      SHIXIANGSCTYPE = #{shixiangsctype,jdbcType=VARCHAR},
+      SUPERVISE_TEL = #{superviseTel,jdbcType=VARCHAR},
+      SERVICE_DAY = #{serviceDay,jdbcType=VARCHAR},
+      SERVICE_MODE = #{serviceMode,jdbcType=VARCHAR},
+      XINGZHENXDRXY = #{xingzhenxdrxy,jdbcType=VARCHAR},
+      HOT = #{hot,jdbcType=DECIMAL},
+      PARTICLES = #{particles,jdbcType=DECIMAL},
+      TONGID = #{tongid,jdbcType=DECIMAL},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where  QL_FULL_ID = #{qlFullId,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    QL_FULL_ID,
+    QL_NAME,
+    BJTYPE,
+    CONTENT_INVOLVE,
+    APPLICABLE_OBJECT,
+    QL_KIND,
+    ITEMSOURCE,
+    ACP_INSTITUTION,
+    DEC_INSTITUTION,
+    ACCEPT_ADDRESS_INFO,
+    LEAD_DEPT,
+    SHIXIANGSCTYPE,
+    APPLY_TYPE,
+    APPLY_TYPE_TEL,
+    LINK_TEL,
+    SUPERVISE_TEL,
+    BANJIAN_FINISHFILES,
+    APPLYERMIN_COUNT,
+    PROMISE_DAY,
+    ANTICIPATE_DAY,
+    HOT,
+    PARTICLES
+    from QLT_QLSX
+    <trim prefix="where" suffixOverrides="and">
+      <if test="qlName!=null and qlName !=''">
+        QL_NAME like '%'||#{qlName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="contentInvolve!=null and contentInvolve!='' ">
+        CONTENT_INVOLVE  like '%'||#{contentInvolve,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="hot!=null and hot !='' ">
+        HOT  = #{hot,jdbcType=DECIMAL} and
+      </if>
+      <if test="particles!=null and particles !='' ">
+        PARTICLES = #{particles,jdbcType=DECIMAL} and
+      </if>
+    </trim>
+    order by HOT desc
+  </select>
+
+
+  <select id="selectCount" resultType="int">
+    select count(1) from QLT_QLSX
+  </select>
+
+
+  <select id="selectByHot" resultMap="BaseResultMap">
+    select
+    QL_FULL_ID,
+    QL_NAME
+    from QLT_QLSX
+    where HOT = 1
+  </select>
+
+</mapper>

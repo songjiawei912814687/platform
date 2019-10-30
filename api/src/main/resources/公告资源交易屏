@@ -1,0 +1,6 @@
+BuildCallService：建筑工程招标service
+BuildWinService：建设工程中标公告接口设计
+SmallProjectResultService：获取小额工程成交结果公示接口设计
+SmallProjectTrans：获取小额工程交易公告接口设计
+Lighthouse:曝光台
+NoticeBoard：公示栏

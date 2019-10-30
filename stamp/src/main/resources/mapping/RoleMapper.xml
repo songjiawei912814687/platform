@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stamp.mapper.mybatis.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.stamp.domain.output.RoleOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="DEFAULT_PERMISSIONS" jdbcType="DECIMAL" property="defaultPermissions" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME, DEFAULT_PERMISSIONS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ROLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    select
+    <include refid="Base_Column_List"/>
+    from role
+    where CREATED_USER_ID = #{createdUserId,jdbcType=INTEGER}
+    <trim prefix="and" suffixOverrides="and">
+      <if test="name !=null">name like '%'||#{name,jdbcType=VARCHAR}||'%' and</if>
+    </trim>
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    select
+    <include refid="Base_Column_List"/>
+    from role
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ROLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.stamp.model.Role">
+    insert into ROLE (ID, CREATED_DATE_TIME, CREATED_USER_ID,
+      CREATED_USER_NAME, DESCRIPTION, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME,
+      DEFAULT_PERMISSIONS)
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL},
+      #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{defaultPermissions,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.stamp.model.Role">
+    insert into ROLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="defaultPermissions != null">
+        DEFAULT_PERMISSIONS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultPermissions != null">
+        #{defaultPermissions,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.stamp.model.Role">
+    update ROLE
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultPermissions != null">
+        DEFAULT_PERMISSIONS = #{defaultPermissions,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.stamp.model.Role">
+    update ROLE
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      DEFAULT_PERMISSIONS = #{defaultPermissions,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    r.ID,  r.DESCRIPTION,  r.NAME, r.DEFAULT_PERMISSIONS
+    from role r
+    inner join user_role ur on ur.role_id = r.id
+    and ur.user_id = #{userId,jdbcType=DECIMAL}
+    where 1= 1
+    <if test="createdUserId!=null and createdUserId!=''">and r.CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL}</if>
+  </select>
+
+  <select id="findByUserIdNotIn" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    r.ID,  r.DESCRIPTION,  r.NAME, r.DEFAULT_PERMISSIONS
+    from role r
+    where r.CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL}
+    AND r.id not in (
+	  SELECT
+	    	r.id
+	  FROM
+		ROLE r
+	  INNER JOIN user_role ur ON ur.role_id = r. ID
+	  AND ur.user_id = #{userId,jdbcType=DECIMAL}
+	)
+  </select>
+</mapper>

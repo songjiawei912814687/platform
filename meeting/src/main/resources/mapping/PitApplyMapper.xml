@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meeting.mapper.mybatis.PitApplyMapper">
+  <resultMap id="BaseResultMap" type="com.meeting.domain.output.PitApplyOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="APPOINTMENT_DATE" jdbcType="TIMESTAMP" property="appointmentDate" />
+    <result column="ATTENDANTS" jdbcType="VARCHAR" property="attendants" />
+    <result column="ATTENDANTS_NAME" jdbcType="VARCHAR" property="attendantsName" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="EMPLOYEES_ID" jdbcType="DECIMAL" property="employeesId" />
+    <result column="END_DATE_TIME" jdbcType="DECIMAL" property="endDateTime" />
+    <result column="HOST_UNIT" jdbcType="VARCHAR" property="hostUnit" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MEETING_ROOM_ID" jdbcType="DECIMAL" property="meetingRoomId" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="START_DATE_TIME" jdbcType="DECIMAL" property="startDateTime" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="THEME" jdbcType="VARCHAR" property="theme" />
+    <result column="roomName" jdbcType="VARCHAR" property="roomName" />
+    <result column="organizationName" jdbcType="VARCHAR" property="organizationName" />
+    <result column="employeesName" jdbcType="VARCHAR" property="employeesName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, APPOINTMENT_DATE, ATTENDANTS, ATTENDANTS_NAME, CREATED_DATE_TIME,
+    CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION, EMPLOYEES_ID, END_DATE_TIME, HOST_UNIT,
+    LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MEETING_ROOM_ID,
+    ORGANIZATION_ID, START_DATE_TIME, STATE, THEME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    meetingApply.id,
+    meetingApply.amputated,
+    meetingApply.attendants,
+    meetingApply.created_date_time,
+    meetingApply.created_user_name,
+    meetingApply.created_user_id,
+    meetingApply.theme,
+    meetingApply.meeting_room_id,
+    meetingApply.end_date_time,
+    meetingApply.start_date_time,
+    meetingApply.host_unit,
+    meetingApply.description,
+    meetingApply.state,
+    meetingApply.APPOINTMENT_DATE,
+    meetingApply.attendants_name,
+    meetingApply.last_update_user_Id,
+    meetingApply.last_update_user_Name,
+    meetingApply.last_update_date_time,
+    meetingApply.organization_id,
+    meetingApply.employees_id,
+    meetingRoom.name as roomName,
+    organization.name as organizationName,
+    emplyees.name as employeesName
+    FROM
+    PIT_APPLY meetingApply
+    left join EMPLOYEES emplyees on emplyees.id=meetingApply.employees_id
+    left join ORGANIZATION organization on organization.id=meetingApply.organization_id
+    left join PIT meetingRoom on meetingRoom.id =meetingApply.meeting_room_id
+    WHERE meetingApply.AMPUTATED = 0
+    and meetingApply.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectByRoomId" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    distinct
+    meetingApply.id,
+    meetingApply.amputated,
+    meetingApply.attendants,
+    meetingApply.theme,
+    meetingApply.meeting_room_id,
+    meetingApply.end_date_time,
+    meetingApply.start_date_time,
+    meetingApply.host_unit,
+    meetingApply.description,
+    meetingApply.state,
+    meetingApply.APPOINTMENT_DATE,
+    meetingApply.attendants_name,
+    meetingApply.organization_id,
+    meetingApply.employees_id,
+    meetingRoom.name as roomName,
+    organization.name as organizationName,
+    emplyees.name as employeesName
+    FROM
+    PIT_APPLY meetingApply
+    left join EMPLOYEES emplyees on emplyees.id=meetingApply.employees_id
+    left join ORGANIZATION organization on organization.id=meetingApply.organization_id
+    left join PIT meetingRoom on meetingRoom.id =meetingApply.meeting_room_id
+    WHERE meetingApply.AMPUTATED = 0 and meetingApply.state!=2
+    and to_char(meetingApply.APPOINTMENT_DATE, 'yyyy-mm-dd')= #{date}
+    and meetingApply.meeting_room_id = #{meetingRoomId}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    meetingApply.id,
+    meetingApply.amputated,
+    meetingApply.attendants,
+    meetingApply.created_date_time,
+    meetingApply.created_user_name,
+    meetingApply.created_user_id,
+    meetingApply.theme,
+    meetingApply.meeting_room_id,
+    meetingApply.end_date_time,
+    meetingApply.start_date_time,
+    meetingApply.host_unit,
+    meetingApply.description,
+    meetingApply.state,
+    meetingApply.APPOINTMENT_DATE,
+    meetingApply.attendants_name,
+    meetingApply.last_update_user_Id,
+    meetingApply.last_update_user_Name,
+    meetingApply.last_update_date_time,
+    meetingApply.organization_id,
+    meetingApply.employees_id,
+    meetingRoom.name as roomName,
+    organization.name as organizationName,
+    emplyees.name as employeesName
+    FROM
+    PIT_APPLY meetingApply
+    left join EMPLOYEES emplyees on emplyees.id=meetingApply.employees_id
+    left join ORGANIZATION organization on organization.id=meetingApply.organization_id
+    left join PIT meetingRoom on meetingRoom.id =meetingApply.meeting_room_id
+    WHERE meetingApply.AMPUTATED = 0 and meetingApply.state!=2
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="date!=null and date !='' "> to_char(meetingApply.APPOINTMENT_DATE, 'yyyy-mm-dd')= #{date}  and </if>
+    </trim>
+  </select>
+</mapper>

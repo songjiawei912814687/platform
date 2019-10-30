@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.mapper.mybatis.MessageGroupEmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.message.domain.output.MessageGroupEmployeeOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="GROUP_ID" jdbcType="DECIMAL" property="groupId" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeesNo"/>
+  </resultMap>
+  <resultMap id="EmployeesMap" type="com.message.domain.output.EmployeesOutput">
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="TEL" jdbcType="VARCHAR" property="tel" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId"/>
+    <result column="EMPLOYEE_NAME" jdbcType="VARCHAR" property="employeeName"/>
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, EMPLOYEE_ID, EMPLOYEE_NAME,
+    EMPLOYEE_PHONE, GROUP_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MESSAGE_GROUP_EMPLOYEE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from MESSAGE_GROUP_EMPLOYEE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.message.model.MessageGroupEmployee">
+    insert into MESSAGE_GROUP_EMPLOYEE (ID, EMPLOYEE_ID, EMPLOYEE_NAME,
+      EMPLOYEE_PHONE, GROUP_ID)
+    values (#{id,jdbcType=DECIMAL}, #{employeeId,jdbcType=DECIMAL}, #{employeeName,jdbcType=VARCHAR},
+      #{employeePhone,jdbcType=VARCHAR}, #{groupId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.model.MessageGroupEmployee">
+    insert into MESSAGE_GROUP_EMPLOYEE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="employeeName != null">
+        EMPLOYEE_NAME,
+      </if>
+      <if test="employeePhone != null">
+        EMPLOYEE_PHONE,
+      </if>
+      <if test="groupId != null">
+        GROUP_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeePhone != null">
+        #{employeePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        #{groupId,jdbcType=DECIMAL},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.model.MessageGroupEmployee">
+    update MESSAGE_GROUP_EMPLOYEE
+    <set>
+
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="employeeName != null">
+        EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeePhone != null">
+        EMPLOYEE_PHONE = #{employeePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null">
+        GROUP_ID = #{groupId,jdbcType=DECIMAL},
+      </if>
+
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.model.MessageGroupEmployee">
+    update MESSAGE_GROUP_EMPLOYEE
+    set
+      EMPLOYEE_NAME = #{employeeName,jdbcType=VARCHAR},
+      EMPLOYEE_PHONE = #{employeePhone,jdbcType=VARCHAR},
+      GROUP_ID = #{groupId,jdbcType=DECIMAL},
+
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <!--查询不分页-->
+  <select id="selectEmployees" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    m.ID,
+    m.NAME AS groupName,
+    m.DESCRIPTION,
+    m.STATE,
+    m.DISPLAY_ORDER,
+    m.LAST_UPDATE_DATE_TIME,
+    m.LAST_UPDATE_USER_NAME,
+    e.NAME AS employeeName,
+    e.EMPLOYEE_NO,
+    e.PHONE_NUMBER,
+    e.ORGANIZATION_ID,
+    g.EMPLOYEE_NAME,
+    g.EMPLOYEE_ID,
+    g.EMPLOYEE_PHONE
+    FROM
+    MESSAGE_GROUP m
+    LEFT JOIN MESSAGE_GROUP_EMPLOYEE g ON m.ID = g.GROUP_ID
+    LEFT JOIN EMPLOYEES e ON e.ID = g.EMPLOYEE_ID
+    where m.AMPUTATED=0
+    ORDER BY m.LAST_UPDATE_DATE_TIME DESC
+  </select>
+  <!--ZW-->
+  <select id="selectByEmployeesId" parameterType="int" resultMap="EmployeesMap">
+    select
+    e.EMPLOYEE_NO as EMPLOYEE_NO,
+    e.ID as EMPLOYEE_ID,
+    e.NAME as  EMPLOYEE_NAME,
+    e.ORGANIZATION_ID as ORGANIZATION_ID,
+    e.PHONE_NUMBER as TEL
+    from EMPLOYEES e
+    where e.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectCountByEmpIdAndGroupId" parameterType="map" resultType="int">
+    select count(1) from MESSAGE_GROUP_EMPLOYEE
+    where EMPLOYEE_ID = #{empId,jdbcType=DECIMAL} and GROUP_ID=#{messageGroupId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteBygroupId" parameterType="java.lang.Integer">
+    delete
+
+    from
+      MESSAGE_GROUP_EMPLOYEE m
+    where
+      m.GROUP_ID = #{groupId,jdbcType=DECIMAL}
+  </delete>
+
+  <select id="selectByGroupId" parameterType="integer" resultMap="BaseResultMap">
+    SELECT
+    g.id,
+    e.NAME as employeesName,
+    g.EMPLOYEE_ID,
+    e.PHONE_NUMBER as phoneNumber,
+    e.EMPLOYEE_NO as EMPLOYEE_NO,
+    o.NAME  as organizationName,
+    o.ID as organizationId,
+    g.GROUP_ID
+    FROM
+    MESSAGE_GROUP_EMPLOYEE g
+    left join EMPLOYEES e
+    on e.ID = g.EMPLOYEE_ID and e.AMPUTATED = 0
+    left join ORGANIZATION o
+    on o.id = e.ORGANIZATION_ID
+    where g.GROUP_ID =#{groupId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectByPageData" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    SELECT
+    g.id,
+    e.NAME as employeesName,
+    g.EMPLOYEE_ID,
+    e.PHONE_NUMBER as phoneNumber,
+    e.EMPLOYEE_NO as EMPLOYEE_NO,
+    o.NAME  as organizationName,
+    o.ID as organizationId,
+    g.GROUP_ID
+    FROM
+    MESSAGE_GROUP_EMPLOYEE g
+    left join EMPLOYEES e
+    on e.ID = g.EMPLOYEE_ID and e.AMPUTATED = 0
+    left join ORGANIZATION o
+    on o.id = e.ORGANIZATION_ID
+    where g.GROUP_ID =#{messageGroupId,jdbcType=DECIMAL}
+    <trim prefix="and" suffixOverrides="and">
+      <if test="employeesNo!=null and employeesNo!=''">
+        e.EMPLOYEE_NO like '%'||#{employeesNo,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="employeesName!=null and employeesName!=''">
+        e.NAME like '%'||#{employeesName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="phone!=null and phone!=''">
+        e.PHONE_NUMBER like '%'||#{phone,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="organizationId!=null and organizationId!=''">
+        CONCAT(O.PATH ,',') like '%'||#{organizationId}||',%'and
+      </if>
+    </trim>
+  </select>
+
+  <delete id="deleteByGroupId" parameterType="java.lang.Integer">
+    delete from MESSAGE_GROUP_EMPLOYEE
+    where GROUP_ID = #{groupId,jdbcType=DECIMAL}
+  </delete>
+
+  <select id="selectByEmpId" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from MESSAGE_GROUP_EMPLOYEE
+    where GROUP_ID =#{groupId,jdbcType=DECIMAL} and EMPLOYEE_ID = #{empId,jdbcType=DECIMAL}
+  </select>
+
+</mapper>

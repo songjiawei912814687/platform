@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meeting.mapper.mybatis.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.meeting.domain.output.UsersOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="IS_ACCOUNT_NON_EXPIRED" jdbcType="DECIMAL" property="isAccountNonExpired" />
+    <result column="IS_ACCOUNT_NON_LOCKED" jdbcType="DECIMAL" property="isAccountNonLocked" />
+    <result column="IS_CREDENTIALS_NON_EXPIRED" jdbcType="DECIMAL" property="isCredentialsNonExpired" />
+    <result column="IS_ENABLED" jdbcType="DECIMAL" property="isEnabled" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MEMBERSHIP_ORGANIZATION_ID" jdbcType="DECIMAL" property="membershipOrganizationId" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="USER_TYPE" jdbcType="DECIMAL" property="userType" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="EMPLOYEES_NAME" jdbcType="DECIMAL" property="employeesName" />
+    <result column="ORGANIZATION_NAME" jdbcType="DECIMAL" property="organizationName" />
+    <result column="JOBS_NAME" jdbcType="VARCHAR" property="jobsName" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="job_id" jdbcType="DECIMAL" property="jobId" />
+    <result column="organ_id" jdbcType="DECIMAL" property="organId" />
+    <result column="organ_name" jdbcType="VARCHAR" property="organName" />
+    <result column="administrator_level" jdbcType="DECIMAL" property="administratorLevel" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, EMPLOYEE_ID, IS_ACCOUNT_NON_EXPIRED,
+    IS_ACCOUNT_NON_LOCKED, IS_CREDENTIALS_NON_EXPIRED, IS_ENABLED, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MEMBERSHIP_ORGANIZATION_ID, PASSWORD,administrator_level,
+    USER_TYPE, u.USERNAME, ORGANIZATION_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+   select
+    u.ID, u.CREATED_DATE_TIME, u.CREATED_USER_ID, u.CREATED_USER_NAME, u.EMPLOYEE_ID, u.IS_ACCOUNT_NON_EXPIRED,
+    u.IS_ACCOUNT_NON_LOCKED, u.IS_CREDENTIALS_NON_EXPIRED, u.IS_ENABLED, u.LAST_UPDATE_DATE_TIME,
+    u.LAST_UPDATE_USER_ID, u.LAST_UPDATE_USER_NAME, u.MEMBERSHIP_ORGANIZATION_ID, u.PASSWORD,
+    u.USER_TYPE, USERNAME, u.ORGANIZATION_ID,e.name as EMPLOYEES_NAME,o.name as ORGANIZATION_NAME,u.administrator_level
+    from USERS u
+    left join EMPLOYEES e on e.ID = u.EMPLOYEE_ID
+    and e.AMPUTATED = 0
+    left join ORGANIZATION o on o.ID = u.ORGANIZATION_ID
+    and o.AMPUTATED = 0
+    where u.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.meeting.model.Users">
+    insert into USERS (ID, CREATED_DATE_TIME, CREATED_USER_ID,
+      CREATED_USER_NAME, EMPLOYEE_ID, IS_ACCOUNT_NON_EXPIRED,
+      IS_ACCOUNT_NON_LOCKED, IS_CREDENTIALS_NON_EXPIRED,
+      IS_ENABLED, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, MEMBERSHIP_ORGANIZATION_ID,
+      PASSWORD, USER_TYPE, USERNAME,
+      ORGANIZATION_ID)
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL},
+      #{createdUserName,jdbcType=VARCHAR}, #{employeeId,jdbcType=DECIMAL}, #{isAccountNonExpired,jdbcType=DECIMAL},
+      #{isAccountNonLocked,jdbcType=DECIMAL}, #{isCredentialsNonExpired,jdbcType=DECIMAL},
+      #{isEnabled,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{membershipOrganizationId,jdbcType=DECIMAL},
+      #{password,jdbcType=VARCHAR}, #{userType,jdbcType=DECIMAL}, #{username,jdbcType=VARCHAR},
+      #{organizationId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.meeting.model.Users">
+    insert into USERS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID,
+      </if>
+      <if test="isAccountNonExpired != null">
+        IS_ACCOUNT_NON_EXPIRED,
+      </if>
+      <if test="isAccountNonLocked != null">
+        IS_ACCOUNT_NON_LOCKED,
+      </if>
+      <if test="isCredentialsNonExpired != null">
+        IS_CREDENTIALS_NON_EXPIRED,
+      </if>
+      <if test="isEnabled != null">
+        IS_ENABLED,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="membershipOrganizationId != null">
+        MEMBERSHIP_ORGANIZATION_ID,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAccountNonExpired != null">
+        #{isAccountNonExpired,jdbcType=DECIMAL},
+      </if>
+      <if test="isAccountNonLocked != null">
+        #{isAccountNonLocked,jdbcType=DECIMAL},
+      </if>
+      <if test="isCredentialsNonExpired != null">
+        #{isCredentialsNonExpired,jdbcType=DECIMAL},
+      </if>
+      <if test="isEnabled != null">
+        #{isEnabled,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="membershipOrganizationId != null">
+        #{membershipOrganizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=DECIMAL},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        #{organizationId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.meeting.model.Users">
+    update USERS
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeId != null">
+        EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      </if>
+      <if test="isAccountNonExpired != null">
+        IS_ACCOUNT_NON_EXPIRED = #{isAccountNonExpired,jdbcType=DECIMAL},
+      </if>
+      <if test="isAccountNonLocked != null">
+        IS_ACCOUNT_NON_LOCKED = #{isAccountNonLocked,jdbcType=DECIMAL},
+      </if>
+      <if test="isCredentialsNonExpired != null">
+        IS_CREDENTIALS_NON_EXPIRED = #{isCredentialsNonExpired,jdbcType=DECIMAL},
+      </if>
+      <if test="isEnabled != null">
+        IS_ENABLED = #{isEnabled,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="membershipOrganizationId != null">
+        MEMBERSHIP_ORGANIZATION_ID = #{membershipOrganizationId,jdbcType=DECIMAL},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=DECIMAL},
+      </if>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationId != null">
+        ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.meeting.model.Users">
+    update USERS
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL},
+      IS_ACCOUNT_NON_EXPIRED = #{isAccountNonExpired,jdbcType=DECIMAL},
+      IS_ACCOUNT_NON_LOCKED = #{isAccountNonLocked,jdbcType=DECIMAL},
+      IS_CREDENTIALS_NON_EXPIRED = #{isCredentialsNonExpired,jdbcType=DECIMAL},
+      IS_ENABLED = #{isEnabled,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MEMBERSHIP_ORGANIZATION_ID = #{membershipOrganizationId,jdbcType=DECIMAL},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=DECIMAL},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <!--查询所有-->
+  <select id="selectAll" parameterType="com.meeting.model.Users">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM USERS users
+    WHERE
+    USERS.AMPUTATED=0
+    ORDER BY users.LAST_UPDATE_DATE_TIME DESC
+  </select>
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    users.ID,
+    users.CREATED_DATE_TIME,
+    users.CREATED_USER_ID,
+    users.CREATED_USER_NAME,
+    users.EMPLOYEE_ID,
+    users.LAST_UPDATE_DATE_TIME,
+    users.LAST_UPDATE_USER_ID,
+    users.LAST_UPDATE_USER_NAME,
+    users.MEMBERSHIP_ORGANIZATION_ID,
+    users.USER_TYPE,
+    users.USERNAME,
+    users.ORGANIZATION_ID,
+    employees.NAME AS EMPLOYEES_NAME,
+    organization.NAME AS ORGANIZATION_NAME
+    FROM
+    USERS users
+    LEFT JOIN EMPLOYEES employees ON employees.ID = users.EMPLOYEE_ID
+    AND employees.AMPUTATED = 0
+    LEFT JOIN ORGANIZATION organization ON organization.ID = users.ORGANIZATION_ID
+    AND organization.AMPUTATED = 0
+    where is_enabled = 0
+    <trim prefix="and" suffixOverrides="and">
+      <if test="username!=null and username !='' ">users.USERNAME like '%'||#{username,jdbcType=VARCHAR}||'%'  and </if>
+      <if test="name!=null and name !='' ">employees.name like '%'||#{name,jdbcType=VARCHAR}||'%'  and </if>
+      <if test="userType!=null">users.user_type = #{userType,jdbcType=INTEGER}  and </if>
+
+    </trim>
+    ORDER BY users.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+  <select id="findByRoleId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    u.ID,
+    u.EMPLOYEE_ID,
+    u.MEMBERSHIP_ORGANIZATION_ID,
+    u.USER_TYPE,
+    u.USERNAME,
+    u.ORGANIZATION_ID,
+    e.NAME AS EMPLOYEES_NAME,
+    o.NAME AS ORGANIZATION_NAME
+    from users u
+    inner join user_role ur on ur.user_id = u.id
+    and u.is_enabled = 0 and ur.role_id = #{roleId,jdbcType=INTEGER}
+    left join EMPLOYEES e on e.ID = u.EMPLOYEE_ID
+    and e.AMPUTATED = 0
+    left join ORGANIZATION o on o.ID = u.ORGANIZATION_ID
+    and o.AMPUTATED = 0
+  </select>
+
+  <select id="findByRoleIdNotIn" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    u.ID,
+    u.EMPLOYEE_ID,
+    u.MEMBERSHIP_ORGANIZATION_ID,
+    u.USER_TYPE,
+    u.USERNAME,
+    u .administrator_level,
+    u.ORGANIZATION_ID,
+    e.NAME AS EMPLOYEES_NAME,
+    o.NAME AS ORGANIZATION_NAME
+    from users u
+    left join user_role ur on ur.user_id = u.id
+    and u.is_enabled = 0
+    left join EMPLOYEES e on e.ID = u.EMPLOYEE_ID
+    and e.AMPUTATED = 0
+    left join ORGANIZATION o on o.ID = u.ORGANIZATION_ID
+    and o.AMPUTATED = 0
+    WHERE ur.role_id != #{roleId,jdbcType=INTEGER} or ur.ROLE_ID is null
+  </select>
+
+
+
+
+  <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+     SELECT
+	U . ID,
+	U .EMPLOYEE_ID,
+	U .IS_ACCOUNT_NON_EXPIRED,
+	U .IS_ACCOUNT_NON_LOCKED,
+	U .IS_CREDENTIALS_NON_EXPIRED,
+	U .IS_ENABLED,
+	U .MEMBERSHIP_ORGANIZATION_ID,
+	U . PASSWORD,
+	U .USER_TYPE,
+	U .USERNAME,
+	U .ORGANIZATION_ID,
+	U .administrator_level,
+	oo. NAME AS organ_name,
+	E . NAME AS EMPLOYEES_NAME,
+	o. ID AS organ_id,
+	o. NAME AS ORGANIZATION_NAME,
+	j. NAME AS JOBS_NAME,
+	E .ICON,
+	j. ID AS job_id
+FROM
+	USERS U
+LEFT JOIN EMPLOYEES E ON E . ID = U .EMPLOYEE_ID
+AND E .AMPUTATED = 0
+LEFT JOIN ORGANIZATION o ON o. ID = E .ORGANIZATION_ID
+AND o.AMPUTATED = 0
+LEFT JOIN ORGANIZATION oo ON oo. ID = U .ORGANIZATION_ID
+AND oo.AMPUTATED = 0
+LEFT JOIN JOBS j ON j. ID = E .JOBS_ID
+AND j.AMPUTATED = 0
+    where u.username = #{userName,jdbcType=VARCHAR}
+  </select>
+
+</mapper>

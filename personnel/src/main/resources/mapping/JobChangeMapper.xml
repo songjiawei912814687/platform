@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personnel.mapper.mybatis.JobChangeMapper">
+  <resultMap id="BaseResultMap" type="com.personnel.domian.output.JobChangeOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="EMPLOYEE_ID" jdbcType="DECIMAL" property="employeeId" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NOW_JOB_ID" jdbcType="DECIMAL" property="nowJobId" />
+    <result column="NOW_JOB_NAME" jdbcType="VARCHAR" property="nowJobName" />
+    <result column="NOW_ORGANIZATION_ID" jdbcType="DECIMAL" property="nowOrganizationId" />
+    <result column="NOW_ORGANIZATION_NAME" jdbcType="VARCHAR" property="nowOrganizationName" />
+    <result column="ORIGINAL_JOB_ID" jdbcType="DECIMAL" property="originalJobId" />
+    <result column="ORIGINAL_JOB_NAME" jdbcType="VARCHAR" property="originalJobName" />
+    <result column="ORIGINAL_ORGANIZATION_ID" jdbcType="DECIMAL" property="originalOrganizationId" />
+    <result column="ORIGINAL_ORGANIZATION_NAME" jdbcType="VARCHAR" property="originalOrganizationName" />
+    <result column="employeesname" jdbcType="VARCHAR" property="employeesname" />
+  </resultMap>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      SELECT
+    jobChange.ID,
+    jobChange.CREATED_DATE_TIME,
+    jobChange.CREATED_USER_ID,
+    jobChange.CREATED_USER_NAME,
+    jobChange.DESCRIPTION,
+    jobChange.EMPLOYEE_ID,
+    jobChange.EMPLOYEE_NO,
+    jobChange.LAST_UPDATE_DATE_TIME,
+    jobChange.LAST_UPDATE_USER_ID,
+    jobChange.LAST_UPDATE_USER_NAME,
+    jobChange.NOW_JOB_ID,
+    jobChange.NOW_JOB_NAME,
+    jobChange.NOW_ORGANIZATION_ID,
+    jobChange.NOW_ORGANIZATION_NAME,
+    jobChange.ORIGINAL_JOB_ID,
+    jobChange.ORIGINAL_JOB_NAME,
+    jobChange.ORIGINAL_ORGANIZATION_ID,
+    jobChange.ORIGINAL_ORGANIZATION_NAME,
+    jobChange.STATE,
+    employees.NAME AS employeesname
+    FROM
+    JOB_CHANGE jobChange
+    LEFT JOIN EMPLOYEES employees ON employees.ID = jobChange.EMPLOYEE_ID
+    AND employees.AMPUTATED = 0
+    where jobChange.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectByEmployeeId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    jobChange.ID,
+    jobChange.CREATED_DATE_TIME,
+    jobChange.CREATED_USER_ID,
+    jobChange.CREATED_USER_NAME,
+    jobChange.DESCRIPTION,
+    jobChange.EMPLOYEE_ID,
+    jobChange.EMPLOYEE_NO,
+    jobChange.LAST_UPDATE_DATE_TIME,
+    jobChange.LAST_UPDATE_USER_ID,
+    jobChange.LAST_UPDATE_USER_NAME,
+    jobChange.NOW_JOB_ID,
+    jobChange.NOW_JOB_NAME,
+    jobChange.NOW_ORGANIZATION_ID,
+    jobChange.NOW_ORGANIZATION_NAME,
+    jobChange.ORIGINAL_JOB_ID,
+    jobChange.ORIGINAL_JOB_NAME,
+    jobChange.ORIGINAL_ORGANIZATION_ID,
+    jobChange.ORIGINAL_ORGANIZATION_NAME,
+    jobChange.STATE
+    FROM
+    JOB_CHANGE jobChange
+    where jobChange.EMPLOYEE_ID = #{employeeId,jdbcType=DECIMAL} AND jobChange.state=0
+  </select>
+  <!--查询所有-->
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    jobChange.ID,
+    jobChange.CREATED_DATE_TIME,
+    jobChange.CREATED_USER_ID,
+    jobChange.CREATED_USER_NAME,
+    jobChange.DESCRIPTION,
+    jobChange.EMPLOYEE_ID,
+    jobChange.EMPLOYEE_NO,
+    jobChange.LAST_UPDATE_DATE_TIME,
+    jobChange.LAST_UPDATE_USER_ID,
+    jobChange.LAST_UPDATE_USER_NAME,
+    jobChange.NOW_JOB_ID,
+    jobChange.NOW_JOB_NAME,
+    jobChange.NOW_ORGANIZATION_ID,
+    jobChange.NOW_ORGANIZATION_NAME,
+    jobChange.ORIGINAL_JOB_ID,
+    jobChange.ORIGINAL_JOB_NAME,
+    jobChange.ORIGINAL_ORGANIZATION_ID,
+    jobChange.STATE,
+    jobChange.ORIGINAL_ORGANIZATION_NAME
+    FROM
+    JOB_CHANGE jobChange
+
+    LEFT JOIN EMPLOYEES employees ON employees.ID = jobChange.EMPLOYEE_ID
+    AND employees.AMPUTATED = 0
+    <trim prefix="where" suffixOverrides="and">
+      <if test="name!=null and name !='' ">employees.NAME like '%'||#{name}||'%' and </if>
+      <if test="employeeNo!=null and employeeNo !='' ">employees.EMPLOYEE_NO like '%'||#{employeeNo}||'%'</if>
+    </trim>
+    ORDER BY jobChange.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    jobChange.ID,
+    jobChange.CREATED_DATE_TIME,
+    jobChange.CREATED_USER_ID,
+    jobChange.CREATED_USER_NAME,
+    jobChange.DESCRIPTION,
+    jobChange.EMPLOYEE_ID,
+    jobChange.EMPLOYEE_NO,
+    jobChange.LAST_UPDATE_DATE_TIME,
+    jobChange.LAST_UPDATE_USER_ID,
+    jobChange.LAST_UPDATE_USER_NAME,
+    jobChange.NOW_JOB_ID,
+    jobChange.NOW_JOB_NAME,
+    jobChange.NOW_ORGANIZATION_ID,
+    jobChange.NOW_ORGANIZATION_NAME,
+    jobChange.ORIGINAL_JOB_ID,
+    jobChange.ORIGINAL_JOB_NAME,
+    jobChange.ORIGINAL_ORGANIZATION_ID,
+    jobChange.ORIGINAL_ORGANIZATION_NAME,
+    jobChange.STATE,
+    employees.NAME AS employeesname
+    FROM
+    JOB_CHANGE jobChange
+    LEFT JOIN EMPLOYEES employees ON employees.ID = jobChange.EMPLOYEE_ID
+    LEFT JOIN ORGANIZATION organization ON jobChange.ORIGINAL_ORGANIZATION_ID = organization.id
+    where 1=1
+    <if test="orgId!=null or employeeId!=null">
+      AND (EXISTS (
+      SELECT
+      ORGANIZATION.ID
+      FROM
+      USER_ROLE
+      INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+      WHERE
+      organization.id = ROLE_ORGAN.ORGAN_ID
+      AND USER_ROLE.USER_ID = #{userId}
+      <if test="orgId!=null">
+        UNION ALL
+        SELECT
+        organ.ID
+        FROM
+        ORGANIZATION organ
+        WHERE
+        (organ.LINKED_ID =#{orgId} or organ.id = #{orgId})
+        AND organization.id = organ.id
+        AND organ.AMPUTATED = 0
+      </if>
+      )
+      <if test="employeeId!=null">
+        or employees.id = #{employeeId}
+      </if>
+      )
+    </if>
+
+      <if test="name!=null and name !='' ">and employees.NAME like '%'||#{name}||'%'</if>
+      <if test="employeeNo!=null and employeeNo !='' ">and employees.EMPLOYEE_NO like '%'||#{employeeNo}||'%'</if>
+
+    ORDER BY jobChange.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+</mapper>

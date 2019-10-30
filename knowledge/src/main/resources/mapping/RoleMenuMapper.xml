@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.knowledge.mapper.mybatis.RoleMenuMapper">
+  <resultMap id="BaseResultMap" type="com.knowledge.domain.output.RoleMenuOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="MENU_ID" jdbcType="DECIMAL" property="menuId" />
+    <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, MENU_ID, ROLE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ROLE_MENU
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ROLE_MENU
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.knowledge.model.RoleMenu">
+    insert into ROLE_MENU (ID, MENU_ID, ROLE_ID
+      )
+    values (#{id,jdbcType=DECIMAL}, #{menuId,jdbcType=DECIMAL}, #{roleId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.knowledge.model.RoleMenu">
+    insert into ROLE_MENU
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="menuId != null">
+        MENU_ID,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=DECIMAL},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.knowledge.model.RoleMenu">
+    update ROLE_MENU
+    <set>
+      <if test="menuId != null">
+        MENU_ID = #{menuId,jdbcType=DECIMAL},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.knowledge.model.RoleMenu">
+    update ROLE_MENU
+    set MENU_ID = #{menuId,jdbcType=DECIMAL},
+      ROLE_ID = #{roleId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <!--查询所有-->
+  <select id="selectAll" parameterType="com.knowledge.model.RoleMenu" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM ROLE_MENU  roleMenu
+    WHERE
+    ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    roleMenu.ID,
+    roleMenu.MENU_ID,
+    roleMenu.ROLE_ID,
+    employees.NAME AS EMPLOYEES_NAME,
+    organization.NAME AS ORGANIZATION_NAME
+    FROM
+    ROLE_MENU roleMenu
+    LEFT JOIN ROLE role ON role.ID = roleMenu.ROLE_ID
+    LEFT JOIN MENU menu ON menu.ID = roleMenu.MENU_ID
+    <!--<trim prefix="where" suffixOverrides="and">-->
+      <!--<if test=" id!=null">roleMenu.IDlike CONCAT('%',#{id},'%' ) and </if>-->
+    <!--</trim>-->
+  </select>
+
+</mapper>

@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.screenData.mapper.mybatis.FeedbackInfoMapper">
+  <resultMap id="BaseResultMap" type="com.screenData.domain.output.FeedbackInfoOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="APPRAISE_STATE" jdbcType="DECIMAL" property="appraiseState"/>
+    <result column="APPRAISE_TIME" jdbcType="VARCHAR" property="appraiseTime"/>
+    <result column="COMPLETE_RATE" jdbcType="DECIMAL" property="completeRate" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="EMPLOYEES_NAME" jdbcType="VARCHAR" property="employeesName"/>
+    <result column="EMPLOYEES_NO" jdbcType="VARCHAR" property="employeesNo"/>
+    <result column="FEEDBACK_TIME" jdbcType="TIMESTAMP" property="feedbackTime" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="MATTERS" jdbcType="VARCHAR" property="matters" />
+    <result column="ORGANIZATION_ID" jdbcType="DECIMAL" property="organizationId" />
+    <result column="ORGANIZATION_NAME" jdbcType="VARCHAR" property="organizationName" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="SATISFACTION" jdbcType="DECIMAL" property="satisfaction"/>
+    <result column="WINDOW_NO" jdbcType="VARCHAR" property="windowNo" />
+    <result column="SEND_STATE" jdbcType="DECIMAL" property="sendState"/>
+    <result column="DEADLINE" jdbcType="VARCHAR" property="deadline"/>
+    <result column="PERSON_NAME" jdbcType="VARCHAR" property="personName"/>
+    <result column="COMPLETE_RATE_NAME" jdbcType="VARCHAR" property="completeRateName"/>
+    <result column="SATISFACTION_NAME" jdbcType="VARCHAR" property="satisfactionName"/>
+    <result column="APPRAISE_STATE_NAME" jdbcType="VARCHAR" property="appraiseStateName"/>
+    <result column="dissatisfactionCount" jdbcType="DECIMAL" property="dissatisfactionCount"/>
+    <result column="RESOURCE_ID" jdbcType="DECIMAL" property="resourceId"/>
+  </resultMap>
+
+  <resultMap id="hotDoResultMap" type="com.screenData.domain.output.HotDoOutput">
+    <result column="QL_FULL_ID" jdbcType="VARCHAR" property="qlFullId" />
+    <result column="QL_NAMES" jdbcType="VARCHAR" property="qlNames" />
+    <result column="COUNT" jdbcType="DECIMAL" property="count"/>
+  </resultMap>
+
+
+  <resultMap id="satisAndComplete" type="com.screenData.domain.output.WindowSatisfactionOutput">
+    <result column="COUNT" jdbcType="DECIMAL" property="count"/>
+    <result column="SATISFACTION_COUNT" jdbcType="DECIMAL"  property="satisfactionCount"/>
+    <result column="RUN_ONCE" jdbcType="DECIMAL" property="runOnce"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, APPRAISE_STATE, APPRAISE_TIME,COMPLETE_RATE,CREATED_DATE_TIME, CREATED_USER_ID,
+    CREATED_USER_NAME,FEEDBACK_TIME, LAST_UPDATE_DATE_TIME,PERSON_NAME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+    MATTERS, ORGANIZATION_Id,ORGANIZATION_NAME, PHONE, SATISFACTION, WINDOW_NO,EMPLOYEES_NAME,EMPLOYEES_NO,
+    RESOURCE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    fi.ID,
+    fi.PERSON_NAME,
+    fi.PHONE,
+    fi.ORGANIZATION_ID,
+    fi.ORGANIZATION_NAME,
+    fi.WINDOW_NO,
+    fi.EMPLOYEES_NO,
+    fi.EMPLOYEES_NAME,
+    fi.MATTERS,
+    fi.FEEDBACK_TIME,
+    fi.APPRAISE_STATE,
+    fi.APPRAISE_TIME,
+    fi.SATISFACTION,
+    fi.COMPLETE_RATE,
+    fi.DEADLINE
+    from FEEDBACK_INFO fi
+    where fi.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from FEEDBACK_INFO
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.screenData.model.FeedbackInfo">
+    insert into FEEDBACK_INFO (ID, AMPUTATED, COMPLETE_RATE,
+      CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+      EMPLOYEES_NAME, FEEDBACK_TIME, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, MATTERS,
+      ORGANIZATION_NAME, PHONE, SATISFACTION,
+      WINDOW_NO)
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{completeRate,jdbcType=VARCHAR},
+      #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR},
+      #{employeesName,jdbcType=VARCHAR}, #{feedbackTime,jdbcType=TIMESTAMP}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{matters,jdbcType=VARCHAR},
+      #{organizationName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{satisfaction,jdbcType=VARCHAR},
+      #{windowNo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.screenData.model.FeedbackInfo">
+    insert into FEEDBACK_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="completeRate != null">
+        COMPLETE_RATE,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="employeesName != null">
+        EMPLOYEES_NAME,
+      </if>
+      <if test="feedbackTime != null">
+        FEEDBACK_TIME,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="matters != null">
+        MATTERS,
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="satisfaction != null">
+        SATISFACTION,
+      </if>
+      <if test="windowNo != null">
+        WINDOW_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="completeRate != null">
+        #{completeRate,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesName != null">
+        #{employeesName,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackTime != null">
+        #{feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="matters != null">
+        #{matters,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null">
+        #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="satisfaction != null">
+        #{satisfaction,jdbcType=VARCHAR},
+      </if>
+      <if test="windowNo != null">
+        #{windowNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.screenData.model.FeedbackInfo">
+    update FEEDBACK_INFO
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="completeRate != null">
+        COMPLETE_RATE = #{completeRate,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="employeesName != null">
+        EMPLOYEES_NAME = #{employeesName,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackTime != null">
+        FEEDBACK_TIME = #{feedbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="matters != null">
+        MATTERS = #{matters,jdbcType=VARCHAR},
+      </if>
+      <if test="organizationName != null">
+        ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="satisfaction != null">
+        SATISFACTION = #{satisfaction,jdbcType=VARCHAR},
+      </if>
+      <if test="windowNo != null">
+        WINDOW_NO = #{windowNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.screenData.model.FeedbackInfo">
+    update FEEDBACK_INFO
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      COMPLETE_RATE = #{completeRate,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      EMPLOYEES_NAME = #{employeesName,jdbcType=VARCHAR},
+      FEEDBACK_TIME = #{feedbackTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      MATTERS = #{matters,jdbcType=VARCHAR},
+      ORGANIZATION_NAME = #{organizationName,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      SATISFACTION = #{satisfaction,jdbcType=VARCHAR},
+      WINDOW_NO = #{windowNo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <!--<select id="selectByFeedbackTime" parameterType="string" resultMap="BaseResultMap">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List"/>-->
+    <!--from FEEDBACK_INFO-->
+    <!--where to_char(FEEDBACK_TIME,'yyyy-MM-dd') = #{feedbackTime,jdbcType=VARCHAR}-->
+  <!--</select>-->
+
+  <select id="selectByFeedbackTime" parameterType="string" resultType="integer">
+    select
+    count(FEEDBACK_TIME)
+    from FEEDBACK_INFO
+    where to_char(FEEDBACK_TIME,'yyyy-MM-dd') = #{feedbackTime,jdbcType=VARCHAR}
+    order by FEEDBACK_TIME
+  </select>
+
+  <select id="selectPathById" parameterType="int" resultType="string">
+    select path from ORGANIZATION where id= #{id,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectHotDo" resultMap="hotDoResultMap">
+  SELECT count ,s.MATTERS as QL_NAMES
+    FROM
+    (SELECT count(fi.MATTERS) as count ,fi.MATTERS from FEEDBACK_INFO fi
+    GROUP BY MATTERS
+    ORDER BY count(MATTERS) desc)s
+    where ROWNUM&lt;7
+  </select>
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    fi.ID,
+    fi.PERSON_NAME,
+    fi.PHONE,
+    fi.ORGANIZATION_ID,
+    fi.ORGANIZATION_NAME,
+    fi.EMPLOYEES_NO,
+    fi.FEEDBACK_TIME,
+    fi.APPRAISE_STATE,
+    fi.SATISFACTION,
+    fi.COMPLETE_RATE,
+    emp.NAME as EMPLOYEES_NAME
+    from FEEDBACK_INFO fi
+    left join ORGANIZATION organ
+    on fi.ORGANIZATION_ID = organ.ID and organ.AMPUTATED=0
+    left join EMPLOYEES emp
+    on emp.EMPLOYEE_NO=fi.EMPLOYEES_NO and emp.AMPUTATED=0
+    <trim prefix="where" suffixOverrides="and">
+      <if test="employeesName!=null and employeesName !='' ">
+        fi.PERSON_NAME like '%'||#{personName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="path !=null and path !=''">
+        CONCAT(organ.PATH,',') like '%'||#{path,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="employeesNo!=null and employeesNo!=''">
+         fi.EMPLOYEES_NO like '%'||#{employeesNo,jdbcType=VARCHAR}||'%' and
+      </if>
+         fi.AMPUTATED=0
+    </trim>
+  </select>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    fi.ID,
+    fi.PERSON_NAME,
+    fi.PHONE,
+    fi.ORGANIZATION_ID,
+    fi.ORGANIZATION_NAME,
+    fi.EMPLOYEES_NO,
+    fi.FEEDBACK_TIME,
+    fi.APPRAISE_STATE,
+    fi.SATISFACTION,
+    fi.COMPLETE_RATE,
+    emp.NAME as EMPLOYEES_NAME
+    from FEEDBACK_INFO fi
+    left join ORGANIZATION organ
+    on fi.ORGANIZATION_ID = organ.ID and organ.AMPUTATED=0
+    left join EMPLOYEES emp
+    on emp.EMPLOYEE_NO=fi.EMPLOYEES_NO and emp.AMPUTATED=0
+    <trim prefix="where" suffixOverrides="and">
+      <if test="employeesName!=null and employeesName !='' ">
+        fi.PERSON_NAME like '%'||#{personName,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="path !=null and path !=''">
+        CONCAT(organ.PATH,',') like '%'||#{path,jdbcType=VARCHAR}||'%' and
+      </if>
+      <if test="employeesNo!=null and employeesNo!=''">
+        fi.EMPLOYEES_NO like '%'||#{employeesNo,jdbcType=VARCHAR}||'%' and
+      </if>
+
+      <if test="time!=null and time!=''">
+        to_char(fi.FEEDBACK_TIME,'yyyy-MM-dd') BETWEEN #{time,jdbcType=VARCHAR}
+        and #{time,jdbcType=VARCHAR} and
+      </if>
+      fi.AMPUTATED=0
+    </trim>
+  </select>
+
+  <select id="selectByWindowNoAndOrgNo" parameterType="map" resultMap="BaseResultMap">
+  SELECT
+   <include refid="Base_Column_List"/>
+   from FEEDBACK_INFO  fi
+  LEFT JOIN EVALUATION_RESULTS er
+  ON fi.PHONE = er.APPRAISER_MOBILE
+  where  ER.COUNTER_CODE = #{windowNo,jdbcType=VARCHAR} AND O.ORGANIZATION_NO = #{organizationNo,jdbcType=VARCHAR}
+    ORDER BY fi.FEEDBACK_TIME desc
+  </select>
+
+  <!--满意数-->
+  <select id="selectByWindowNoAndDate1"  resultType="int">
+    select count( 1 ) as SatisfactionNumber from FEEDBACK_INFO fi
+    where fi.WINDOW_NO = #{windowNo,jdbcType=VARCHAR}
+        and fi.SATISFACTION = 0
+        and fi.APPRAISE_STATE = 1
+        and  TO_CHAR(TO_DATE(fi.APPRAISE_TIME,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd') = #{date,jdbcType=VARCHAR}
+  </select>
+
+  <!--跑一次-->
+  <select id="selectByWindowNoAndDate"  resultType="int">
+    select count( 1 ) from FEEDBACK_INFO fi
+    where fi.WINDOW_NO = #{windowNo,jdbcType=VARCHAR}
+        and fi.COMPLETE_RATE = 1
+        and fi.APPRAISE_STATE = 1
+        and  TO_CHAR(TO_DATE(fi.APPRAISE_TIME,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd') = #{date,jdbcType=VARCHAR}
+  </select>
+
+  <!--总数-->
+  <select id="selectCount" resultType="int">
+    select count( 1 ) from FEEDBACK_INFO fi
+    where fi.WINDOW_NO = #{windowNo,jdbcType=VARCHAR}
+    and fi.APPRAISE_STATE = 1
+    and  TO_CHAR(TO_DATE(fi.APPRAISE_TIME,'yyyy-mm-dd hh24:mi:ss'),'yyyy-mm-dd') = #{date,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByAppraiseTime"  resultMap="BaseResultMap">
+    select
+    fi.ID,
+    fi.PERSON_NAME,
+    fi.PHONE,
+    fi.ORGANIZATION_ID,
+    fi.ORGANIZATION_NAME,
+    fi.WINDOW_NO,
+    fi.EMPLOYEES_NO,
+    fi.EMPLOYEES_NAME,
+    fi.MATTERS,
+    fi.FEEDBACK_TIME,
+    fi.APPRAISE_STATE,
+    fi.APPRAISE_TIME,
+    fi.SATISFACTION,
+    fi.COMPLETE_RATE
+    from FEEDBACK_INFO fi
+    where fi.APPRAISE_TIME is null and to_char((sysdate-2),'yyyy-MM-dd HH24:mi:ss') &lt;= to_char(fi.FEEDBACK_TIME,'yyyy-MM-dd HH24:mi:ss')
+  </select>
+
+
+
+
+
+                                                              <!--窗口满意率统计-->
+
+  <!--窗口满意数-->
+  <select id="selectSatisfactoryNumbers" resultType="int">
+    select count(*) from FEEDBACK_INFO fi
+    <where>
+      <if test="organizationName!=null and organizationName !='' ">
+        and fi.ORGANIZATION_NAME like '%'||#{organizationName,jdbcType=VARCHAR}||'%'
+      </if>
+      and fi.SATISFACTION = 0
+    </where>
+  </select>
+  <!--窗口不满意数-->
+  <select id="selectUnsatisfactoryNumbers" resultType="int">
+    select count(*) from FEEDBACK_INFO fi
+    <where>
+      <if test="organizationName!=null and organizationName !='' ">
+        and fi.ORGANIZATION_NAME like '%'||#{organizationName,jdbcType=VARCHAR}||'%'
+      </if>
+      and fi.SATISFACTION = 1
+    </where>
+  </select>
+  <!--窗口跑一次-->
+  <select id="selectRunOneTimes" resultType="int">
+    select count(*) from FEEDBACK_INFO fi
+    <where>
+    <if test="organizationName!=null and organizationName !='' ">
+      and fi.ORGANIZATION_NAME like '%'||#{organizationName,jdbcType=VARCHAR}||'%'
+    </if>
+    and fi.COMPLETE_RATE = 1
+    </where>
+  </select>
+  <!--窗口跑多次-->
+  <select id="selectRunManyTimes" resultType="int">
+    select count(*) from FEEDBACK_INFO fi
+    <where>
+      <if test="organizationName!=null and organizationName !='' ">
+        and fi.ORGANIZATION_NAME like '%'||#{organizationName,jdbcType=VARCHAR}||'%'
+      </if>
+      and fi.COMPLETE_RATE = 2
+    </where>
+  </select>
+  <!--窗口总数-->
+  <select id="selectSum" resultType="int">
+    select count(*) from FEEDBACK_INFO fi
+    <where>
+            <if test="organizationName!=null and organizationName !=''">
+              and fi.ORGANIZATION_NAME like '%'||#{organizationName,jdbcType=VARCHAR}||'%'
+            </if>
+    </where>
+  </select>
+
+
+  <select id="selectByOrganizationId" parameterType="integer" resultType="integer">
+    SELECT
+    count(1)
+    FROM
+    FEEDBACK_INFO
+    WHERE
+    AMPUTATED = 0
+    AND APPRAISE_STATE = 1
+    AND TO_CHAR ( sysdate, 'yyyy-mm' ) = TO_CHAR ( FEEDBACK_TIME, 'yyyy-mm' )
+    AND ORGANIZATION_ID=#{organizationId,jdbcType=DECIMAL}
+  </select>
+
+
+  <select id="selectDissatisfaction" parameterType="integer" resultType="integer">
+    SELECT
+	count( 1 )
+    FROM
+	FEEDBACK_INFO
+    WHERE
+	AMPUTATED = 0
+	AND APPRAISE_STATE = 1
+	AND SATISFACTION = 0
+	AND TO_CHAR ( sysdate, 'yyyy-mm' ) = TO_CHAR ( FEEDBACK_TIME, 'yyyy-mm' )
+	and ORGANIZATION_ID=#{organizationId,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectUnstatis" parameterType="integer" resultMap="BaseResultMap">
+    select
+    fi.ID,
+    fi.ONE_DETAIL,
+    fi.TWO_DETAIL
+    FROM
+    FEEDBACK_INFO fi
+    WHERE
+    AMPUTATED = 0
+    AND APPRAISE_STATE = 1
+    AND SATISFACTION = 1
+    AND TO_CHAR ( sysdate, 'yyyy-mm' ) = TO_CHAR ( FEEDBACK_TIME, 'yyyy-mm' )
+    and ORGANIZATION_ID=#{organizationId,jdbcType=DECIMAL}
+  </select>
+
+
+  <select id="selectTodayByOrganizationId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+     SELECT
+    ID
+        FROM
+        FEEDBACK_INFO
+        WHERE
+        AMPUTATED = 0
+        AND TO_CHAR ( sysdate, 'yyyy-mm-dd' ) = TO_CHAR ( FEEDBACK_TIME, 'yyyy-mm-dd' )
+        AND ORGANIZATION_ID=#{organizationId,jdbcType=DECIMAL}
+  </select>
+
+
+  <select id="selectQueCount" parameterType="string" resultType="integer">
+    select count (1) from FEEDBACK_INFO where WINDOW_NO = #{windowNo,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByThisMonth" parameterType="com.common.model.PageData" resultType="integer">
+    select count(1) as COUNT from FEEDBACK_INFO fi
+    where
+    fi.APPRAISE_STATE =1
+    and FEEDBACK_TIME BETWEEN (select trunc(sysdate,'MM') from dual)
+		and (select last_day(sysdate) from dual)
+      <if test="satis!=null">
+        and fi.SATISFACTION=#{satis,jdbcType=VARCHAR}
+      </if>
+      <if test="complete!=null">
+        and fi.COMPLETE_RATE = #{complete,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <select id="selectThisDay" resultMap="BaseResultMap">
+ SELECT FI.EMPLOYEES_NO,FI.SATISFACTION,FI.COMPLETE_RATE,FI.APPRAISE_STATE,FI.FEEDBACK_TIME FROM FEEDBACK_INFO fi
+  WHERE FI.APPRAISE_STATE=1
+  AND
+  FI.FEEDBACK_TIME
+  BETWEEN
+  (select trunc(add_months(sysdate,-1),'mm') from dual) AND (SELECT (sysdate) FROM dual)
+  </select>
+
+</mapper>

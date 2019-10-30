@@ -1,0 +1,186 @@
+server:
+    port: 8771
+    tomcat:
+      uri-encoding: UTF-8
+
+
+spring:
+    application:
+      name: personnel
+
+    jpa:
+      show-sql: true
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.Oracle10gDialect
+          enable_lazy_load_no_trans: true
+      open-in-view: true
+      database: oracle
+
+    jackson:
+      default-property-inclusion: non_null
+    aop:
+      auto: true
+
+    datasource:
+      name: dataSource
+#      url: jdbc:oracle:thin:@localhost:1521:young
+      url: jdbc:oracle:thin:@10.32.250.83:1521:fyplatform
+#      url: jdbc:oracle:thin:@10.71.177.154:1521:fyplatform
+#      url: jdbc:oracle:thin:@10.71.177.199:1521:fyplatform
+      username: fyplatform
+      password: 123456
+      # 使用druid数据源
+      type: com.alibaba.druid.pool.DruidDataSource
+      driver-class-name: oracle.jdbc.OracleDriver
+      filters: stat,wall,slf4j
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+
+
+  #redis配置
+    redis:
+      database: 0
+      host: 10.32.250.87
+#      host: localhost
+      port: 6379
+      password:
+      jedis:
+        pool:
+          max-active: 8
+          max-wait: 1ms
+          max-idle: 8
+          min-idle: 0
+      timeout: 10000ms
+
+#mybatis 配置
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.personnel.model  # 注意：对应实体类的路径
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: oracle
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+#devtools:
+#  livereload:
+#    enabled: true #是否支持livereload
+#    port: 35729
+#  restart:
+#    enabled: true #是否支持热部署
+
+eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+#        defaultZone: http://10.32.250.85:8761/eureka/
+    server:
+      enable-self-preservation: false
+      eviction-interval-timer-in-ms: 4000
+    instance:
+      #优先使用IP地址作为主机名的标识
+      prefer-ip-address: true
+      #续约任务调用时间间隔
+      lease-renewal-interval-in-seconds: 5000
+      #服务失效时间
+      lease-expiration-duration-in-seconds: 5000
+
+#------------------------排队叫号系统参数---------------------------------------------
+
+queue:
+  #设备接入到网络中的IP地址
+  evaluatorAddress: 172.16.19.246
+  # 窗口下发地址（本地测试）
+#  windowUrl: http://172.16.19.246:8000/service/queue.asmx/CreateOrUpdateCounter
+
+  # 窗口下发地址(发布到88服务器)
+  windowUrl: http://10.32.194.4:8000/service/queue.asmx/CreateOrUpdateCounter
+
+ # 人员下发的地址（本地测试）
+#  empUrl: http://172.16.19.246:8000/service/queue.asmx/CreateOrUpdateEmployee
+
+#   人员下发的地址（发布到88服务器）
+  empUrl: http://10.32.194.4:8000/service/queue.asmx/CreateOrUpdateEmployee
+
+  #叫号器登陆密码
+  password: 123456
+  #员工等级
+  rated: 100
+  #头像地址前缀
+  avatarUrlPrefix: http://10.32.250.84:8089
+
+
+#-------------------------餐盘系统参数-------------------------------------------------
+foodSystem:
+#  授权应用的Id
+  client_id: Zk63i4R4z6rQ27YDavaf9vF/RxHyMoqiG4ORZrcTkZg=
+#  IP加端口本地测试
+#  urlPrfix: http://172.16.19.246:90/zytkapi/
+#  发布到88服务器
+  urlPrfix: http://10.32.194.4:90/zytkapi/
+#  获取AccessToken
+  accessTokenUrl: SignIn/RSignIn
+#  同步卡户部门
+  updateAccDepUrl: AccDep/UpdateAccDep
+#  删除卡户部门
+  deleteAccDepUrl: AccDep/DeleteAccDep
+#   获取卡户部门
+  getAccDepUrl: AccDep/GetAccDep
+
+#  同步卡户信息
+  uploadAccInfoUrl: AccInfo/UpdateAccInfo
+#  修改卡户状态
+  updateStateAccUrl: AccInfo/UpdateStateAcc
+#  获取卡户信息
+  getAllAccUrl: AccInfo/GetAllAcc
+
+#  获取身份参数
+  getAccClassUrl: AccClass/GetAccClass
+#  获取园区参数
+  getAreaUrl: Area/GetArea
+#  代码辅助查询
+  getErrTxtByCodeUrl: GetErrTxt/GetErrTxtByCode
+
+
+
+#----------------------------海康平台系统参数--------------------------------
+
+hik:
+  #人员下发
+  addPerson_URL: http://10.32.250.86:8080/person/addPerson
+#  addPerson_URL: http://localhost:8080/person/addPerson
+  #开卡
+  addCard_URL: http://10.32.250.86:8080/person/addCard
+#  addCard_URL: http://localhost:8080/person/addCard
+  #退卡
+  returnCard_URL: http://10.32.250.86:8080/person/returnCard
+  returnCard2_URL: http://10.32.250.86:8080/person/returnCard2
+#  returnCard_URL: http://localhost:8080/person/returnCard
+#  returnCard2_URL: http://localhost:8080/person/returnCard2
+  #绑卡
+  openCard_URL: http://10.32.250.86:8080/person/openCard
+#  openCard_URL: http://localhost:8080/person/openCard
+  #删除人员
+  deletePerson_URL: http://10.32.250.86:8080/person/deletePerson
+  #下发车牌号
+  addCarInfo_URL: http://10.32.250.86:8080/person/addCarInfo
+  #删除车牌号
+  deleteCarInfo_URL: http://10.32.250.86:8080/person/deleteCarInfo
+  #分页获取部门
+  getDeptInfos_URL: http://10.32.250.86:8080/person/getDeptInfos
+#  getDeptInfos_URL: http://localhost:8080/person/getDeptInfos

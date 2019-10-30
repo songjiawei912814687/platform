@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meeting.mapper.mybatis.MeetingRoomMapper">
+  <resultMap id="BaseResultMap" type="com.meeting.domain.output.MeetingRoomOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CONTAIN_NUMBER" jdbcType="DECIMAL" property="containNumber" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="TEA_NAME" jdbcType="VARCHAR" property="teaName" />
+    <result column="TEA_PHONE" jdbcType="VARCHAR" property="teaPhone" />
+    <result column="IT_NAME" jdbcType="VARCHAR" property="itName" />
+    <result column="IT_PHONE" jdbcType="VARCHAR" property="itPhone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CONTAIN_NUMBER, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+    DESCRIPTION, DISPLAY_ORDER, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+    NAME, STATE,ip,TEA_NAME,TEA_PHONE,IT_NAME,IT_PHONE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MEETING_ROOM
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <select id="selectPage" resultMap="BaseResultMap">
+    SELECT MEETING_ROOM.ID,MEETING_ROOM.NAME,MEETING_ROOM.CONTAIN_NUMBER,MEETING_ROOM.DESCRIPTION,MEETING_ROOM.LAST_UPDATE_DATE_TIME FROM MEETING_ROOM left join ROOM_ORGAN
+    on  MEETING_ROOM.id = ROOM_ORGAN.ROOM_ID
+
+    where
+    AMPUTATED = 0
+    <if test="orgId!=null">and ORGAN_ID = #{orgId}</if>
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">NAME like '%'||#{name}||'%'and </if>
+    </trim>
+    GROUP BY MEETING_ROOM.ID, MEETING_ROOM.NAME,MEETING_ROOM.CONTAIN_NUMBER,MEETING_ROOM.DESCRIPTION,MEETING_ROOM.LAST_UPDATE_DATE_TIME
+    ORDER by MEETING_ROOM.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from MEETING_ROOM WHERE AMPUTATED = 0 and state=0
+    ORDER by LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from MEETING_ROOM WHERE AMPUTATED = 0 and state=0 and NAME= #{name,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByIp" resultMap="BaseResultMap" parameterType="String">
+    select
+    <include refid="Base_Column_List" />
+    from MEETING_ROOM WHERE AMPUTATED = 0 and state=0 and ip like '%'||#{ip,jdbcType=VARCHAR}||'%'
+  </select>
+
+</mapper>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personnel.mapper.mybatis.JobsMapper">
+  <resultMap id="BaseResultMap" type="com.personnel.domian.output.JobsOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="RESPONSIBILITIES" jdbcType="VARCHAR" property="responsibilities" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, AMPUTATED, LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME, RESPONSIBILITIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from JOBS
+    where ID = #{id,jdbcType=DECIMAL} and AMPUTATED = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from JOBS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.personnel.model.Jobs">
+    insert into JOBS (ID, CREATED_DATE_TIME, CREATED_USER_ID,
+      CREATED_USER_NAME, AMPUTATED, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, NAME,
+      RESPONSIBILITIES)
+    values (#{id,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL},
+      #{createdUserName,jdbcType=VARCHAR}, #{amputated,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{responsibilities,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.personnel.model.Jobs">
+    insert into JOBS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="responsibilities != null">
+        RESPONSIBILITIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibilities != null">
+        #{responsibilities,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.personnel.model.Jobs">
+    update JOBS
+    <set>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibilities != null">
+        RESPONSIBILITIES = #{responsibilities,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.personnel.model.Jobs">
+    update JOBS
+    set CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      RESPONSIBILITIES = #{responsibilities,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    jobs.ID,
+    jobs.CREATED_DATE_TIME,
+    jobs.CREATED_USER_ID,
+    jobs.CREATED_USER_NAME,
+    jobs.AMPUTATED,
+    jobs.LAST_UPDATE_DATE_TIME,
+    jobs.LAST_UPDATE_USER_ID,
+    jobs.LAST_UPDATE_USER_NAME,
+    jobs.NAME,
+    jobs.RESPONSIBILITIES
+    FROM
+    JOBS jobs
+    WHERE  jobs.AMPUTATED=0
+    <trim prefix="and" suffixOverrides="and">
+      <if test="name!=null and name !='' ">jobs.NAME like '%'||#{name}||'%'and </if>
+    </trim>
+    ORDER BY jobs.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    jobs.ID,
+    jobs.CREATED_DATE_TIME,
+    jobs.CREATED_USER_ID,
+    jobs.CREATED_USER_NAME,
+    jobs.AMPUTATED,
+    jobs.LAST_UPDATE_DATE_TIME,
+    jobs.LAST_UPDATE_USER_ID,
+    jobs.LAST_UPDATE_USER_NAME,
+    jobs.NAME,
+    jobs.RESPONSIBILITIES
+    FROM
+    JOBS jobs
+    WHERE  jobs.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">jobs.NAME like '%'||#{name}||'%'and </if>
+    </trim>
+    ORDER BY jobs.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    jobs.ID,
+    jobs.CREATED_DATE_TIME,
+    jobs.CREATED_USER_ID,
+    jobs.CREATED_USER_NAME,
+    jobs.AMPUTATED,
+    jobs.LAST_UPDATE_DATE_TIME,
+    jobs.LAST_UPDATE_USER_ID,
+    jobs.LAST_UPDATE_USER_NAME,
+    jobs.NAME,
+    jobs.RESPONSIBILITIES
+    FROM
+    JOBS jobs where
+    jobs.AMPUTATED=0 and jobs.name= #{name,jdbcType=VARCHAR}
+    ORDER BY jobs.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+</mapper>

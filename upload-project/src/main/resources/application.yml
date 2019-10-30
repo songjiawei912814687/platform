@@ -1,0 +1,45 @@
+server:
+  port: 8762
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100M
+      file-size-threshold: 0
+      max-request-size: 100M
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.OracleDialect
+        enable_lazy_load_no_trans: true
+    open-in-view: true
+    database: oracle
+
+  jackson:
+    default-property-inclusion: non_null
+  datasource:
+    name: dataSource
+#    url: jdbc:oracle:thin:@139.196.192.24:1521:fyplatform
+          url: jdbc:oracle:thin:@10.32.250.83:1521:fyplatform
+    username: fyplatform
+#          username: scott
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: oracle.jdbc.OracleDriver
+    filters: stat,wall,slf4j
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20

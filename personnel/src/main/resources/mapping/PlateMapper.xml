@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personnel.mapper.mybatis.PlateMapper">
+  <resultMap id="BaseResultMap" type="com.personnel.model.Plate">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PERSON_ID" jdbcType="DECIMAL" property="personId" />
+    <result column="PERSON_NO" jdbcType="VARCHAR" property="personNo" />
+    <result column="PHONE_NO" jdbcType="VARCHAR" property="phoneNo" />
+    <result column="PLATE_NO" jdbcType="VARCHAR" property="plateNo" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime"/>
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, PERSON_ID, PERSON_NO, PHONE_NO, PLATE_NO, STATE,CREATED_DATE_TIME,LAST_UPDATE_DATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PLATE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from PLATE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.personnel.model.Plate">
+    insert into PLATE (ID, NAME, PERSON_ID, 
+      PERSON_NO, PHONE_NO, PLATE_NO,
+      STATE,CREATED_DATE_TIME,LAST_UPDATE_DATE_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{personId,jdbcType=DECIMAL}, 
+      #{personNo,jdbcType=VARCHAR}, #{phoneNo,jdbcType=VARCHAR}, #{plateNo,jdbcType=VARCHAR}, 
+      #{state,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=VARCHAR}, #{lastUpdateDateTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.personnel.model.Plate">
+    insert into PLATE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="personId != null">
+        PERSON_ID,
+      </if>
+      <if test="personNo != null">
+        PERSON_NO,
+      </if>
+      <if test="phoneNo != null">
+        PHONE_NO,
+      </if>
+      <if test="plateNo != null">
+        PLATE_NO,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=VARCHAR},
+      </if>
+
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=DECIMAL},
+      </if>
+      <if test="personNo != null">
+        #{personNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null">
+        #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNo != null">
+        #{plateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=VARCHAR},
+      </if>
+
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.personnel.model.Plate">
+    update PLATE
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="personId != null">
+        PERSON_ID = #{personId,jdbcType=DECIMAL},
+      </if>
+      <if test="personNo != null">
+        PERSON_NO = #{personNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNo != null">
+        PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      </if>
+      <if test="plateNo != null">
+        PLATE_NO = #{plateNo,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=VARCHAR},
+      </if>
+
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.personnel.model.Plate">
+    update PLATE
+    set NAME = #{name,jdbcType=VARCHAR},
+      PERSON_ID = #{personId,jdbcType=DECIMAL},
+      PERSON_NO = #{personNo,jdbcType=VARCHAR},
+      PHONE_NO = #{phoneNo,jdbcType=VARCHAR},
+      PLATE_NO = #{plateNo,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="selectByState" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from PLATE
+    where STATE = #{state,jdbcType=DECIMAL}
+  </select>
+
+  <select id="selectByPersonNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from PLATE
+    where PERSON_NO = #{personNo,jdbcType=DECIMAL} and state=1
+  </select>
+
+  <select id="selectByPlateNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from PLATE
+    where PLATE_NO = #{plateNo,jdbcType=DECIMAL} and state=1
+  </select>
+
+  <select id="selectPlateNo" parameterType="java.lang.Integer" resultType="com.personnel.domian.output.PlateOutput">
+    select
+      emp.EMPLOYEE_NO as personNo,
+      emp.NAME as name,
+      emp.PHONE_NUMBER as phoneNo,
+      emp.PLATE_NO as plateNo,
+      p.PERSON_ID as personId
+    from PERSON p
+    left join EMPLOYEES emp on emp.ID = p.EMPLOYEE_ID
+    where p.STATE = #{state,jdbcType=DECIMAL} and emp.PLATE_NO is not null
+  </select>
+
+</mapper>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.knowledge.mapper.mybatis.QuestionMapper">
+  <resultMap id="BaseResultMap" type="com.knowledge.domain.output.QuestionOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="IS_OPEN" jdbcType="DECIMAL" property="isOpen" />
+    <result column="IS_TOP" jdbcType="DECIMAL" property="isTop" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="organization_Id" jdbcType="DECIMAL" property="organizationId" />
+    <result column="organizationName" jdbcType="VARCHAR" property="organizationName" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="PHONE_NUMBER" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="type" jdbcType="DECIMAL" property="type" />
+    <result column="state" jdbcType="DECIMAL" property="state" />
+    <result column="release_Time" jdbcType="DECIMAL" property="releaseTime" />
+    <result column="typeName" jdbcType="VARCHAR" property="typeName" />
+    <result column="ANSWER_STATE" jdbcType="DECIMAL" property="answerState" />
+    <result column="ASK_NAME" jdbcType="VARCHAR" property="askName" />
+    <result column="ASK_TEL" jdbcType="VARCHAR" property="askTel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+    IS_OPEN, IS_TOP, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME,
+    TITLE,organization_Id,type,state,release_Time,ANSWER_STATE,ASK_NAME,ASK_TEL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    question.id,
+    question.AMPUTATED,
+    question.DESCRIPTION,
+    question.IS_TOP,
+    question.IS_OPEN,
+    question.TITLE,
+    question.organization_Id,
+    question.type,
+    question.state,
+    question.release_Time,
+    question.ASK_NAME,
+    question.ASK_TEL,
+    question.ANSWER_STATE,
+    question.LAST_UPDATE_DATE_TIME,
+    organ.PHONE_NUMBER,
+    organ.name,
+    organ.name as organizationName,
+    config.name as typeName
+    from QUESTION question left join organization organ on question.organization_Id=organ.id
+    LEFT  join EMPLOYEES employees  on employees.id=organ.DEPARTMENTAL_MANAGER
+    left join config config on config.id=question.type
+    where question.ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from QUESTION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.knowledge.model.Question">
+    insert into QUESTION (ID, AMPUTATED, CREATED_DATE_TIME,
+      CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION,
+      IS_OPEN, IS_TOP, LAST_UPDATE_DATE_TIME,
+      LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, TITLE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP},
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{isOpen,jdbcType=DECIMAL}, #{isTop,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      #{lastUpdateUserId,jdbcType=DECIMAL}, #{lastUpdateUserName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.knowledge.model.Question">
+    insert into QUESTION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="isOpen != null">
+        IS_OPEN,
+      </if>
+      <if test="isTop != null">
+        IS_TOP,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpen != null">
+        #{isOpen,jdbcType=DECIMAL},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.knowledge.model.Question">
+    update QUESTION
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpen != null">
+        IS_OPEN = #{isOpen,jdbcType=DECIMAL},
+      </if>
+      <if test="isTop != null">
+        IS_TOP = #{isTop,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.knowledge.model.Question">
+    update QUESTION
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      IS_OPEN = #{isOpen,jdbcType=DECIMAL},
+      IS_TOP = #{isTop,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    select
+    question.id,
+    question.AMPUTATED,
+    question.DESCRIPTION,
+    question.IS_TOP,
+    question.IS_OPEN,
+    question.TITLE,
+    question.organization_Id,
+    question.CREATED_USER_NAME,
+    question.type,
+    question.state,
+    question.ANSWER_STATE,
+    question.release_Time,
+    organization.name as organizationName,
+    config.name as typeName
+    from QUESTION question left join organization organization on question.organization_Id=organization.id
+    left join config config on config.id=question.type
+    WHERE  question.AMPUTATED=0  and (question.is_open=1
+    <if test="orgId!=null and orgId!=''">
+    or (EXISTS (
+    SELECT
+    organization.ID
+    FROM
+    USER_ROLE
+    INNER JOIN ROLE_ORGAN ON USER_ROLE.ROLE_ID = ROLE_ORGAN.ROLE_ID
+    WHERE
+    organization.id = ROLE_ORGAN.ORGAN_ID
+    AND USER_ROLE.USER_ID = #{userId,jdbcType=DECIMAL}
+    <if test="orgId!=null and orgId!=''">
+      UNION ALL
+      SELECT
+      organ.ID
+      FROM
+      ORGANIZATION organ
+      WHERE
+      (organ.LINKED_ID =#{orgId,jdbcType=DECIMAL} or organ.id = #{orgId,jdbcType=DECIMAL})
+      AND organization.id = organ.id
+      AND organ.AMPUTATED = 0
+    </if>
+    )
+    )
+    </if>
+    or question.CREATED_USER_ID = #{userId,jdbcType=DECIMAL}
+    )
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="title!=null and title !='' ">question.TITLE like '%'||#{title,jdbcType=VARCHAR}||'%'and </if>
+      <if test="paths !=null and paths !=''">CONCAT(organization.path,',') like '%'||#{paths,jdbcType=VARCHAR}||'%'and </if>
+      <if test="organizationId!=null and organizationId!=''">
+        organization.id = #{organizationId,jdbcType=DECIMAL} and
+      </if>
+      <if test="type!=null and type!=''">
+        question.TYPE = #{type,jdbcType=VARCHAR} and
+      </if>
+    </trim>
+    ORDER BY question.IS_TOP desc,question.state,question.TITLE
+  </select>
+
+  <!--查询分页-->
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    select
+    question.id,
+    question.AMPUTATED,
+    question.DESCRIPTION,
+    question.IS_TOP,
+    question.IS_OPEN,
+    question.TITLE,
+    question.organization_Id,
+    question.CREATED_USER_NAME,
+    question.type,
+    question.state,
+    question.ANSWER_STATE,
+    question.release_Time,
+    organization.name as organizationName,
+    config.name as typeName
+    from QUESTION question left join organization organization on question.organization_Id=organization.id
+    left join config config on config.id=question.type
+    WHERE  question.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="title!=null and title !='' ">question.TITLE like '%'||#{title,jdbcType=VARCHAR}||'%'and </if>
+      <if test="paths !=null and paths !=''">CONCAT(organization.path,',') like '%'||#{paths,jdbcType=VARCHAR}||'%'and </if>
+      <if test="organizationId!=null and organizationId!=''">
+        organization.id = #{organizationId,jdbcType=DECIMAL} and
+      </if>
+      <if test="type!=null and type!=''">
+        question.TYPE = #{type,jdbcType=VARCHAR} and
+      </if>
+    </trim>
+    ORDER BY question.IS_TOP desc,question.state,question.TITLE
+  </select>
+
+
+  <select id="findAllByAnswerState" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    QUESTION
+    WHERE  AMPUTATED=0 and ANSWER_STATE = #{answerState} and is_open=1
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="title!=null and title !='' ">  TITLE like '%'||#{title}||'%'and </if>
+      <if test="organizationId!=null and organizationId !='' ">  organization_Id = #{organizationId} and </if>
+      <if test="type!=null and type !='' ">  TYPE = #{type} and </if>
+    </trim>
+    ORDER BY IS_TOP ,TITLE
+  </select>
+
+  <select id="selectQustionOrganizations" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT QUESTION.ORGANIZATION_ID,"ORGANIZATION"."NAME" organizationName from QUESTION INNER JOIN "ORGANIZATION"  on "ORGANIZATION"."ID" = QUESTION.ORGANIZATION_ID
+    WHERE  QUESTION.AMPUTATED=0 and QUESTION.ANSWER_STATE = #{answerState} and is_open=1
+    GROUP BY QUESTION.ORGANIZATION_ID,"ORGANIZATION"."NAME",ORGANIZATION.DISPLAY_ORDER
+    ORDER BY ORGANIZATION.DISPLAY_ORDER
+  </select>
+
+  <select id="selectOrgByParentId" resultType="java.lang.Integer">
+    select
+    id
+    from ORGANIZATION WHERE  AMPUTATED = 0
+    and PARENT_ID = #{parentId}
+  </select>
+</mapper>

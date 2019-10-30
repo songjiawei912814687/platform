@@ -1,0 +1,1 @@
+package com.screen.mapper.jpa;import com.screen.core.base.BaseMapper;import com.screen.model.TotalInterface;import org.springframework.stereotype.Repository;/** * @author: XiGuoQing * @description: * @date: Created in 下午 2:05 2018/10/30 0030 * @modified by: */@Repositorypublic interface TotalInterfaceRepository extends BaseMapper<TotalInterface,Integer> {}

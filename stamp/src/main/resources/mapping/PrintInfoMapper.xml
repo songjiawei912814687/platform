@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stamp.mapper.mybatis.PrintInfoMapper">
+  <resultMap id="BaseResultMap" type="com.stamp.domain.output.PrintInfoOutput">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ALL_DURATION" jdbcType="DECIMAL" property="allDuration" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="BAK" jdbcType="VARCHAR" property="bak" />
+    <result column="BANK_DURATION" jdbcType="DECIMAL" property="bankDuration" />
+    <result column="CALL_TIME" jdbcType="VARCHAR" property="callTime" />
+    <result column="COMPANY_ADDRESS" jdbcType="VARCHAR" property="companyAddress" />
+    <result column="COMPANY_NAME" jdbcType="VARCHAR" property="companyName" />
+    <result column="COMPANY_PUSH_DURATION" jdbcType="DECIMAL" property="companyPushDuration" />
+    <result column="COMPANY_PUSH_TIME" jdbcType="VARCHAR" property="companyPushTime" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DO_IDENTITY" jdbcType="VARCHAR" property="doIdentity" />
+    <result column="DO_NAME" jdbcType="VARCHAR" property="doName" />
+    <result column="DO_NUMBER" jdbcType="VARCHAR" property="doNumber" />
+    <result column="EMP_NAME" jdbcType="VARCHAR" property="empName" />
+    <result column="EMP_NO" jdbcType="VARCHAR" property="empNo" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="LEAL_IDENTITY" jdbcType="VARCHAR" property="lealIdentity" />
+    <result column="LEAL_PERSON" jdbcType="VARCHAR" property="lealPerson" />
+    <result column="SERVICE_PLAN" jdbcType="VARCHAR" property="servicePlan" />
+    <result column="SOCIAL_CODE" jdbcType="VARCHAR" property="socialCode" />
+    <result column="STAMP_COMPANY" jdbcType="DECIMAL" property="stampCompany" />
+    <result column="STAMP_DURATION" jdbcType="DECIMAL" property="stampDuration" />
+    <result column="TAX_DURATION" jdbcType="DECIMAL" property="taxDuration"/>
+    <result column="STAMP_RECEIVE_TIME" jdbcType="DECIMAL" property="stampReceiveTime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ALL_DURATION, AMPUTATED, BAK, BANK_DURATION, CALL_TIME, COMPANY_ADDRESS, COMPANY_NAME,
+    COMPANY_PUSH_DURATION, COMPANY_PUSH_TIME, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME,
+    DO_IDENTITY, DO_NAME, DO_NUMBER, EMP_NAME, EMP_NO, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+    LAST_UPDATE_USER_NAME, LEAL_IDENTITY, LEAL_PERSON, SERVICE_PLAN, SOCIAL_CODE, STAMP_COMPANY, STAMP_RECEIVE_TIME,
+    STAMP_DURATION,TAX_DURATION
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    pi.ID, pi.ALL_DURATION, pi.AMPUTATED, pi.BAK, pi.BANK_DURATION, pi.CALL_TIME, pi.COMPANY_ADDRESS,pi.COMPANY_NAME,
+    pi.COMPANY_PUSH_DURATION, pi.COMPANY_PUSH_TIME, pi.CREATED_DATE_TIME, pi.CREATED_USER_ID, pi.CREATED_USER_NAME,
+    pi.DO_IDENTITY, pi.DO_NAME, pi.DO_NUMBER, pi.EMP_NAME, pi.EMP_NO, pi.LAST_UPDATE_DATE_TIME, pi.LAST_UPDATE_USER_ID,
+    pi.LAST_UPDATE_USER_NAME, pi.LEAL_IDENTITY, pi.LEAL_PERSON, pi.SERVICE_PLAN, pi.SOCIAL_CODE, pi.STAMP_COMPANY,
+    pi.STAMP_DURATION,o.NAME as stampCompanyName,pi.TAX_DURATION
+    from PRINT_INFO  pi
+    left join STAMP_ORGAN o
+    on o.ID = pi.STAMP_COMPANY and o.AMPUTATED = 0
+    where pi.ID = #{id,jdbcType=DECIMAL}
+    and pi.AMPUTATED = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from PRINT_INFO
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.stamp.model.PrintInfo">
+    insert into PRINT_INFO (ID, ALL_DURATION, AMPUTATED,
+      BAK, BANK_DURATION, CALL_TIME,
+      COMPANY_ADDRESS, COMPANY_NAME, COMPANY_PUSH_DURATION,
+      COMPANY_PUSH_TIME, CREATED_DATE_TIME, CREATED_USER_ID,
+      CREATED_USER_NAME, DO_IDENTITY, DO_NAME,
+      DO_NUMBER, EMP_NAME, EMP_NO,
+      LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID,
+      LAST_UPDATE_USER_NAME, LEAL_IDENTITY, LEAL_PERSON,
+      SERVICE_PLAN, SOCIAL_CODE, STAMP_COMPANY,
+      STAMP_DURATION)
+    values (#{id,jdbcType=DECIMAL}, #{allDuration,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL},
+      #{bak,jdbcType=VARCHAR}, #{bankDuration,jdbcType=DECIMAL}, #{callTime,jdbcType=VARCHAR},
+      #{companyAddress,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{companyPushDuration,jdbcType=DECIMAL},
+      #{companyPushTime,jdbcType=VARCHAR}, #{createdDateTime,jdbcType=TIMESTAMP}, #{createdUserId,jdbcType=DECIMAL},
+      #{createdUserName,jdbcType=VARCHAR}, #{doIdentity,jdbcType=VARCHAR}, #{doName,jdbcType=VARCHAR},
+      #{doNumber,jdbcType=VARCHAR}, #{empName,jdbcType=VARCHAR}, #{empNo,jdbcType=VARCHAR},
+      #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL},
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{lealIdentity,jdbcType=VARCHAR}, #{lealPerson,jdbcType=VARCHAR},
+      #{servicePlan,jdbcType=VARCHAR}, #{socialCode,jdbcType=VARCHAR}, #{stampCompany,jdbcType=DECIMAL},
+      #{stampDuration,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.stamp.model.PrintInfo">
+    insert into PRINT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="allDuration != null">
+        ALL_DURATION,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="bak != null">
+        BAK,
+      </if>
+      <if test="bankDuration != null">
+        BANK_DURATION,
+      </if>
+      <if test="callTime != null">
+        CALL_TIME,
+      </if>
+      <if test="companyAddress != null">
+        COMPANY_ADDRESS,
+      </if>
+      <if test="companyName != null">
+        COMPANY_NAME,
+      </if>
+      <if test="companyPushDuration != null">
+        COMPANY_PUSH_DURATION,
+      </if>
+      <if test="companyPushTime != null">
+        COMPANY_PUSH_TIME,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="doIdentity != null">
+        DO_IDENTITY,
+      </if>
+      <if test="doName != null">
+        DO_NAME,
+      </if>
+      <if test="doNumber != null">
+        DO_NUMBER,
+      </if>
+      <if test="empName != null">
+        EMP_NAME,
+      </if>
+      <if test="empNo != null">
+        EMP_NO,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="lealIdentity != null">
+        LEAL_IDENTITY,
+      </if>
+      <if test="lealPerson != null">
+        LEAL_PERSON,
+      </if>
+      <if test="servicePlan != null">
+        SERVICE_PLAN,
+      </if>
+      <if test="socialCode != null">
+        SOCIAL_CODE,
+      </if>
+      <if test="stampCompany != null">
+        STAMP_COMPANY,
+      </if>
+      <if test="stampDuration != null">
+        STAMP_DURATION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="allDuration != null">
+        #{allDuration,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="bak != null">
+        #{bak,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDuration != null">
+        #{bankDuration,jdbcType=DECIMAL},
+      </if>
+      <if test="callTime != null">
+        #{callTime,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null">
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPushDuration != null">
+        #{companyPushDuration,jdbcType=DECIMAL},
+      </if>
+      <if test="companyPushTime != null">
+        #{companyPushTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="doIdentity != null">
+        #{doIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="doName != null">
+        #{doName,jdbcType=VARCHAR},
+      </if>
+      <if test="doNumber != null">
+        #{doNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="empName != null">
+        #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empNo != null">
+        #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lealIdentity != null">
+        #{lealIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="lealPerson != null">
+        #{lealPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePlan != null">
+        #{servicePlan,jdbcType=VARCHAR},
+      </if>
+      <if test="socialCode != null">
+        #{socialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stampCompany != null">
+        #{stampCompany,jdbcType=DECIMAL},
+      </if>
+      <if test="stampDuration != null">
+        #{stampDuration,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.stamp.model.PrintInfo">
+    update PRINT_INFO
+    <set>
+      <if test="allDuration != null">
+        ALL_DURATION = #{allDuration,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="bak != null">
+        BAK = #{bak,jdbcType=VARCHAR},
+      </if>
+      <if test="bankDuration != null">
+        BANK_DURATION = #{bankDuration,jdbcType=DECIMAL},
+      </if>
+      <if test="callTime != null">
+        CALL_TIME = #{callTime,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null">
+        COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null">
+        COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPushDuration != null">
+        COMPANY_PUSH_DURATION = #{companyPushDuration,jdbcType=DECIMAL},
+      </if>
+      <if test="companyPushTime != null">
+        COMPANY_PUSH_TIME = #{companyPushTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="doIdentity != null">
+        DO_IDENTITY = #{doIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="doName != null">
+        DO_NAME = #{doName,jdbcType=VARCHAR},
+      </if>
+      <if test="doNumber != null">
+        DO_NUMBER = #{doNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="empName != null">
+        EMP_NAME = #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empNo != null">
+        EMP_NO = #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="lealIdentity != null">
+        LEAL_IDENTITY = #{lealIdentity,jdbcType=VARCHAR},
+      </if>
+      <if test="lealPerson != null">
+        LEAL_PERSON = #{lealPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="servicePlan != null">
+        SERVICE_PLAN = #{servicePlan,jdbcType=VARCHAR},
+      </if>
+      <if test="socialCode != null">
+        SOCIAL_CODE = #{socialCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stampCompany != null">
+        STAMP_COMPANY = #{stampCompany,jdbcType=DECIMAL},
+      </if>
+      <if test="stampDuration != null">
+        STAMP_DURATION = #{stampDuration,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.stamp.model.PrintInfo">
+    update PRINT_INFO
+    set ALL_DURATION = #{allDuration,jdbcType=DECIMAL},
+      AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      BAK = #{bak,jdbcType=VARCHAR},
+      BANK_DURATION = #{bankDuration,jdbcType=DECIMAL},
+      CALL_TIME = #{callTime,jdbcType=VARCHAR},
+      COMPANY_ADDRESS = #{companyAddress,jdbcType=VARCHAR},
+      COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+      COMPANY_PUSH_DURATION = #{companyPushDuration,jdbcType=DECIMAL},
+      COMPANY_PUSH_TIME = #{companyPushTime,jdbcType=VARCHAR},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DO_IDENTITY = #{doIdentity,jdbcType=VARCHAR},
+      DO_NAME = #{doName,jdbcType=VARCHAR},
+      DO_NUMBER = #{doNumber,jdbcType=VARCHAR},
+      EMP_NAME = #{empName,jdbcType=VARCHAR},
+      EMP_NO = #{empNo,jdbcType=VARCHAR},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      LEAL_IDENTITY = #{lealIdentity,jdbcType=VARCHAR},
+      LEAL_PERSON = #{lealPerson,jdbcType=VARCHAR},
+      SERVICE_PLAN = #{servicePlan,jdbcType=VARCHAR},
+      SOCIAL_CODE = #{socialCode,jdbcType=VARCHAR},
+      STAMP_COMPANY = #{stampCompany,jdbcType=DECIMAL},
+      STAMP_DURATION = #{stampDuration,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+
+  <select id="selectPage" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+  select
+  pi.id,
+  pi.AMPUTATED,
+  pi.CREATED_USER_NAME,
+  pi.EMP_NO,
+  pi.EMP_NAME,
+  pi.DO_NAME,
+  pi.SERVICE_PLAN,
+  pi.STAMP_COMPANY,
+  pi.STAMP_RECEIVE_TIME,
+  o.NAME as stampCompanyName,
+  pi.COMPANY_PUSH_TIME,
+  pi.COMPANY_PUSH_DURATION,
+  pi.STAMP_DURATION,
+  pi.BANK_DURATION,
+  pi.TAX_DURATION,
+  pi.ALL_DURATION,
+  pi.BAK,
+    pi.COMPANY_NAME,
+    pi.COMPANY_ADDRESS
+  from PRINT_INFO pi
+  left join STAMP_ORGAN o
+  on o.ID = pi.STAMP_COMPANY and o.AMPUTATED = 0
+  where pi.AMPUTATED = 0
+  <trim prefix="and" suffixOverrides="and">
+    <if test="empName != null and empName != ''">
+      pi.EMP_NAME like '%'||#{empName,jdbcType=VARCHAR}||'%'  and
+    </if>
+    <if test="empNo != null and empNo != ''">
+      pi.EMP_NO like '%'||#{empNo,jdbcType=VARCHAR}||'%'  and
+    </if>
+    <if test="doName != null and doName != ''">
+      pi.DO_NAME like '%'||#{doName,jdbcType=VARCHAR}||'%'  and
+    </if>
+    <if test="doNumber != null and doNumber != ''">
+      pi.DO_NUMBER like '%'||#{doNumber,jdbcType=VARCHAR}||'%'  and
+    </if>
+    <if test="stampCompany != null and stampCompany != ''">
+      pi.STAMP_COMPANY = #{stampCompany,jdbcType=DECIMAL}  and
+    </if>
+    <if test="servicePlan != null and servicePlan != ''">
+      pi.SERVICE_PLAN like '%'||#{servicePlan,jdbcType=VARCHAR}||'%'  and
+    </if>
+    <if test="startDate!=null and startDate!=''">
+      pi.COMPANY_PUSH_TIME>=#{startDate,jdbcType=VARCHAR} and
+    </if>
+    <if test="endDate!=null and endDate!=''">
+      pi.COMPANY_PUSH_TIME&lt;=#{endDate,jdbcType=VARCHAR} and
+    </if>
+    <if test="createUserId!=null and createUserId!=''">
+      pi.CREATED_USER_ID = #{createUserId,jdbcType=DECIMAL} and
+    </if>
+    <if test="organizationId!=null and organizationId!=''">
+      pi.STAMP_COMPANY = #{organizationId,jdbcType=DECIMAL} and
+    </if>
+  </trim>
+  order by pi.LAST_UPDATE_DATE_TIME desc
+</select>
+
+  <select id="selectAll" parameterType="com.common.model.PageData" resultMap="BaseResultMap">
+    select
+    pi.id,
+    pi.AMPUTATED,
+    pi.CREATED_USER_NAME,
+    pi.EMP_NO,
+    pi.EMP_NAME,
+    pi.DO_NAME,
+    pi.SERVICE_PLAN,
+    pi.STAMP_COMPANY,
+    pi.STAMP_RECEIVE_TIME,
+    o.NAME as stampCompanyName,
+    pi.COMPANY_PUSH_TIME,
+    pi.COMPANY_PUSH_DURATION,
+    pi.COMPANY_NAME,
+    pi.COMPANY_ADDRESS,
+    pi.STAMP_DURATION,
+    pi.BANK_DURATION,
+    pi.TAX_DURATION,
+    pi.ALL_DURATION,
+    pi.BAK
+    from PRINT_INFO pi
+    left join STAMP_ORGAN o
+    on o.ID = pi.STAMP_COMPANY and o.AMPUTATED = 0
+    where pi.AMPUTATED = 0
+    <trim prefix="and" suffixOverrides="and">
+      <if test="empName != null and empName != ''">
+        pi.EMP_NAME like '%'||#{empName,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="empNo != null and empNo != ''">
+        pi.EMP_NO like '%'||#{empNo,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="doName != null and doName != ''">
+        pi.DO_NAME like '%'||#{doName,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="doNumber != null and doNumber != ''">
+        pi.DO_NUMBER like '%'||#{doNumber,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="stampCompany != null and stampCompany != ''">
+        pi.STAMP_COMPANY = #{stampCompany,jdbcType=DECIMAL}  and
+      </if>
+      <if test="servicePlan != null and servicePlan != ''">
+        pi.SERVICE_PLAN like '%'||#{servicePlan,jdbcType=VARCHAR}||'%'  and
+      </if>
+      <if test="startDate!=null">
+        pi.COMPANY_PUSH_TIME>=#{startDate,jdbcType=VARCHAR} and
+      </if>
+      <if test="endDate!=null">
+        pi.COMPANY_PUSH_TIME&lt;=#{endDate,jdbcType=VARCHAR} and
+      </if>
+      <if test="createUserId!=null">
+        pi.CREATED_USER_ID = #{createUserId,jdbcType=DECIMAL} and
+      </if>
+      <if test="organizationId!=null">
+        pi.STAMP_COMPANY = #{organizationId,jdbcType=DECIMAL} and
+      </if>
+    </trim>
+    order by pi.LAST_UPDATE_DATE_TIME desc
+  </select>
+</mapper>

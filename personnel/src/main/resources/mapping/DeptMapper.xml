@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.personnel.mapper.mybatis.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.personnel.model.Dept">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="DEPT_NO" jdbcType="VARCHAR" property="deptNo" />
+    <result column="DEPT_PATH" jdbcType="VARCHAR" property="deptPath" />
+    <result column="DEPT_PINYIN" jdbcType="VARCHAR" property="deptPinyin" />
+    <result column="DEPT_UUID" jdbcType="VARCHAR" property="deptUuid" />
+    <result column="PARENT_DEPT_UUID" jdbcType="VARCHAR" property="parentDeptUuid" />
+    <result column="UPD_TIME" jdbcType="DECIMAL" property="updTime" />
+    <result column="DEPT_NAME" jdbcType="DECIMAL" property="deptName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEPT_NO, DEPT_PATH, DEPT_PINYIN, DEPT_UUID, PARENT_DEPT_UUID, UPD_TIME,DEPT_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from DEPT
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from DEPT
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.personnel.model.Dept">
+    insert into DEPT (ID, DEPT_NO, DEPT_PATH, 
+      DEPT_PINYIN, DEPT_UUID, PARENT_DEPT_UUID, DEPT_NAME,
+      UPD_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{deptNo,jdbcType=VARCHAR}, #{deptPath,jdbcType=VARCHAR}, 
+      #{deptPinyin,jdbcType=VARCHAR}, #{deptUuid,jdbcType=VARCHAR}, #{parentDeptUuid,jdbcType=VARCHAR}, 
+      #{updTime,jdbcType=DECIMAL}), #{deptName,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertSelective" parameterType="com.personnel.model.Dept">
+    insert into DEPT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="deptNo != null">
+        DEPT_NO,
+      </if>
+      <if test="deptPath != null">
+        DEPT_PATH,
+      </if>
+      <if test="deptPinyin != null">
+        DEPT_PINYIN,
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME,
+      </if>
+      <if test="deptUuid != null">
+        DEPT_UUID,
+      </if>
+      <if test="parentDeptUuid != null">
+        PARENT_DEPT_UUID,
+      </if>
+      <if test="updTime != null">
+        UPD_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="deptNo != null">
+        #{deptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deptPath != null">
+        #{deptPath,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptPinyin != null">
+        #{deptPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="deptUuid != null">
+        #{deptUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentDeptUuid != null">
+        #{parentDeptUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        #{updTime,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.personnel.model.Dept">
+    update DEPT
+    <set>
+      <if test="deptNo != null">
+        DEPT_NO = #{deptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deptPath != null">
+        DEPT_PATH = #{deptPath,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptPinyin != null">
+        DEPT_PINYIN = #{deptPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="deptUuid != null">
+        DEPT_UUID = #{deptUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentDeptUuid != null">
+        PARENT_DEPT_UUID = #{parentDeptUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="updTime != null">
+        UPD_TIME = #{updTime,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.personnel.model.Dept">
+    update DEPT
+    set DEPT_NO = #{deptNo,jdbcType=VARCHAR},
+      DEPT_PATH = #{deptPath,jdbcType=VARCHAR},
+      DEPT_PINYIN = #{deptPinyin,jdbcType=VARCHAR},
+      DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+      DEPT_UUID = #{deptUuid,jdbcType=VARCHAR},
+      PARENT_DEPT_UUID = #{parentDeptUuid,jdbcType=VARCHAR},
+      UPD_TIME = #{updTime,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

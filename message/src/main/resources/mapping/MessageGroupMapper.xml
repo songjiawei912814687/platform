@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.message.mapper.mybatis.MessageGroupMapper">
+  <resultMap id="BaseResultMap" type="com.message.domain.output.MessageGroupOutput">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="AMPUTATED" jdbcType="DECIMAL" property="amputated" />
+    <result column="CREATED_DATE_TIME" jdbcType="TIMESTAMP" property="createdDateTime" />
+    <result column="CREATED_USER_ID" jdbcType="DECIMAL" property="createdUserId" />
+    <result column="CREATED_USER_NAME" jdbcType="VARCHAR" property="createdUserName" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="DISPLAY_ORDER" jdbcType="DECIMAL" property="displayOrder" />
+    <result column="LAST_UPDATE_DATE_TIME" jdbcType="TIMESTAMP" property="lastUpdateDateTime" />
+    <result column="LAST_UPDATE_USER_ID" jdbcType="DECIMAL" property="lastUpdateUserId" />
+    <result column="LAST_UPDATE_USER_NAME" jdbcType="VARCHAR" property="lastUpdateUserName" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, AMPUTATED, CREATED_DATE_TIME, CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION, 
+    DISPLAY_ORDER, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, LAST_UPDATE_USER_NAME, 
+    NAME, STATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from MESSAGE_GROUP
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from MESSAGE_GROUP
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.message.model.MessageGroup">
+    insert into MESSAGE_GROUP (ID, AMPUTATED, CREATED_DATE_TIME, 
+      CREATED_USER_ID, CREATED_USER_NAME, DESCRIPTION, 
+      DISPLAY_ORDER, LAST_UPDATE_DATE_TIME, LAST_UPDATE_USER_ID, 
+      LAST_UPDATE_USER_NAME, NAME, STATE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{amputated,jdbcType=DECIMAL}, #{createdDateTime,jdbcType=TIMESTAMP}, 
+      #{createdUserId,jdbcType=DECIMAL}, #{createdUserName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{displayOrder,jdbcType=DECIMAL}, #{lastUpdateDateTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=DECIMAL}, 
+      #{lastUpdateUserName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{state,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.model.MessageGroup">
+    insert into MESSAGE_GROUP
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="amputated != null">
+        AMPUTATED,
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME,
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID,
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER,
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME,
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID,
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="amputated != null">
+        #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.model.MessageGroup">
+    update MESSAGE_GROUP
+    <set>
+      <if test="amputated != null">
+        AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      </if>
+      <if test="createdDateTime != null">
+        CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdUserId != null">
+        CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="createdUserName != null">
+        CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateDateTime != null">
+        LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUpdateUserName != null">
+        LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.model.MessageGroup">
+    update MESSAGE_GROUP
+    set AMPUTATED = #{amputated,jdbcType=DECIMAL},
+      CREATED_DATE_TIME = #{createdDateTime,jdbcType=TIMESTAMP},
+      CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL},
+      CREATED_USER_NAME = #{createdUserName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      DISPLAY_ORDER = #{displayOrder,jdbcType=DECIMAL},
+      LAST_UPDATE_DATE_TIME = #{lastUpdateDateTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_USER_ID = #{lastUpdateUserId,jdbcType=DECIMAL},
+      LAST_UPDATE_USER_NAME = #{lastUpdateUserName,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <!--查询分页-->
+  <select id="selectPage" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    ID,
+    NAME,
+    DESCRIPTION,
+    STATE,
+    DISPLAY_ORDER,
+    LAST_UPDATE_DATE_TIME,
+    LAST_UPDATE_USER_NAME,
+    CREATED_USER_ID
+    FROM
+    MESSAGE_GROUP
+    where AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">NAME like '%'||#{name,jdbcType=VARCHAR}||'%' and </if>
+      <if test="createdUserId!=null and createdUserId!='' ">CREATED_USER_ID = #{createdUserId,jdbcType=DECIMAL} and </if>
+    </trim>
+    ORDER BY LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+  <!--查询不分页-->
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="com.common.model.PageData">
+    SELECT
+    m.ID,
+    m.NAME,
+    m.DESCRIPTION,
+    m.STATE,
+    m.DISPLAY_ORDER,
+    m.LAST_UPDATE_DATE_TIME,
+    m.LAST_UPDATE_USER_NAME
+    FROM
+    MESSAGE_GROUP m
+    where m.AMPUTATED=0
+    <trim prefix="AND" suffixOverrides="and">
+      <if test="name!=null and name !='' ">m.NAME like '%'||#{name}||'%' and </if>
+    </trim>
+    ORDER BY m.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    SELECT
+    m.ID,
+    m.NAME,
+    m.DESCRIPTION,
+    m.STATE,
+    m.DISPLAY_ORDER,
+    m.LAST_UPDATE_DATE_TIME,
+    m.LAST_UPDATE_USER_NAME
+    FROM
+    MESSAGE_GROUP m
+    where m.NAME =#{name,jdbcType=VARCHAR} and m.AMPUTATED=0
+    ORDER BY m.LAST_UPDATE_DATE_TIME DESC
+  </select>
+  <select id="selectByGroupId" resultType="com.message.model.MessageGroupEmployee">
+    SELECT
+    m.ID,
+    m.NAME AS groupName,
+    m.DESCRIPTION,
+    m.STATE,
+    m.DISPLAY_ORDER,
+    m.LAST_UPDATE_DATE_TIME,
+    m.LAST_UPDATE_USER_NAME,
+    g.EMPLOYEE_NAME,
+    g.EMPLOYEE_ID,
+    g.EMPLOYEE_PHONE
+    FROM
+    MESSAGE_GROUP m
+    LEFT JOIN MESSAGE_GROUP_EMPLOYEE g ON m.ID = g.GROUP_ID
+    where g.GROUP_ID =#{groupId,jdbcType=DECIMAL}
+    ORDER BY m.LAST_UPDATE_DATE_TIME DESC
+  </select>
+
+
+
+
+</mapper>

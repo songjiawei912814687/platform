@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stamp.mapper.mybatis.RoleActionMapper">
+  <resultMap id="BaseResultMap" type="com.stamp.model.RoleAction">
+    <id column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="ACTION_ID" jdbcType="DECIMAL" property="actionId" />
+    <result column="MENU_ID" jdbcType="DECIMAL" property="menuId" />
+    <result column="ROLE_ID" jdbcType="DECIMAL" property="roleId" />
+  </resultMap>
+
+  <resultMap id="MenuBaseResult" type="com.stamp.domain.output.MenuOutput">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="dis_play_order_by" jdbcType="INTEGER" property="disPlayOrderBy" />
+    <result column="has_child" jdbcType="INTEGER" property="hasChild" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ACTION_ID, MENU_ID, ROLE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ROLE_ACTION
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ROLE_ACTION
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.stamp.model.RoleAction">
+    insert into ROLE_ACTION (ID, ACTION_ID, MENU_ID, 
+      ROLE_ID)
+    values (#{id,jdbcType=DECIMAL}, #{actionId,jdbcType=DECIMAL}, #{menuId,jdbcType=DECIMAL}, 
+      #{roleId,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.stamp.model.RoleAction">
+    insert into ROLE_ACTION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="actionId != null">
+        ACTION_ID,
+      </if>
+      <if test="menuId != null">
+        MENU_ID,
+      </if>
+      <if test="roleId != null">
+        ROLE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="actionId != null">
+        #{actionId,jdbcType=DECIMAL},
+      </if>
+      <if test="menuId != null">
+        #{menuId,jdbcType=DECIMAL},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.stamp.model.RoleAction">
+    update ROLE_ACTION
+    <set>
+      <if test="actionId != null">
+        ACTION_ID = #{actionId,jdbcType=DECIMAL},
+      </if>
+      <if test="menuId != null">
+        MENU_ID = #{menuId,jdbcType=DECIMAL},
+      </if>
+      <if test="roleId != null">
+        ROLE_ID = #{roleId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.stamp.model.RoleAction">
+    update ROLE_ACTION
+    set ACTION_ID = #{actionId,jdbcType=DECIMAL},
+      MENU_ID = #{menuId,jdbcType=DECIMAL},
+      ROLE_ID = #{roleId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+
+  <select id="findByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select ra.ID,ra.ACTION_ID,ra.MENU_ID,ra.ROLE_ID,a.NAME as ACTION_NAME
+    from role_action ra
+    inner join action a on a.id = ra.action_id
+    where ra.role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select ra.ID,ra.ACTION_ID,ra.MENU_ID,ra.ROLE_ID,a.NAME as ACTION_NAME
+    from role_action ra
+    inner join action a on a.id = ra.action_id
+  </select>
+
+
+  <select id="findMenuByRoleId" resultMap="MenuBaseResult" parameterType="java.lang.Integer">
+    select m.id,m.name,m.parent_id,m.dis_play_order_by,m.has_child
+    from role_menu rm
+    inner join menu m on m.id = rm.menu_id
+    where rm.role_id = #{roleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="findMenuByRoleIdIn" resultMap="MenuBaseResult" parameterType="java.lang.Integer">
+    select temp.*
+    from (
+    select m.id,
+    m.name,
+    m.parent_id,
+    m.dis_play_order_by,
+    m.has_child,
+    ROW_NUMBER() OVER (
+    PARTITION BY m.ID
+    ORDER BY
+    m.id DESC
+    ) AS row_flg
+    from role_menu rm
+    inner join menu m on m.id = rm.menu_id
+    where rm.role_id in
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+      #{item}
+    </foreach>
+    ) temp
+    where row_flg = '1'
+  </select>
+</mapper>
